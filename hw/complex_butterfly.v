@@ -22,7 +22,7 @@ module complex_butterfly #(
     reg  signed [DATA_WIDTH:0]   diff_re;
     reg  signed [DATA_WIDTH:0]   diff_im;
 
-    function [DATA_WIDTH-1:0] sat_value;
+    function signed [DATA_WIDTH-1:0] sat_value;
         input signed [DATA_WIDTH:0] value;
         begin
             if (value > MAX_VAL) begin

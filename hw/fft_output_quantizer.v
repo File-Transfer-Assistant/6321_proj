@@ -15,7 +15,7 @@ module fft_output_quantizer #(
     reg signed [IN_WIDTH:0] shifted_re;
     reg signed [IN_WIDTH:0] shifted_im;
 
-    function [15:0] sat_q97;
+    function signed [15:0] sat_q97;
         input signed [IN_WIDTH:0] value;
         begin
             if (value > MAX_Q97) begin

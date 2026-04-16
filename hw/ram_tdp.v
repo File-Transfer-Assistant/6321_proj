@@ -6,14 +6,14 @@ module ram_tdp #(
     input                       clk,
     input                       a_we,
     input      [ADDR_W-1:0]     a_addr,
-    input      [WIDTH-1:0]      a_din,
-    output     [WIDTH-1:0]      a_dout,
+    input      signed [WIDTH-1:0] a_din,
+    output     signed [WIDTH-1:0] a_dout,
     input                       b_we,
     input      [ADDR_W-1:0]     b_addr,
-    input      [WIDTH-1:0]      b_din,
-    output     [WIDTH-1:0]      b_dout
+    input      signed [WIDTH-1:0] b_din,
+    output     signed [WIDTH-1:0] b_dout
 );
-    reg [WIDTH-1:0] mem [0:DEPTH-1];
+    reg signed [WIDTH-1:0] mem [0:DEPTH-1];
 
     assign a_dout = mem[a_addr];
     assign b_dout = mem[b_addr];

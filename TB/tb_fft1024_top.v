@@ -90,7 +90,7 @@ module tb_fft1024_top;
             in_we    <= 1'b0;
             in_addr  <= 10'd0;
             in_wdata <= 16'sd0;
-            code = $fclose(fh_in);
+            $fclose(fh_in);
         end
     endtask
 
@@ -121,7 +121,7 @@ module tb_fft1024_top;
             tw_addr     <= 9'd0;
             tw_re_wdata <= 16'sd0;
             tw_im_wdata <= 16'sd0;
-            code = $fclose(fh_tw);
+            $fclose(fh_tw);
         end
     endtask
 
@@ -149,7 +149,7 @@ module tb_fft1024_top;
                 $fwrite(fh_out, "%0d %0d\n", $signed(out_re_rdata), $signed(out_im_rdata));
             end
 
-            code = $fclose(fh_out);
+            $fclose(fh_out);
         end
     endtask
 

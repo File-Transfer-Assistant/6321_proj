@@ -2,7 +2,8 @@ function golden_module()
 % GOLDEN_MODULE
 % MATLAB golden reference for the 1024-point radix-2 FFT coursework.
 %
-% This script reads the course-provided Q1.15 input and twiddle HEX files,
+% This script reads the course-provided Q1.15 input file and FP32 twiddle
+% HEX file,
 % runs 10 blocks of 1024-point FFT in double precision, and writes:
 %   1) floating-point FFT outputs
 %   2) Q9.7 quantized FFT outputs
@@ -11,7 +12,7 @@ function golden_module()
 %   code/
 %     golden_module/golden_module.m
 %     input/input_q1_15_v3.hex
-%     input/twiddle_q15.hex
+%     input/twiddle_fp32.hex
 %
 % Output directory:
 %   code/golden_module/golden_out/
@@ -27,14 +28,14 @@ function golden_module()
     out_dir = fullfile(this_dir, 'golden_out');
 
     input_q15_path = fullfile(input_dir, 'input_q1_15_v3.hex');
-    twiddle_q15_path = fullfile(input_dir, 'twiddle_q15.hex');
+    twiddle_fp32_path = fullfile(input_dir, 'twiddle_fp32.hex');
 
     input_q15 = read_q15_hex_file(input_q15_path, NUM_TOTAL_SAMPLES);
     input_float = double(input_q15) / 2^15;
 
-    twiddle_q15 = read_twiddle_q15_hex_file(twiddle_q15_path, TWIDDLE_N);
+    twiddle_fp32 = read_twiddle_fp32_hex_file(twiddle_fp32_path, TWIDDLE_N);
     fprintf('Loaded %d Q1.15 input samples from %s\n', numel(input_q15), input_q15_path);
-    fprintf('Loaded %d Q1.15 twiddle entries from %s\n', numel(twiddle_q15), twiddle_q15_path);
+    fprintf('Loaded %d FP32 twiddle entries from %s\n', numel(twiddle_fp32), twiddle_fp32_path);
 
     if ~exist(out_dir, 'dir')
         mkdir(out_dir);
@@ -72,7 +73,7 @@ function x_q15 = read_q15_hex_file(filepath, expected_count)
 end
 
 
-function twiddle = read_twiddle_q15_hex_file(filepath, expected_count)
+function twiddle = read_twiddle_fp32_hex_file(filepath, expected_count)
     lines = read_nonempty_lines(filepath);
 
     if numel(lines) ~= expected_count
@@ -82,15 +83,15 @@ function twiddle = read_twiddle_q15_hex_file(filepath, expected_count)
     twiddle = complex(zeros(expected_count, 1), zeros(expected_count, 1));
     for idx = 1:expected_count
         token = upper(strtrim(lines{idx}));
-        if strlength(token) ~= 8
-            error('Twiddle line %d must be 8 hex characters, got "%s".', idx, token);
+        if strlength(token) ~= 16
+            error('Twiddle line %d must be 16 hex characters, got "%s".', idx, token);
         end
 
-        re_hex = extractBetween(token, 1, 4);
-        im_hex = extractBetween(token, 5, 8);
-        re_q15 = double(int16(hex_to_signed(re_hex{1}, 16))) / 2^15;
-        im_q15 = double(int16(hex_to_signed(im_hex{1}, 16))) / 2^15;
-        twiddle(idx) = complex(re_q15, im_q15);
+        re_hex = extractBetween(token, 1, 8);
+        im_hex = extractBetween(token, 9, 16);
+        re_fp32 = hex_to_single(re_hex{1});
+        im_fp32 = hex_to_single(im_hex{1});
+        twiddle(idx) = complex(double(re_fp32), double(im_fp32));
     end
 end
 
@@ -117,6 +118,12 @@ function value = hex_to_signed(hex_str, width_bits)
     else
         value = int64(unsigned_value);
     end
+end
+
+
+function value = hex_to_single(hex_str)
+    u32 = uint32(hex2dec(char(hex_str)));
+    value = typecast(u32, 'single');
 end
 
 
