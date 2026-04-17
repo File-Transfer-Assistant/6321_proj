@@ -1,0 +1,122 @@
+ 
+****************************************
+Report : timing
+        -path end
+        -delay max
+        -max_paths 10000
+        -sort_by slack
+Design : fft_processor_top
+Version: U-2022.12-SP7
+Date   : Thu Apr 16 20:58:52 2026
+****************************************
+
+Operating Conditions: NCCOM   Library: tcbn65gplustc_ccs
+Wire Load Model Mode: segmented
+
+Endpoint                         Path Delay     Path Required     Slack
+------------------------------------------------------------------------
+data_out_re[10] (out)               0.92 r            3.88         2.96
+data_out_im[3] (out)                0.92 r            3.88         2.96
+data_out_re[3] (out)                0.92 r            3.88         2.96
+data_out_re[7] (out)                0.92 r            3.88         2.96
+data_out_im[9] (out)                0.92 r            3.88         2.96
+data_out_re[6] (out)                0.92 r            3.88         2.96
+data_out_re[2] (out)                0.92 r            3.88         2.96
+data_out_re[1] (out)                0.91 r            3.88         2.97
+data_out_im[2] (out)                0.91 r            3.88         2.97
+data_out_re[11] (out)               0.91 r            3.88         2.97
+data_out_im[11] (out)               0.91 r            3.88         2.97
+data_out_im[7] (out)                0.91 r            3.88         2.97
+data_out_im[5] (out)                0.91 r            3.88         2.97
+data_out_im[6] (out)                0.91 r            3.88         2.97
+data_out_im[1] (out)                0.91 r            3.88         2.97
+data_out_re[4] (out)                0.91 r            3.88         2.97
+data_out_re[9] (out)                0.91 r            3.88         2.97
+data_out_im[10] (out)               0.91 r            3.88         2.97
+data_out_re[13] (out)               0.91 r            3.88         2.97
+data_out_im[13] (out)               0.91 r            3.88         2.97
+data_out_re[5] (out)                0.91 r            3.88         2.97
+data_out_im[4] (out)                0.91 r            3.88         2.97
+data_out_re[0] (out)                0.91 r            3.88         2.97
+data_out_re[8] (out)                0.91 r            3.88         2.97
+data_out_im[8] (out)                0.91 r            3.88         2.97
+data_out_re[14] (out)               0.91 r            3.88         2.97
+data_out_re[12] (out)               0.91 r            3.88         2.97
+data_out_im[14] (out)               0.91 r            3.88         2.97
+data_out_im[12] (out)               0.91 r            3.88         2.97
+data_out_im[0] (out)                0.91 r            3.88         2.97
+data_out_re[15] (out)               0.91 r            3.88         2.97
+data_out_im[15] (out)               0.91 r            3.88         2.97
+tb_sram_dout[26] (out)              0.88 r            3.88         3.00
+tb_sram_dout[3] (out)               0.88 r            3.88         3.00
+tb_sram_dout[19] (out)              0.88 r            3.88         3.00
+tb_sram_dout[23] (out)              0.88 r            3.88         3.00
+tb_sram_dout[9] (out)               0.88 r            3.88         3.00
+tb_sram_dout[22] (out)              0.88 r            3.88         3.00
+tb_sram_dout[18] (out)              0.88 r            3.88         3.00
+tb_sram_dout[17] (out)              0.88 r            3.88         3.00
+tb_sram_dout[2] (out)               0.88 r            3.88         3.00
+tb_sram_dout[27] (out)              0.88 r            3.88         3.00
+tb_sram_dout[11] (out)              0.88 r            3.88         3.00
+tb_sram_dout[7] (out)               0.88 r            3.88         3.00
+tb_sram_dout[5] (out)               0.88 r            3.88         3.00
+tb_sram_dout[6] (out)               0.88 r            3.88         3.00
+tb_sram_dout[1] (out)               0.88 r            3.88         3.00
+tb_sram_dout[20] (out)              0.88 r            3.88         3.00
+tb_sram_dout[25] (out)              0.88 r            3.88         3.00
+tb_sram_dout[10] (out)              0.88 r            3.88         3.00
+tb_sram_dout[29] (out)              0.88 r            3.88         3.00
+tb_sram_dout[13] (out)              0.88 r            3.88         3.00
+tb_sram_dout[21] (out)              0.88 r            3.88         3.00
+tb_sram_dout[4] (out)               0.88 r            3.88         3.00
+tb_sram_dout[16] (out)              0.88 r            3.88         3.00
+tb_sram_dout[24] (out)              0.88 r            3.88         3.00
+tb_sram_dout[8] (out)               0.88 r            3.88         3.00
+tb_sram_dout[30] (out)              0.88 r            3.88         3.00
+tb_sram_dout[28] (out)              0.88 r            3.88         3.00
+tb_sram_dout[14] (out)              0.88 r            3.88         3.00
+tb_sram_dout[12] (out)              0.88 r            3.88         3.00
+tb_sram_dout[0] (out)               0.88 r            3.88         3.00
+tb_sram_dout[31] (out)              0.88 r            3.88         3.00
+tb_sram_dout[15] (out)              0.88 r            3.88         3.00
+tb_twiddle_dout[26] (out)           0.80 r            3.88         3.08
+tb_twiddle_dout[18] (out)           0.80 r            3.88         3.08
+tb_twiddle_dout[12] (out)           0.80 r            3.88         3.08
+tb_twiddle_dout[10] (out)           0.80 r            3.88         3.08
+tb_twiddle_dout[24] (out)           0.80 r            3.88         3.08
+tb_twiddle_dout[14] (out)           0.80 r            3.88         3.08
+tb_twiddle_dout[8] (out)            0.80 r            3.88         3.08
+tb_twiddle_dout[2] (out)            0.80 r            3.88         3.08
+tb_twiddle_dout[22] (out)           0.80 r            3.88         3.08
+tb_twiddle_dout[20] (out)           0.80 r            3.88         3.08
+tb_twiddle_dout[4] (out)            0.80 r            3.88         3.08
+tb_twiddle_dout[30] (out)           0.80 r            3.88         3.08
+tb_twiddle_dout[6] (out)            0.80 r            3.88         3.08
+tb_twiddle_dout[28] (out)           0.80 r            3.88         3.08
+tb_twiddle_dout[16] (out)           0.80 r            3.88         3.08
+tb_twiddle_dout[0] (out)            0.80 r            3.88         3.08
+tb_twiddle_dout[31] (out)           0.79 r            3.88         3.09
+tb_twiddle_dout[29] (out)           0.79 r            3.88         3.09
+tb_twiddle_dout[27] (out)           0.79 r            3.88         3.09
+tb_twiddle_dout[25] (out)           0.79 r            3.88         3.09
+tb_twiddle_dout[23] (out)           0.79 r            3.88         3.09
+tb_twiddle_dout[21] (out)           0.79 r            3.88         3.09
+tb_twiddle_dout[19] (out)           0.79 r            3.88         3.09
+tb_twiddle_dout[17] (out)           0.79 r            3.88         3.09
+tb_twiddle_dout[15] (out)           0.79 r            3.88         3.09
+tb_twiddle_dout[13] (out)           0.79 r            3.88         3.09
+tb_twiddle_dout[11] (out)           0.79 r            3.88         3.09
+tb_twiddle_dout[9] (out)            0.79 r            3.88         3.09
+tb_twiddle_dout[7] (out)            0.79 r            3.88         3.09
+tb_twiddle_dout[5] (out)            0.79 r            3.88         3.09
+tb_twiddle_dout[3] (out)            0.79 r            3.88         3.09
+tb_twiddle_dout[1] (out)            0.79 r            3.88         3.09
+data_out_valid (out)                0.11 f            3.88         3.77
+done (out)                          0.11 f            3.88         3.77
+dbg_stage[3] (out)                  0.11 f            3.88         3.77
+dbg_stage[2] (out)                  0.11 f            3.88         3.77
+dbg_stage[1] (out)                  0.11 f            3.88         3.77
+dbg_stage[0] (out)                  0.11 f            3.88         3.77
+dbg_stage_done (out)                0.11 f            3.88         3.77
+
+1

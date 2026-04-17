@@ -1,0 +1,2433 @@
+
+                           Design Compiler Graphical 
+                                 DC Ultra (TM)
+                                  DFTMAX (TM)
+                              Power Compiler (TM)
+                                 DesignWare (R)
+                                 DC Expert (TM)
+                               Design Vision (TM)
+                               HDL Compiler (TM)
+                               VHDL Compiler (TM)
+                                  DFT Compiler
+                               Design Compiler(R)
+
+               Version U-2022.12-SP7 for linux64 - Oct 10, 2023 
+
+                    Copyright (c) 1988 - 2023 Synopsys, Inc.
+   This software and the associated documentation are proprietary to Synopsys,
+ Inc. This software may only be used in accordance with the terms and conditions
+ of a written license agreement with Synopsys, Inc. All other use, reproduction,
+   or distribution of this software is strictly prohibited.  Licensed Products
+     communicate with Synopsys servers for the purpose of providing software
+    updates, detecting software piracy and verifying that customers are using
+    Licensed Products in conformity with the applicable License Key for such
+  Licensed Products. Synopsys will use information gathered in connection with
+    this process to deliver software updates and pursue software pirates and
+                                   infringers.
+
+ Inclusivity & Diversity - Visit SolvNetPlus to read the "Synopsys Statement on
+            Inclusivity and Diversity" (Refer to article 000036315 at
+                        https://solvnetplus.synopsys.com)
+Initializing...
+Current time:       Thu Apr 16 20:57:05 2026
+Hostname:           cadpc19
+CPU Model:          11th Gen Intel(R) Core(TM) i9-11900 @ 2.50GHz
+CPU Details:        Cores = 16 : Sockets = 1 : Cache Size = 16384 KB : Freq = 2.50 GHz
+OS:                 Linux 4.18.0-553.117.1.el8_10.x86_64
+RAM:                 62 GB (Free  45 GB)
+Swap:                31 GB (Free  31 GB)
+Work Filesystem:    /homes mounted to auto.homes
+Tmp Filesystem:     /tmp mounted to tmpfs
+Work Disk:          16773 GB (Free 6397 GB)
+Tmp Disk:            31 GB (Free  31 GB)
+
+CPU Load: 1%, Ram Free: 45 GB, Swap Free: 31 GB, Work Disk Free: 6397 GB, Tmp Disk Free: 31 GB
+#########################################
+# TSMC 65nm Synthesis                   #
+# TCL script for Design Compiler        #
+# 2024 Paul Huang                       #
+#########################################
+#########################################
+# READ Design and Library               #
+#########################################
+# Set top level module name
+set top_level fft_processor_top
+fft_processor_top
+# Read libraries
+set search_path [list "." \
+    "/courses/ee6350/pdk2025/tcbn65gplus/TSMCHOME/digital/Front_End/timing_power_noise/CCS/tcbn65gplus_200a" \
+    "/tools/synopsys/syn/U-2022.12-SP7/libraries/syn" \
+    "../../memory_compiler/sram00/sram00_libs" \
+    "../../memory_compiler/sram01/sram01_libs"]
+. /courses/ee6350/pdk2025/tcbn65gplus/TSMCHOME/digital/Front_End/timing_power_noise/CCS/tcbn65gplus_200a /tools/synopsys/syn/U-2022.12-SP7/libraries/syn ../../memory_compiler/sram00/sram00_libs ../../memory_compiler/sram01/sram01_libs
+set synthetic_library [list "dw_foundation.sldb"]
+dw_foundation.sldb
+set link_library [list "*" "tcbn65gplustc_ccs.db" "dw_foundation.sldb" \
+    "sram00_nldm_tt_1p00v_1p00v_25c_syn.db" \
+    "sram01_nldm_tt_1p00v_1p00v_25c_syn.db"]
+* tcbn65gplustc_ccs.db dw_foundation.sldb sram00_nldm_tt_1p00v_1p00v_25c_syn.db sram01_nldm_tt_1p00v_1p00v_25c_syn.db
+set target_library [list "tcbn65gplustc_ccs.db"]
+tcbn65gplustc_ccs.db
+# Read verilog files and elaborate
+analyze -format verilog "../../rtl/fft/butterfly_unit.v"
+Running PRESTO HDLC
+Compiling source file ../../rtl/fft/butterfly_unit.v
+Presto compilation completed successfully.
+Loading db file '/courses/ee6350/pdk2025/tcbn65gplus/TSMCHOME/digital/Front_End/timing_power_noise/CCS/tcbn65gplus_200a/tcbn65gplustc_ccs.db'
+Information: Using CCS timing libraries. (TIM-024)
+Loading db file '/tools/synopsys/syn/U-2022.12-SP7/libraries/syn/dw_foundation.sldb'
+Loading db file '/homes/user/stud/fall25/tl3468/ee6321/memory_compiler/sram00/sram00_libs/sram00_nldm_tt_1p00v_1p00v_25c_syn.db'
+Loading db file '/homes/user/stud/fall25/tl3468/ee6321/memory_compiler/sram01/sram01_libs/sram01_nldm_tt_1p00v_1p00v_25c_syn.db'
+1
+analyze -format verilog "../../rtl/fft/fft_controller.v"
+Running PRESTO HDLC
+Compiling source file ../../rtl/fft/fft_controller.v
+Presto compilation completed successfully.
+1
+analyze -format verilog "../../rtl/fft/sram_1024x32.v"
+Running PRESTO HDLC
+Compiling source file ../../rtl/fft/sram_1024x32.v
+Presto compilation completed successfully.
+1
+analyze -format verilog "../../rtl/fft/twiddle_rom.v"
+Running PRESTO HDLC
+Compiling source file ../../rtl/fft/twiddle_rom.v
+Presto compilation completed successfully.
+1
+analyze -format verilog "../../rtl/fft/fft_processor_top.v"
+Running PRESTO HDLC
+Compiling source file ../../rtl/fft/fft_processor_top.v
+Presto compilation completed successfully.
+1
+elaborate $top_level
+Loading db file '/tools/synopsys/syn/current/libraries/syn/gtech.db'
+Loading db file '/tools/synopsys/syn/current/libraries/syn/standard.sldb'
+  Loading link library 'tcbn65gplustc_ccs'
+  Loading link library 'USERLIB_nldm_tt_1p00v_1p00v_25c'
+  Loading link library 'USERLIB_nldm_tt_1p00v_1p00v_25c'
+  Loading link library 'gtech'
+Running PRESTO HDLC
+
+Inferred memory devices in process
+	in routine fft_processor_top line 94 in file
+		'../../rtl/fft/fft_processor_top.v'.
+===============================================================================
+|    Register Name    |   Type    | Width | Bus | MB | AR | AS | SR | SS | ST |
+===============================================================================
+| unload_valid_d_reg  | Flip-flop |   1   |  N  | N  | Y  | N  | N  | N  | N  |
+===============================================================================
+Presto compilation completed successfully. (fft_processor_top)
+Elaborated 1 design.
+Current design is now 'fft_processor_top'.
+Information: Building the design 'fft_controller'. (HDL-193)
+Warning:  ../../rtl/fft/fft_controller.v:69: DEFAULT branch of CASE statement cannot be reached. (ELAB-311)
+
+Statistics for case statements in always block at line 62 in file
+	'../../rtl/fft/fft_controller.v'
+===============================================
+|           Line           |  full/ parallel  |
+===============================================
+|            64            |    auto/auto     |
+===============================================
+
+Statistics for case statements in always block at line 73 in file
+	'../../rtl/fft/fft_controller.v'
+===============================================
+|           Line           |  full/ parallel  |
+===============================================
+|            92            |    auto/auto     |
+===============================================
+
+Inferred memory devices in process
+	in routine fft_controller line 57 in file
+		'../../rtl/fft/fft_controller.v'.
+===============================================================================
+|    Register Name    |   Type    | Width | Bus | MB | AR | AS | SR | SS | ST |
+===============================================================================
+|      state_reg      | Flip-flop |   2   |  Y  | N  | Y  | N  | N  | N  | N  |
+===============================================================================
+
+Inferred memory devices in process
+	in routine fft_controller line 73 in file
+		'../../rtl/fft/fft_controller.v'.
+===============================================================================
+|    Register Name    |   Type    | Width | Bus | MB | AR | AS | SR | SS | ST |
+===============================================================================
+|     bf_cnt_reg      | Flip-flop |   9   |  Y  | N  | Y  | N  | N  | N  | N  |
+|   is_loading_reg    | Flip-flop |   1   |  N  | N  | Y  | N  | N  | N  | N  |
+|  is_unloading_reg   | Flip-flop |   1   |  N  | N  | Y  | N  | N  | N  | N  |
+| dbg_stage_done_reg  | Flip-flop |   1   |  N  | N  | Y  | N  | N  | N  | N  |
+|      done_reg       | Flip-flop |   1   |  N  | N  | Y  | N  | N  | N  | N  |
+|    dbg_stage_reg    | Flip-flop |   4   |  Y  | N  | Y  | N  | N  | N  | N  |
+|  compute_phase_reg  | Flip-flop |   1   |  N  | N  | Y  | N  | N  | N  | N  |
+|    load_cnt_reg     | Flip-flop |  10   |  Y  | N  | Y  | N  | N  | N  | N  |
+|   unload_cnt_reg    | Flip-flop |  10   |  Y  | N  | Y  | N  | N  | N  | N  |
+|    stage_cnt_reg    | Flip-flop |   4   |  Y  | N  | Y  | N  | N  | N  | N  |
+===============================================================================
+Presto compilation completed successfully. (fft_controller)
+Information: Building the design 'sram_1024x32'. (HDL-193)
+
+Inferred memory devices in process
+	in routine sram_1024x32 line 21 in file
+		'../../rtl/fft/sram_1024x32.v'.
+===============================================================================
+|    Register Name    |   Type    | Width | Bus | MB | AR | AS | SR | SS | ST |
+===============================================================================
+|     we_a_q_reg      | Flip-flop |   1   |  N  | N  | N  | N  | N  | N  | N  |
+|    addr_a_q_reg     | Flip-flop |  10   |  Y  | N  | N  | N  | N  | N  | N  |
+|     din_a_q_reg     | Flip-flop |  32   |  Y  | N  | N  | N  | N  | N  | N  |
+|     we_b_q_reg      | Flip-flop |   1   |  N  | N  | N  | N  | N  | N  | N  |
+|    addr_b_q_reg     | Flip-flop |  10   |  Y  | N  | N  | N  | N  | N  | N  |
+|     din_b_q_reg     | Flip-flop |  32   |  Y  | N  | N  | N  | N  | N  | N  |
+===============================================================================
+Presto compilation completed successfully. (sram_1024x32)
+Information: Building the design 'twiddle_rom'. (HDL-193)
+
+Inferred memory devices in process
+	in routine twiddle_rom line 18 in file
+		'../../rtl/fft/twiddle_rom.v'.
+===============================================================================
+|    Register Name    |   Type    | Width | Bus | MB | AR | AS | SR | SS | ST |
+===============================================================================
+|    ext_din_q_reg    | Flip-flop |  32   |  Y  | N  | N  | N  | N  | N  | N  |
+|    ext_we_q_reg     | Flip-flop |   1   |  N  | N  | N  | N  | N  | N  | N  |
+|   ram_addr_q_reg    | Flip-flop |   9   |  Y  | N  | N  | N  | N  | N  | N  |
+===============================================================================
+Presto compilation completed successfully. (twiddle_rom)
+Information: Building the design 'butterfly_unit'. (HDL-193)
+Presto compilation completed successfully. (butterfly_unit)
+1
+# List the names of the designs
+list_designs
+butterfly_unit          fft_processor_top (*)   twiddle_rom
+fft_controller          sram_1024x32
+1
+# Check error
+if { [check_error -v] == 1 } { exit 1 }
+# Link the design
+link
+
+  Linking design 'fft_processor_top'
+  Using the following designs and libraries:
+  --------------------------------------------------------------------------
+  * (5 designs)               /homes/user/stud/fall25/tl3468/ee6321/dc/fft/fft_processor_top.db, etc
+  tcbn65gplustc_ccs (library) /courses/ee6350/pdk2025/tcbn65gplus/TSMCHOME/digital/Front_End/timing_power_noise/CCS/tcbn65gplus_200a/tcbn65gplustc_ccs.db
+  dw_foundation.sldb (library) /tools/synopsys/syn/U-2022.12-SP7/libraries/syn/dw_foundation.sldb
+  USERLIB_nldm_tt_1p00v_1p00v_25c (library) /homes/user/stud/fall25/tl3468/ee6321/memory_compiler/sram00/sram00_libs/sram00_nldm_tt_1p00v_1p00v_25c_syn.db
+  USERLIB_nldm_tt_1p00v_1p00v_25c (library) /homes/user/stud/fall25/tl3468/ee6321/memory_compiler/sram01/sram01_libs/sram01_nldm_tt_1p00v_1p00v_25c_syn.db
+
+1
+check_design
+ 
+****************************************
+check_design summary:
+Version:     U-2022.12-SP7
+Date:        Thu Apr 16 20:57:12 2026
+****************************************
+
+                   Name                                            Total
+--------------------------------------------------------------------------------
+Inputs/Outputs                                                     65
+    Unconnected ports (LINT-28)                                     1
+    Shorted outputs (LINT-31)                                      64
+
+Cells                                                               4
+    Cells do not drive (LINT-1)                                     4
+--------------------------------------------------------------------------------
+
+Warning: In design 'fft_controller', cell 'C530' does not drive any nets. (LINT-1)
+Warning: In design 'fft_controller', cell 'C542' does not drive any nets. (LINT-1)
+Warning: In design 'fft_controller', cell 'C543' does not drive any nets. (LINT-1)
+Warning: In design 'fft_controller', cell 'C544' does not drive any nets. (LINT-1)
+Warning: In design 'butterfly_unit', port 'clk' is not connected to any nets. (LINT-28)
+Warning: In design 'fft_processor_top', output port 'tb_sram_dout[31]' is connected directly to output port 'data_out_re[15]'. (LINT-31)
+Warning: In design 'fft_processor_top', output port 'tb_sram_dout[30]' is connected directly to output port 'data_out_re[14]'. (LINT-31)
+Warning: In design 'fft_processor_top', output port 'tb_sram_dout[29]' is connected directly to output port 'data_out_re[13]'. (LINT-31)
+Warning: In design 'fft_processor_top', output port 'tb_sram_dout[28]' is connected directly to output port 'data_out_re[12]'. (LINT-31)
+Warning: In design 'fft_processor_top', output port 'tb_sram_dout[27]' is connected directly to output port 'data_out_re[11]'. (LINT-31)
+Warning: In design 'fft_processor_top', output port 'tb_sram_dout[26]' is connected directly to output port 'data_out_re[10]'. (LINT-31)
+Warning: In design 'fft_processor_top', output port 'tb_sram_dout[25]' is connected directly to output port 'data_out_re[9]'. (LINT-31)
+Warning: In design 'fft_processor_top', output port 'tb_sram_dout[24]' is connected directly to output port 'data_out_re[8]'. (LINT-31)
+Warning: In design 'fft_processor_top', output port 'tb_sram_dout[23]' is connected directly to output port 'data_out_re[7]'. (LINT-31)
+Warning: In design 'fft_processor_top', output port 'tb_sram_dout[22]' is connected directly to output port 'data_out_re[6]'. (LINT-31)
+Warning: In design 'fft_processor_top', output port 'tb_sram_dout[21]' is connected directly to output port 'data_out_re[5]'. (LINT-31)
+Warning: In design 'fft_processor_top', output port 'tb_sram_dout[20]' is connected directly to output port 'data_out_re[4]'. (LINT-31)
+Warning: In design 'fft_processor_top', output port 'tb_sram_dout[19]' is connected directly to output port 'data_out_re[3]'. (LINT-31)
+Warning: In design 'fft_processor_top', output port 'tb_sram_dout[18]' is connected directly to output port 'data_out_re[2]'. (LINT-31)
+Warning: In design 'fft_processor_top', output port 'tb_sram_dout[17]' is connected directly to output port 'data_out_re[1]'. (LINT-31)
+Warning: In design 'fft_processor_top', output port 'tb_sram_dout[16]' is connected directly to output port 'data_out_re[0]'. (LINT-31)
+Warning: In design 'fft_processor_top', output port 'tb_sram_dout[15]' is connected directly to output port 'data_out_im[15]'. (LINT-31)
+Warning: In design 'fft_processor_top', output port 'tb_sram_dout[14]' is connected directly to output port 'data_out_im[14]'. (LINT-31)
+Warning: In design 'fft_processor_top', output port 'tb_sram_dout[13]' is connected directly to output port 'data_out_im[13]'. (LINT-31)
+Warning: In design 'fft_processor_top', output port 'tb_sram_dout[12]' is connected directly to output port 'data_out_im[12]'. (LINT-31)
+Warning: In design 'fft_processor_top', output port 'tb_sram_dout[11]' is connected directly to output port 'data_out_im[11]'. (LINT-31)
+Warning: In design 'fft_processor_top', output port 'tb_sram_dout[10]' is connected directly to output port 'data_out_im[10]'. (LINT-31)
+Warning: In design 'fft_processor_top', output port 'tb_sram_dout[9]' is connected directly to output port 'data_out_im[9]'. (LINT-31)
+Warning: In design 'fft_processor_top', output port 'tb_sram_dout[8]' is connected directly to output port 'data_out_im[8]'. (LINT-31)
+Warning: In design 'fft_processor_top', output port 'tb_sram_dout[7]' is connected directly to output port 'data_out_im[7]'. (LINT-31)
+Warning: In design 'fft_processor_top', output port 'tb_sram_dout[6]' is connected directly to output port 'data_out_im[6]'. (LINT-31)
+Warning: In design 'fft_processor_top', output port 'tb_sram_dout[5]' is connected directly to output port 'data_out_im[5]'. (LINT-31)
+Warning: In design 'fft_processor_top', output port 'tb_sram_dout[4]' is connected directly to output port 'data_out_im[4]'. (LINT-31)
+Warning: In design 'fft_processor_top', output port 'tb_sram_dout[3]' is connected directly to output port 'data_out_im[3]'. (LINT-31)
+Warning: In design 'fft_processor_top', output port 'tb_sram_dout[2]' is connected directly to output port 'data_out_im[2]'. (LINT-31)
+Warning: In design 'fft_processor_top', output port 'tb_sram_dout[1]' is connected directly to output port 'data_out_im[1]'. (LINT-31)
+Warning: In design 'fft_processor_top', output port 'tb_sram_dout[0]' is connected directly to output port 'data_out_im[0]'. (LINT-31)
+Warning: In design 'twiddle_rom', output port 'dout[31]' is connected directly to output port 'ext_dout[31]'. (LINT-31)
+Warning: In design 'twiddle_rom', output port 'dout[30]' is connected directly to output port 'ext_dout[30]'. (LINT-31)
+Warning: In design 'twiddle_rom', output port 'dout[29]' is connected directly to output port 'ext_dout[29]'. (LINT-31)
+Warning: In design 'twiddle_rom', output port 'dout[28]' is connected directly to output port 'ext_dout[28]'. (LINT-31)
+Warning: In design 'twiddle_rom', output port 'dout[27]' is connected directly to output port 'ext_dout[27]'. (LINT-31)
+Warning: In design 'twiddle_rom', output port 'dout[26]' is connected directly to output port 'ext_dout[26]'. (LINT-31)
+Warning: In design 'twiddle_rom', output port 'dout[25]' is connected directly to output port 'ext_dout[25]'. (LINT-31)
+Warning: In design 'twiddle_rom', output port 'dout[24]' is connected directly to output port 'ext_dout[24]'. (LINT-31)
+Warning: In design 'twiddle_rom', output port 'dout[23]' is connected directly to output port 'ext_dout[23]'. (LINT-31)
+Warning: In design 'twiddle_rom', output port 'dout[22]' is connected directly to output port 'ext_dout[22]'. (LINT-31)
+Warning: In design 'twiddle_rom', output port 'dout[21]' is connected directly to output port 'ext_dout[21]'. (LINT-31)
+Warning: In design 'twiddle_rom', output port 'dout[20]' is connected directly to output port 'ext_dout[20]'. (LINT-31)
+Warning: In design 'twiddle_rom', output port 'dout[19]' is connected directly to output port 'ext_dout[19]'. (LINT-31)
+Warning: In design 'twiddle_rom', output port 'dout[18]' is connected directly to output port 'ext_dout[18]'. (LINT-31)
+Warning: In design 'twiddle_rom', output port 'dout[17]' is connected directly to output port 'ext_dout[17]'. (LINT-31)
+Warning: In design 'twiddle_rom', output port 'dout[16]' is connected directly to output port 'ext_dout[16]'. (LINT-31)
+Warning: In design 'twiddle_rom', output port 'dout[15]' is connected directly to output port 'ext_dout[15]'. (LINT-31)
+Warning: In design 'twiddle_rom', output port 'dout[14]' is connected directly to output port 'ext_dout[14]'. (LINT-31)
+Warning: In design 'twiddle_rom', output port 'dout[13]' is connected directly to output port 'ext_dout[13]'. (LINT-31)
+Warning: In design 'twiddle_rom', output port 'dout[12]' is connected directly to output port 'ext_dout[12]'. (LINT-31)
+Warning: In design 'twiddle_rom', output port 'dout[11]' is connected directly to output port 'ext_dout[11]'. (LINT-31)
+Warning: In design 'twiddle_rom', output port 'dout[10]' is connected directly to output port 'ext_dout[10]'. (LINT-31)
+Warning: In design 'twiddle_rom', output port 'dout[9]' is connected directly to output port 'ext_dout[9]'. (LINT-31)
+Warning: In design 'twiddle_rom', output port 'dout[8]' is connected directly to output port 'ext_dout[8]'. (LINT-31)
+Warning: In design 'twiddle_rom', output port 'dout[7]' is connected directly to output port 'ext_dout[7]'. (LINT-31)
+Warning: In design 'twiddle_rom', output port 'dout[6]' is connected directly to output port 'ext_dout[6]'. (LINT-31)
+Warning: In design 'twiddle_rom', output port 'dout[5]' is connected directly to output port 'ext_dout[5]'. (LINT-31)
+Warning: In design 'twiddle_rom', output port 'dout[4]' is connected directly to output port 'ext_dout[4]'. (LINT-31)
+Warning: In design 'twiddle_rom', output port 'dout[3]' is connected directly to output port 'ext_dout[3]'. (LINT-31)
+Warning: In design 'twiddle_rom', output port 'dout[2]' is connected directly to output port 'ext_dout[2]'. (LINT-31)
+Warning: In design 'twiddle_rom', output port 'dout[1]' is connected directly to output port 'ext_dout[1]'. (LINT-31)
+Warning: In design 'twiddle_rom', output port 'dout[0]' is connected directly to output port 'ext_dout[0]'. (LINT-31)
+1
+# Set current design
+current_design $top_level
+Current design is 'fft_processor_top'.
+{fft_processor_top}
+check_design
+ 
+****************************************
+check_design summary:
+Version:     U-2022.12-SP7
+Date:        Thu Apr 16 20:57:12 2026
+****************************************
+
+                   Name                                            Total
+--------------------------------------------------------------------------------
+Inputs/Outputs                                                     65
+    Unconnected ports (LINT-28)                                     1
+    Shorted outputs (LINT-31)                                      64
+
+Cells                                                               4
+    Cells do not drive (LINT-1)                                     4
+--------------------------------------------------------------------------------
+
+Warning: In design 'fft_controller', cell 'C530' does not drive any nets. (LINT-1)
+Warning: In design 'fft_controller', cell 'C542' does not drive any nets. (LINT-1)
+Warning: In design 'fft_controller', cell 'C543' does not drive any nets. (LINT-1)
+Warning: In design 'fft_controller', cell 'C544' does not drive any nets. (LINT-1)
+Warning: In design 'butterfly_unit', port 'clk' is not connected to any nets. (LINT-28)
+Warning: In design 'fft_processor_top', output port 'tb_sram_dout[31]' is connected directly to output port 'data_out_re[15]'. (LINT-31)
+Warning: In design 'fft_processor_top', output port 'tb_sram_dout[30]' is connected directly to output port 'data_out_re[14]'. (LINT-31)
+Warning: In design 'fft_processor_top', output port 'tb_sram_dout[29]' is connected directly to output port 'data_out_re[13]'. (LINT-31)
+Warning: In design 'fft_processor_top', output port 'tb_sram_dout[28]' is connected directly to output port 'data_out_re[12]'. (LINT-31)
+Warning: In design 'fft_processor_top', output port 'tb_sram_dout[27]' is connected directly to output port 'data_out_re[11]'. (LINT-31)
+Warning: In design 'fft_processor_top', output port 'tb_sram_dout[26]' is connected directly to output port 'data_out_re[10]'. (LINT-31)
+Warning: In design 'fft_processor_top', output port 'tb_sram_dout[25]' is connected directly to output port 'data_out_re[9]'. (LINT-31)
+Warning: In design 'fft_processor_top', output port 'tb_sram_dout[24]' is connected directly to output port 'data_out_re[8]'. (LINT-31)
+Warning: In design 'fft_processor_top', output port 'tb_sram_dout[23]' is connected directly to output port 'data_out_re[7]'. (LINT-31)
+Warning: In design 'fft_processor_top', output port 'tb_sram_dout[22]' is connected directly to output port 'data_out_re[6]'. (LINT-31)
+Warning: In design 'fft_processor_top', output port 'tb_sram_dout[21]' is connected directly to output port 'data_out_re[5]'. (LINT-31)
+Warning: In design 'fft_processor_top', output port 'tb_sram_dout[20]' is connected directly to output port 'data_out_re[4]'. (LINT-31)
+Warning: In design 'fft_processor_top', output port 'tb_sram_dout[19]' is connected directly to output port 'data_out_re[3]'. (LINT-31)
+Warning: In design 'fft_processor_top', output port 'tb_sram_dout[18]' is connected directly to output port 'data_out_re[2]'. (LINT-31)
+Warning: In design 'fft_processor_top', output port 'tb_sram_dout[17]' is connected directly to output port 'data_out_re[1]'. (LINT-31)
+Warning: In design 'fft_processor_top', output port 'tb_sram_dout[16]' is connected directly to output port 'data_out_re[0]'. (LINT-31)
+Warning: In design 'fft_processor_top', output port 'tb_sram_dout[15]' is connected directly to output port 'data_out_im[15]'. (LINT-31)
+Warning: In design 'fft_processor_top', output port 'tb_sram_dout[14]' is connected directly to output port 'data_out_im[14]'. (LINT-31)
+Warning: In design 'fft_processor_top', output port 'tb_sram_dout[13]' is connected directly to output port 'data_out_im[13]'. (LINT-31)
+Warning: In design 'fft_processor_top', output port 'tb_sram_dout[12]' is connected directly to output port 'data_out_im[12]'. (LINT-31)
+Warning: In design 'fft_processor_top', output port 'tb_sram_dout[11]' is connected directly to output port 'data_out_im[11]'. (LINT-31)
+Warning: In design 'fft_processor_top', output port 'tb_sram_dout[10]' is connected directly to output port 'data_out_im[10]'. (LINT-31)
+Warning: In design 'fft_processor_top', output port 'tb_sram_dout[9]' is connected directly to output port 'data_out_im[9]'. (LINT-31)
+Warning: In design 'fft_processor_top', output port 'tb_sram_dout[8]' is connected directly to output port 'data_out_im[8]'. (LINT-31)
+Warning: In design 'fft_processor_top', output port 'tb_sram_dout[7]' is connected directly to output port 'data_out_im[7]'. (LINT-31)
+Warning: In design 'fft_processor_top', output port 'tb_sram_dout[6]' is connected directly to output port 'data_out_im[6]'. (LINT-31)
+Warning: In design 'fft_processor_top', output port 'tb_sram_dout[5]' is connected directly to output port 'data_out_im[5]'. (LINT-31)
+Warning: In design 'fft_processor_top', output port 'tb_sram_dout[4]' is connected directly to output port 'data_out_im[4]'. (LINT-31)
+Warning: In design 'fft_processor_top', output port 'tb_sram_dout[3]' is connected directly to output port 'data_out_im[3]'. (LINT-31)
+Warning: In design 'fft_processor_top', output port 'tb_sram_dout[2]' is connected directly to output port 'data_out_im[2]'. (LINT-31)
+Warning: In design 'fft_processor_top', output port 'tb_sram_dout[1]' is connected directly to output port 'data_out_im[1]'. (LINT-31)
+Warning: In design 'fft_processor_top', output port 'tb_sram_dout[0]' is connected directly to output port 'data_out_im[0]'. (LINT-31)
+Warning: In design 'twiddle_rom', output port 'dout[31]' is connected directly to output port 'ext_dout[31]'. (LINT-31)
+Warning: In design 'twiddle_rom', output port 'dout[30]' is connected directly to output port 'ext_dout[30]'. (LINT-31)
+Warning: In design 'twiddle_rom', output port 'dout[29]' is connected directly to output port 'ext_dout[29]'. (LINT-31)
+Warning: In design 'twiddle_rom', output port 'dout[28]' is connected directly to output port 'ext_dout[28]'. (LINT-31)
+Warning: In design 'twiddle_rom', output port 'dout[27]' is connected directly to output port 'ext_dout[27]'. (LINT-31)
+Warning: In design 'twiddle_rom', output port 'dout[26]' is connected directly to output port 'ext_dout[26]'. (LINT-31)
+Warning: In design 'twiddle_rom', output port 'dout[25]' is connected directly to output port 'ext_dout[25]'. (LINT-31)
+Warning: In design 'twiddle_rom', output port 'dout[24]' is connected directly to output port 'ext_dout[24]'. (LINT-31)
+Warning: In design 'twiddle_rom', output port 'dout[23]' is connected directly to output port 'ext_dout[23]'. (LINT-31)
+Warning: In design 'twiddle_rom', output port 'dout[22]' is connected directly to output port 'ext_dout[22]'. (LINT-31)
+Warning: In design 'twiddle_rom', output port 'dout[21]' is connected directly to output port 'ext_dout[21]'. (LINT-31)
+Warning: In design 'twiddle_rom', output port 'dout[20]' is connected directly to output port 'ext_dout[20]'. (LINT-31)
+Warning: In design 'twiddle_rom', output port 'dout[19]' is connected directly to output port 'ext_dout[19]'. (LINT-31)
+Warning: In design 'twiddle_rom', output port 'dout[18]' is connected directly to output port 'ext_dout[18]'. (LINT-31)
+Warning: In design 'twiddle_rom', output port 'dout[17]' is connected directly to output port 'ext_dout[17]'. (LINT-31)
+Warning: In design 'twiddle_rom', output port 'dout[16]' is connected directly to output port 'ext_dout[16]'. (LINT-31)
+Warning: In design 'twiddle_rom', output port 'dout[15]' is connected directly to output port 'ext_dout[15]'. (LINT-31)
+Warning: In design 'twiddle_rom', output port 'dout[14]' is connected directly to output port 'ext_dout[14]'. (LINT-31)
+Warning: In design 'twiddle_rom', output port 'dout[13]' is connected directly to output port 'ext_dout[13]'. (LINT-31)
+Warning: In design 'twiddle_rom', output port 'dout[12]' is connected directly to output port 'ext_dout[12]'. (LINT-31)
+Warning: In design 'twiddle_rom', output port 'dout[11]' is connected directly to output port 'ext_dout[11]'. (LINT-31)
+Warning: In design 'twiddle_rom', output port 'dout[10]' is connected directly to output port 'ext_dout[10]'. (LINT-31)
+Warning: In design 'twiddle_rom', output port 'dout[9]' is connected directly to output port 'ext_dout[9]'. (LINT-31)
+Warning: In design 'twiddle_rom', output port 'dout[8]' is connected directly to output port 'ext_dout[8]'. (LINT-31)
+Warning: In design 'twiddle_rom', output port 'dout[7]' is connected directly to output port 'ext_dout[7]'. (LINT-31)
+Warning: In design 'twiddle_rom', output port 'dout[6]' is connected directly to output port 'ext_dout[6]'. (LINT-31)
+Warning: In design 'twiddle_rom', output port 'dout[5]' is connected directly to output port 'ext_dout[5]'. (LINT-31)
+Warning: In design 'twiddle_rom', output port 'dout[4]' is connected directly to output port 'ext_dout[4]'. (LINT-31)
+Warning: In design 'twiddle_rom', output port 'dout[3]' is connected directly to output port 'ext_dout[3]'. (LINT-31)
+Warning: In design 'twiddle_rom', output port 'dout[2]' is connected directly to output port 'ext_dout[2]'. (LINT-31)
+Warning: In design 'twiddle_rom', output port 'dout[1]' is connected directly to output port 'ext_dout[1]'. (LINT-31)
+Warning: In design 'twiddle_rom', output port 'dout[0]' is connected directly to output port 'ext_dout[0]'. (LINT-31)
+1
+#########################################
+# Design Constraints                    #
+#########################################
+set_max_capacitance 0.005 [all_inputs]
+1
+set_max_fanout 4 [all_inputs]
+1
+set_max_fanout 4 $top_level
+1
+set_fix_multiple_port_nets -all -buffer_constants
+1
+check_design
+ 
+****************************************
+check_design summary:
+Version:     U-2022.12-SP7
+Date:        Thu Apr 16 20:57:12 2026
+****************************************
+
+                   Name                                            Total
+--------------------------------------------------------------------------------
+Inputs/Outputs                                                     65
+    Unconnected ports (LINT-28)                                     1
+    Shorted outputs (LINT-31)                                      64
+
+Cells                                                               4
+    Cells do not drive (LINT-1)                                     4
+--------------------------------------------------------------------------------
+
+Warning: In design 'fft_controller', cell 'C530' does not drive any nets. (LINT-1)
+Warning: In design 'fft_controller', cell 'C542' does not drive any nets. (LINT-1)
+Warning: In design 'fft_controller', cell 'C543' does not drive any nets. (LINT-1)
+Warning: In design 'fft_controller', cell 'C544' does not drive any nets. (LINT-1)
+Warning: In design 'butterfly_unit', port 'clk' is not connected to any nets. (LINT-28)
+Warning: In design 'fft_processor_top', output port 'tb_sram_dout[31]' is connected directly to output port 'data_out_re[15]'. (LINT-31)
+Warning: In design 'fft_processor_top', output port 'tb_sram_dout[30]' is connected directly to output port 'data_out_re[14]'. (LINT-31)
+Warning: In design 'fft_processor_top', output port 'tb_sram_dout[29]' is connected directly to output port 'data_out_re[13]'. (LINT-31)
+Warning: In design 'fft_processor_top', output port 'tb_sram_dout[28]' is connected directly to output port 'data_out_re[12]'. (LINT-31)
+Warning: In design 'fft_processor_top', output port 'tb_sram_dout[27]' is connected directly to output port 'data_out_re[11]'. (LINT-31)
+Warning: In design 'fft_processor_top', output port 'tb_sram_dout[26]' is connected directly to output port 'data_out_re[10]'. (LINT-31)
+Warning: In design 'fft_processor_top', output port 'tb_sram_dout[25]' is connected directly to output port 'data_out_re[9]'. (LINT-31)
+Warning: In design 'fft_processor_top', output port 'tb_sram_dout[24]' is connected directly to output port 'data_out_re[8]'. (LINT-31)
+Warning: In design 'fft_processor_top', output port 'tb_sram_dout[23]' is connected directly to output port 'data_out_re[7]'. (LINT-31)
+Warning: In design 'fft_processor_top', output port 'tb_sram_dout[22]' is connected directly to output port 'data_out_re[6]'. (LINT-31)
+Warning: In design 'fft_processor_top', output port 'tb_sram_dout[21]' is connected directly to output port 'data_out_re[5]'. (LINT-31)
+Warning: In design 'fft_processor_top', output port 'tb_sram_dout[20]' is connected directly to output port 'data_out_re[4]'. (LINT-31)
+Warning: In design 'fft_processor_top', output port 'tb_sram_dout[19]' is connected directly to output port 'data_out_re[3]'. (LINT-31)
+Warning: In design 'fft_processor_top', output port 'tb_sram_dout[18]' is connected directly to output port 'data_out_re[2]'. (LINT-31)
+Warning: In design 'fft_processor_top', output port 'tb_sram_dout[17]' is connected directly to output port 'data_out_re[1]'. (LINT-31)
+Warning: In design 'fft_processor_top', output port 'tb_sram_dout[16]' is connected directly to output port 'data_out_re[0]'. (LINT-31)
+Warning: In design 'fft_processor_top', output port 'tb_sram_dout[15]' is connected directly to output port 'data_out_im[15]'. (LINT-31)
+Warning: In design 'fft_processor_top', output port 'tb_sram_dout[14]' is connected directly to output port 'data_out_im[14]'. (LINT-31)
+Warning: In design 'fft_processor_top', output port 'tb_sram_dout[13]' is connected directly to output port 'data_out_im[13]'. (LINT-31)
+Warning: In design 'fft_processor_top', output port 'tb_sram_dout[12]' is connected directly to output port 'data_out_im[12]'. (LINT-31)
+Warning: In design 'fft_processor_top', output port 'tb_sram_dout[11]' is connected directly to output port 'data_out_im[11]'. (LINT-31)
+Warning: In design 'fft_processor_top', output port 'tb_sram_dout[10]' is connected directly to output port 'data_out_im[10]'. (LINT-31)
+Warning: In design 'fft_processor_top', output port 'tb_sram_dout[9]' is connected directly to output port 'data_out_im[9]'. (LINT-31)
+Warning: In design 'fft_processor_top', output port 'tb_sram_dout[8]' is connected directly to output port 'data_out_im[8]'. (LINT-31)
+Warning: In design 'fft_processor_top', output port 'tb_sram_dout[7]' is connected directly to output port 'data_out_im[7]'. (LINT-31)
+Warning: In design 'fft_processor_top', output port 'tb_sram_dout[6]' is connected directly to output port 'data_out_im[6]'. (LINT-31)
+Warning: In design 'fft_processor_top', output port 'tb_sram_dout[5]' is connected directly to output port 'data_out_im[5]'. (LINT-31)
+Warning: In design 'fft_processor_top', output port 'tb_sram_dout[4]' is connected directly to output port 'data_out_im[4]'. (LINT-31)
+Warning: In design 'fft_processor_top', output port 'tb_sram_dout[3]' is connected directly to output port 'data_out_im[3]'. (LINT-31)
+Warning: In design 'fft_processor_top', output port 'tb_sram_dout[2]' is connected directly to output port 'data_out_im[2]'. (LINT-31)
+Warning: In design 'fft_processor_top', output port 'tb_sram_dout[1]' is connected directly to output port 'data_out_im[1]'. (LINT-31)
+Warning: In design 'fft_processor_top', output port 'tb_sram_dout[0]' is connected directly to output port 'data_out_im[0]'. (LINT-31)
+Warning: In design 'twiddle_rom', output port 'dout[31]' is connected directly to output port 'ext_dout[31]'. (LINT-31)
+Warning: In design 'twiddle_rom', output port 'dout[30]' is connected directly to output port 'ext_dout[30]'. (LINT-31)
+Warning: In design 'twiddle_rom', output port 'dout[29]' is connected directly to output port 'ext_dout[29]'. (LINT-31)
+Warning: In design 'twiddle_rom', output port 'dout[28]' is connected directly to output port 'ext_dout[28]'. (LINT-31)
+Warning: In design 'twiddle_rom', output port 'dout[27]' is connected directly to output port 'ext_dout[27]'. (LINT-31)
+Warning: In design 'twiddle_rom', output port 'dout[26]' is connected directly to output port 'ext_dout[26]'. (LINT-31)
+Warning: In design 'twiddle_rom', output port 'dout[25]' is connected directly to output port 'ext_dout[25]'. (LINT-31)
+Warning: In design 'twiddle_rom', output port 'dout[24]' is connected directly to output port 'ext_dout[24]'. (LINT-31)
+Warning: In design 'twiddle_rom', output port 'dout[23]' is connected directly to output port 'ext_dout[23]'. (LINT-31)
+Warning: In design 'twiddle_rom', output port 'dout[22]' is connected directly to output port 'ext_dout[22]'. (LINT-31)
+Warning: In design 'twiddle_rom', output port 'dout[21]' is connected directly to output port 'ext_dout[21]'. (LINT-31)
+Warning: In design 'twiddle_rom', output port 'dout[20]' is connected directly to output port 'ext_dout[20]'. (LINT-31)
+Warning: In design 'twiddle_rom', output port 'dout[19]' is connected directly to output port 'ext_dout[19]'. (LINT-31)
+Warning: In design 'twiddle_rom', output port 'dout[18]' is connected directly to output port 'ext_dout[18]'. (LINT-31)
+Warning: In design 'twiddle_rom', output port 'dout[17]' is connected directly to output port 'ext_dout[17]'. (LINT-31)
+Warning: In design 'twiddle_rom', output port 'dout[16]' is connected directly to output port 'ext_dout[16]'. (LINT-31)
+Warning: In design 'twiddle_rom', output port 'dout[15]' is connected directly to output port 'ext_dout[15]'. (LINT-31)
+Warning: In design 'twiddle_rom', output port 'dout[14]' is connected directly to output port 'ext_dout[14]'. (LINT-31)
+Warning: In design 'twiddle_rom', output port 'dout[13]' is connected directly to output port 'ext_dout[13]'. (LINT-31)
+Warning: In design 'twiddle_rom', output port 'dout[12]' is connected directly to output port 'ext_dout[12]'. (LINT-31)
+Warning: In design 'twiddle_rom', output port 'dout[11]' is connected directly to output port 'ext_dout[11]'. (LINT-31)
+Warning: In design 'twiddle_rom', output port 'dout[10]' is connected directly to output port 'ext_dout[10]'. (LINT-31)
+Warning: In design 'twiddle_rom', output port 'dout[9]' is connected directly to output port 'ext_dout[9]'. (LINT-31)
+Warning: In design 'twiddle_rom', output port 'dout[8]' is connected directly to output port 'ext_dout[8]'. (LINT-31)
+Warning: In design 'twiddle_rom', output port 'dout[7]' is connected directly to output port 'ext_dout[7]'. (LINT-31)
+Warning: In design 'twiddle_rom', output port 'dout[6]' is connected directly to output port 'ext_dout[6]'. (LINT-31)
+Warning: In design 'twiddle_rom', output port 'dout[5]' is connected directly to output port 'ext_dout[5]'. (LINT-31)
+Warning: In design 'twiddle_rom', output port 'dout[4]' is connected directly to output port 'ext_dout[4]'. (LINT-31)
+Warning: In design 'twiddle_rom', output port 'dout[3]' is connected directly to output port 'ext_dout[3]'. (LINT-31)
+Warning: In design 'twiddle_rom', output port 'dout[2]' is connected directly to output port 'ext_dout[2]'. (LINT-31)
+Warning: In design 'twiddle_rom', output port 'dout[1]' is connected directly to output port 'ext_dout[1]'. (LINT-31)
+Warning: In design 'twiddle_rom', output port 'dout[0]' is connected directly to output port 'ext_dout[0]'. (LINT-31)
+1
+# Timing constraints
+source -verbose "./timing.tcl"
+0.02
+4.0
+0.1
+0.06
+0.02
+0.02
+0.002
+clk
+clk
+rst_n
+rst_n
+1
+1
+1
+1
+1
+1
+Warning: Design rule attributes from the driving cell will be set on the port 'clk'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'rst_n'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'start'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'data_in_re[15]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'data_in_re[14]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'data_in_re[13]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'data_in_re[12]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'data_in_re[11]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'data_in_re[10]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'data_in_re[9]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'data_in_re[8]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'data_in_re[7]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'data_in_re[6]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'data_in_re[5]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'data_in_re[4]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'data_in_re[3]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'data_in_re[2]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'data_in_re[1]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'data_in_re[0]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'tb_io_mode'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'tb_skip_load'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'tb_sram_we'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'tb_sram_addr[9]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'tb_sram_addr[8]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'tb_sram_addr[7]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'tb_sram_addr[6]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'tb_sram_addr[5]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'tb_sram_addr[4]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'tb_sram_addr[3]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'tb_sram_addr[2]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'tb_sram_addr[1]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'tb_sram_addr[0]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'tb_sram_din[31]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'tb_sram_din[30]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'tb_sram_din[29]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'tb_sram_din[28]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'tb_sram_din[27]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'tb_sram_din[26]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'tb_sram_din[25]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'tb_sram_din[24]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'tb_sram_din[23]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'tb_sram_din[22]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'tb_sram_din[21]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'tb_sram_din[20]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'tb_sram_din[19]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'tb_sram_din[18]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'tb_sram_din[17]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'tb_sram_din[16]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'tb_sram_din[15]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'tb_sram_din[14]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'tb_sram_din[13]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'tb_sram_din[12]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'tb_sram_din[11]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'tb_sram_din[10]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'tb_sram_din[9]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'tb_sram_din[8]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'tb_sram_din[7]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'tb_sram_din[6]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'tb_sram_din[5]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'tb_sram_din[4]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'tb_sram_din[3]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'tb_sram_din[2]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'tb_sram_din[1]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'tb_sram_din[0]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'tb_twiddle_we'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'tb_twiddle_addr[8]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'tb_twiddle_addr[7]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'tb_twiddle_addr[6]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'tb_twiddle_addr[5]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'tb_twiddle_addr[4]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'tb_twiddle_addr[3]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'tb_twiddle_addr[2]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'tb_twiddle_addr[1]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'tb_twiddle_addr[0]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'tb_twiddle_din[31]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'tb_twiddle_din[30]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'tb_twiddle_din[29]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'tb_twiddle_din[28]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'tb_twiddle_din[27]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'tb_twiddle_din[26]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'tb_twiddle_din[25]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'tb_twiddle_din[24]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'tb_twiddle_din[23]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'tb_twiddle_din[22]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'tb_twiddle_din[21]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'tb_twiddle_din[20]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'tb_twiddle_din[19]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'tb_twiddle_din[18]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'tb_twiddle_din[17]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'tb_twiddle_din[16]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'tb_twiddle_din[15]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'tb_twiddle_din[14]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'tb_twiddle_din[13]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'tb_twiddle_din[12]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'tb_twiddle_din[11]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'tb_twiddle_din[10]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'tb_twiddle_din[9]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'tb_twiddle_din[8]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'tb_twiddle_din[7]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'tb_twiddle_din[6]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'tb_twiddle_din[5]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'tb_twiddle_din[4]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'tb_twiddle_din[3]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'tb_twiddle_din[2]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'tb_twiddle_din[1]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'tb_twiddle_din[0]'. (UID-401)
+1
+1
+1
+1
+1
+1
+1
+#########################################
+# Compile                               #
+#########################################
+current_design $top_level
+Current design is 'fft_processor_top'.
+{fft_processor_top}
+link
+
+  Linking design 'fft_processor_top'
+  Using the following designs and libraries:
+  --------------------------------------------------------------------------
+  * (5 designs)               /homes/user/stud/fall25/tl3468/ee6321/dc/fft/fft_processor_top.db, etc
+  tcbn65gplustc_ccs (library) /courses/ee6350/pdk2025/tcbn65gplus/TSMCHOME/digital/Front_End/timing_power_noise/CCS/tcbn65gplus_200a/tcbn65gplustc_ccs.db
+  dw_foundation.sldb (library)
+                              /tools/synopsys/syn/U-2022.12-SP7/libraries/syn/dw_foundation.sldb
+  USERLIB_nldm_tt_1p00v_1p00v_25c (library)
+                              /homes/user/stud/fall25/tl3468/ee6321/memory_compiler/sram00/sram00_libs/sram00_nldm_tt_1p00v_1p00v_25c_syn.db
+  USERLIB_nldm_tt_1p00v_1p00v_25c (library)
+                              /homes/user/stud/fall25/tl3468/ee6321/memory_compiler/sram01/sram01_libs/sram01_nldm_tt_1p00v_1p00v_25c_syn.db
+
+1
+compile
+CPU Load: 1%, Ram Free: 43 GB, Swap Free: 31 GB, Work Disk Free: 6397 GB, Tmp Disk Free: 31 GB
+Information: Checking out the license 'DesignWare'. (SEC-104)
+Information: Evaluating DesignWare library utilization. (UISN-27)
+
+============================================================================
+| DesignWare Building Block Library  |         Version         | Available |
+============================================================================
+| Basic DW Building Blocks           | U-2022.12-DWBB_202212.5 |     *     |
+| Licensed DW Building Blocks        | U-2022.12-DWBB_202212.5 |     *     |
+============================================================================
+
+====================================================================================================
+| Flow Information                                                                                 |
+----------------------------------------------------------------------------------------------------
+| Flow         | Design Compiler                                                                   |
+====================================================================================================
+| Design Information                                      | Value                                  |
+====================================================================================================
+| Number of Scenarios                                     | 0                                      |
+| Leaf Cell Count                                         | 392                                    |
+| Number of User Hierarchies                              | 4                                      |
+| Sequential Cell Count                                   | 175                                    |
+| Macro Count                                             | 0                                      |
+| Number of Power Domains                                 | 0                                      |
+| Number of Path Groups                                   | 2                                      |
+| Number of VT Class                                      | 0                                      |
+| Number of Clocks                                        | 1                                      |
+| Number of Dont Touch Cells                              | 63                                     |
+| Number of Dont Touch Nets                               | 7                                      |
+| Number of Size Only Cells                               | 0                                      |
+| Design with UPF Data                                    | false                                  |
+----------------------------------------------------------------------------------------------------
+| Variables                                               | Value                                  |
+----------------------------------------------------------------------------------------------------
+| set_fix_multiple_port_nets                              | -all -buffer_constants                 |
+====================================================================================================
+
+Information: There are 69 potential problems in your design. Please run 'check_design' for more information. (LINT-99)
+
+
+
+  Beginning Pass 1 Mapping
+  ------------------------
+  Processing 'butterfly_unit'
+  Processing 'twiddle_rom'
+  Processing 'sram_1024x32'
+  Processing 'fft_controller'
+Information: Added key list 'DesignWare' to design 'fft_controller'. (DDB-72)
+  Processing 'fft_processor_top'
+
+  Updating timing information
+Information: Updating design information... (UID-85)
+
+  Beginning Implementation Selection
+  ----------------------------------
+  Processing 'butterfly_unit_DW01_add_0'
+  Processing 'butterfly_unit_DW01_add_1'
+  Processing 'fft_controller_DW01_inc_0_DW01_inc_1'
+  Processing 'fft_controller_DW01_inc_1_DW01_inc_2'
+  Processing 'fft_controller_DW01_inc_2_DW01_inc_3'
+  Mapping 'DW_leftsh'
+  Processing 'fft_controller_DW01_add_0_DW01_add_2'
+  Allocating blocks in 'DW_div_uns_a_width9_b_width10'
+  Allocating blocks in 'DW_div_a_width9_b_width10_tc_mode0_rem_mode1'
+  Processing 'fft_controller_DW_div_uns_0'
+  Mapping 'DW01_add'
+  Mapping 'DW01_add'
+  Mapping 'DW01_add'
+  Mapping 'DW01_add'
+  Mapping 'fft_controller_DW01_add_1'
+  Mapping 'fft_controller_DW01_add_2'
+  Mapping 'fft_controller_DW01_add_3'
+  Mapping 'fft_controller_DW01_add_4'
+  Processing 'fft_controller_DW_div_uns_1'
+  Mapping 'DW01_add'
+  Mapping 'DW01_add'
+  Mapping 'DW01_add'
+  Mapping 'DW01_add'
+  Mapping 'fft_controller_DW01_add_5'
+  Mapping 'fft_controller_DW01_add_6'
+  Mapping 'fft_controller_DW01_add_7'
+  Mapping 'fft_controller_DW01_add_8'
+  Mapping 'DW_rightsh'
+  Building model 'DW01_sub_width17' (rpl)
+Warning: The trip points for the library named USERLIB_nldm_tt_1p00v_1p00v_25c differ from those in the library named tcbn65gplustc_ccs. (TIM-164)
+Warning: The trip points for the library named USERLIB_nldm_tt_1p00v_1p00v_25c differ from those in the library named tcbn65gplustc_ccs. (TIM-164)
+  Processing 'DW01_sub_width17'
+  Building model 'DW01_add_width31' (rpl)
+  Processing 'DW01_add_width31'
+  Building model 'DW01_sub_width31' (rpl)
+  Processing 'DW01_sub_width31'
+  Building model 'DW01_add_width10' (rpl)
+  Processing 'DW01_add_width10'
+  Processing 'butterfly_unit_DW01_sub_0'
+  Processing 'butterfly_unit_DW01_add_2_DW01_add_3'
+  Mapping 'butterfly_unit_DW_mult_tc_0'
+  Mapping 'butterfly_unit_DW_mult_tc_1'
+  Mapping 'butterfly_unit_DW_mult_tc_2'
+  Mapping 'butterfly_unit_DW_mult_tc_3'
+  Processing 'butterfly_unit_DW01_sub_1'
+  Processing 'butterfly_unit_DW01_sub_2'
+  Processing 'fft_controller_DW01_add_9_DW01_add_4'
+  Mapping 'fft_controller_DW_mult_uns_0'
+Information: Command 'do_operand_isolation' is obsolete and is being ignored.  Please refer to the replacement command 'set power_enable_datapath_gating true' instead. (INFO-118)
+
+  Beginning Mapping Optimizations  (Medium effort)
+  -------------------------------
+  Allocating blocks in 'DW_div_uns_a_width9_b_width10'
+  Allocating blocks in 'DW_div_a_width9_b_width10_tc_mode0_rem_mode1'
+  Allocating blocks in 'DW_div_a_width9_b_width10_tc_mode0_rem_mode1'
+  Allocating blocks in 'DW_div_uns_a_width9_b_width10'
+  Allocating blocks in 'DW_div_a_width9_b_width10_tc_mode0_rem_mode1'
+  Allocating blocks in 'DW_div_a_width9_b_width10_tc_mode0_rem_mode1'
+  Mapping Optimization (Phase 1)
+
+                                  TOTAL                                                  
+   ELAPSED            WORST NEG   SETUP    DESIGN                              MIN DELAY 
+    TIME      AREA      SLACK     COST    RULE COST         ENDPOINT             COST    
+  --------- --------- --------- --------- --------- ------------------------- -----------
+    0:00:15  182113.0      1.65      48.1    2624.0                                0.00  
+    0:00:15  182113.0      1.65      48.1    2624.0                                0.00  
+Information: Command 'do_operand_isolation' is obsolete and is being ignored.  Please refer to the replacement command 'set power_enable_datapath_gating true' instead. (INFO-118)
+    0:00:19  186263.1      0.54      21.0    2178.7                                0.00  
+    0:00:19  186238.6      0.53      20.9    2178.7                                0.00  
+    0:00:19  186238.6      0.53      20.9    2178.7                                0.00  
+    0:00:19  186235.0      0.53      20.9    2178.7                                0.00  
+    0:00:19  186235.0      0.53      20.9    2178.7                                0.00  
+    0:00:21  162143.8      0.81      23.4    2173.0                                0.00  
+    0:00:22  161878.1      0.85      25.2    2173.0                                0.00  
+    0:00:22  161839.3      0.83      23.5    2168.0                                0.00  
+    0:00:23  161858.0      0.73      22.3    2165.0                                0.00  
+    0:00:23  161838.2      0.72      22.2    2165.0                                0.00  
+    0:00:23  161839.6      0.66      21.9    2163.0                                0.00  
+    0:00:23  161849.7      0.65      21.7    2163.0                                0.00  
+    0:00:23  161835.3      0.71      21.9    2163.0                                0.00  
+    0:00:23  161835.7      0.68      22.1    2163.0                                0.00  
+    0:00:24  161834.9      0.68      22.2    2163.0                                0.00  
+    0:00:24  161840.7      0.66      21.4    2155.0                                0.00  
+    0:00:24  161842.9      0.65      21.3    2155.0                                0.00  
+    0:00:24  161842.9      0.65      21.3    2155.0                                0.00  
+    0:00:24  161727.7      0.65      21.3    2155.0                                0.00  
+    0:00:24  161727.7      0.65      21.3    2155.0                                0.00  
+    0:00:25  161977.5      0.65      21.2    1840.0                                0.00  
+    0:00:26  162148.5      0.66      21.2    1630.0                                0.00  
+    0:00:26  162306.2      0.65      21.5    1442.0                                0.00  
+    0:00:27  162416.7      0.64      21.6    1294.0                                0.00  
+    0:00:27  162517.5      0.64      21.6    1187.0                                0.00  
+    0:00:28  162591.7      0.64      21.4    1098.0                                0.00  
+    0:00:28  162646.7      0.64      21.0    1020.0                                0.00  
+    0:00:28  162697.5      0.64      20.9     988.0                                0.00  
+    0:00:28  162715.5      0.64      20.9     975.0                                0.00  
+    0:00:28  162715.5      0.64      20.9     975.0                                0.00  
+    0:00:28  162732.4      0.57      19.9     978.0 u_sram/addr_b_q_reg[9]/D       0.00  
+    0:00:29  162752.6      0.54      19.4     981.0 u_sram/addr_b_q_reg[9]/D       0.00  
+    0:00:29  162755.8      0.52      18.8     981.0                                0.00  
+
+
+
+  Beginning Delay Optimization Phase
+  ----------------------------------
+
+                                  TOTAL                                                  
+   ELAPSED            WORST NEG   SETUP    DESIGN                              MIN DELAY 
+    TIME      AREA      SLACK     COST    RULE COST         ENDPOINT             COST    
+  --------- --------- --------- --------- --------- ------------------------- -----------
+    0:00:29  162755.8      0.52      18.8     981.0                                0.00  
+    0:00:29  162793.6      0.49      17.9     981.0 u_sram/addr_b_q_reg[9]/D       0.00  
+    0:00:29  162814.1      0.47      17.5     982.0 u_sram/addr_b_q_reg[9]/D       0.00  
+    0:00:29  162828.5      0.47      17.4     981.0 u_sram/addr_b_q_reg[9]/D       0.00  
+    0:00:29  162835.7      0.46      17.4     982.0 u_sram/addr_b_q_reg[9]/D       0.00  
+    0:00:30  162839.0      0.46      17.3     982.0 u_sram/addr_b_q_reg[9]/D       0.00  
+    0:00:30  162843.3      0.46      17.2     978.0 u_sram/addr_b_q_reg[9]/D       0.00  
+    0:00:30  162848.7      0.46      17.2     978.0 u_sram/addr_b_q_reg[9]/D       0.00  
+    0:00:30  162849.1      0.45      17.0     979.0 u_sram/addr_b_q_reg[9]/D       0.00  
+    0:00:30  162873.2      0.44      16.9     977.0 u_sram/addr_b_q_reg[9]/D       0.00  
+    0:00:30  162885.8      0.44      16.6     978.0 u_sram/addr_b_q_reg[9]/D       0.00  
+    0:00:30  162907.0      0.43      16.5     972.0 u_sram/addr_b_q_reg[9]/D       0.00  
+    0:00:31  162913.9      0.43      16.5     971.0 u_sram/addr_b_q_reg[9]/D       0.00  
+    0:00:31  162911.3      0.43      16.4     981.0 u_sram/addr_b_q_reg[9]/D       0.00  
+    0:00:31  162911.3      0.42      16.2     984.0 u_sram/addr_b_q_reg[9]/D       0.00  
+    0:00:31  162934.7      0.41      15.9     988.0 u_sram/addr_b_q_reg[9]/D       0.00  
+    0:00:31  162947.0      0.41      15.6     988.0 u_sram/addr_b_q_reg[9]/D       0.00  
+    0:00:31  162939.1      0.41      15.6     990.0 u_sram/addr_b_q_reg[9]/D       0.00  
+    0:00:31  162955.3      0.40      15.5     989.0 u_sram/addr_b_q_reg[9]/D       0.00  
+    0:00:31  162964.3      0.40      15.4     989.0 u_sram/addr_b_q_reg[9]/D       0.00  
+    0:00:31  162970.7      0.40      15.3     988.0 u_sram/addr_b_q_reg[9]/D       0.00  
+    0:00:32  162976.1      0.39      15.2     988.0 u_sram/addr_b_q_reg[9]/D       0.00  
+    0:00:32  162978.7      0.39      15.1     986.0 u_sram/addr_b_q_reg[9]/D       0.00  
+    0:00:32  162968.6      0.39      15.1     987.0 u_sram/addr_b_q_reg[9]/D       0.00  
+    0:00:32  162980.8      0.39      15.0     982.0 u_sram/addr_b_q_reg[9]/D       0.00  
+    0:00:32  162991.3      0.39      15.0     987.0 u_sram/addr_b_q_reg[9]/D       0.00  
+    0:00:32  162995.6      0.38      14.9     989.0 u_sram/addr_b_q_reg[9]/D       0.00  
+    0:00:32  162992.3      0.38      14.9     988.0 u_sram/addr_b_q_reg[9]/D       0.00  
+    0:00:32  162998.5      0.38      14.9     991.0 u_sram/addr_b_q_reg[9]/D       0.00  
+    0:00:32  163003.1      0.38      14.9     989.0 u_sram/addr_b_q_reg[9]/D       0.00  
+    0:00:32  163007.5      0.38      14.8     989.0 u_sram/addr_b_q_reg[9]/D       0.00  
+    0:00:32  163008.2      0.38      14.8     991.0 u_sram/addr_b_q_reg[9]/D       0.00  
+    0:00:33  163013.9      0.37      14.6     992.0 u_sram/addr_b_q_reg[9]/D       0.00  
+    0:00:33  163017.9      0.37      14.5     992.0 u_sram/addr_b_q_reg[9]/D       0.00  
+    0:00:33  163030.9      0.36      14.4     991.0 u_sram/addr_b_q_reg[9]/D       0.00  
+    0:00:33  163058.2      0.36      14.3     990.0 u_sram/addr_b_q_reg[9]/D       0.00  
+    0:00:33  163071.5      0.36      14.3     989.0 u_sram/addr_b_q_reg[9]/D       0.00  
+    0:00:33  163079.5      0.36      14.2     985.0 u_sram/addr_b_q_reg[9]/D       0.00  
+    0:00:33  163058.9      0.36      14.2     996.0 u_sram/addr_b_q_reg[9]/D       0.00  
+    0:00:34  163035.9      0.35      14.1    1007.0 u_sram/addr_b_q_reg[9]/D       0.00  
+    0:00:34  163048.9      0.35      14.0    1004.0 u_sram/addr_b_q_reg[9]/D       0.00  
+    0:00:34  163056.1      0.35      13.9    1003.0 u_sram/addr_b_q_reg[9]/D       0.00  
+    0:00:34  163064.0      0.34      13.8    1000.0 u_sram/addr_b_q_reg[9]/D       0.00  
+    0:00:34  163085.9      0.34      13.7    1000.0 u_sram/addr_b_q_reg[9]/D       0.00  
+    0:00:34  163079.8      0.34      13.6    1006.0 u_sram/addr_b_q_reg[9]/D       0.00  
+    0:00:34  163075.5      0.34      13.5    1001.0 u_sram/addr_b_q_reg[9]/D       0.00  
+    0:00:34  163074.1      0.34      13.4    1000.0 u_sram/addr_b_q_reg[9]/D       0.00  
+    0:00:35  163097.5      0.33      13.4    1001.0 u_sram/addr_b_q_reg[9]/D       0.00  
+    0:00:35  163098.9      0.33      13.4    1005.0 u_sram/addr_b_q_reg[9]/D       0.00  
+    0:00:35  163096.0      0.33      13.4    1005.0 u_sram/addr_b_q_reg[9]/D       0.00  
+    0:00:35  163097.8      0.33      13.3    1005.0 u_sram/addr_b_q_reg[9]/D       0.00  
+    0:00:35  163103.2      0.32      13.2    1007.0 u_sram/addr_b_q_reg[9]/D       0.00  
+    0:00:35  163098.9      0.32      13.2    1012.0 u_sram/addr_b_q_reg[9]/D       0.00  
+    0:00:35  163101.8      0.32      13.2    1012.0 u_sram/addr_b_q_reg[9]/D       0.00  
+    0:00:36  163097.5      0.32      13.1    1012.0 u_sram/addr_b_q_reg[9]/D       0.00  
+    0:00:36  163100.3      0.32      13.1    1012.0 u_sram/addr_b_q_reg[9]/D       0.00  
+    0:00:36  163099.6      0.32      13.1    1014.0 u_sram/addr_b_q_reg[9]/D       0.00  
+    0:00:36  163101.4      0.32      13.1    1014.0 u_sram/addr_b_q_reg[9]/D       0.00  
+    0:00:36  163098.9      0.32      13.1    1014.0 u_sram/addr_b_q_reg[9]/D       0.00  
+    0:00:36  163101.4      0.31      13.0    1012.0 u_sram/addr_b_q_reg[9]/D       0.00  
+    0:00:36  163110.8      0.31      13.0    1011.0 u_sram/addr_b_q_reg[9]/D       0.00  
+    0:00:36  163114.7      0.31      12.9    1011.0 u_sram/addr_b_q_reg[9]/D       0.00  
+    0:00:36  163114.0      0.31      12.9    1012.0 u_sram/addr_b_q_reg[9]/D       0.00  
+    0:00:37  163124.1      0.31      12.9    1012.0 u_sram/addr_b_q_reg[9]/D       0.00  
+    0:00:37  163124.1      0.31      12.9    1012.0 u_sram/addr_b_q_reg[9]/D       0.00  
+    0:00:37  163124.8      0.31      12.9    1013.0 u_sram/addr_b_q_reg[9]/D       0.00  
+    0:00:37  163135.3      0.31      12.8    1014.0 u_sram/addr_b_q_reg[9]/D       0.00  
+    0:00:37  163138.5      0.31      12.8    1015.0 u_sram/addr_b_q_reg[9]/D       0.00  
+    0:00:37  163137.4      0.31      12.8    1015.0 u_sram/addr_b_q_reg[9]/D       0.00  
+    0:00:37  163154.3      0.31      12.7    1019.0 u_sram/din_b_q_reg[30]/D       0.00  
+    0:00:37  163147.5      0.30      12.7    1019.0 u_sram/addr_b_q_reg[9]/D       0.00  
+    0:00:37  163152.5      0.30      12.7    1019.0 u_sram/din_b_q_reg[9]/D        0.00  
+    0:00:37  163154.7      0.30      12.6    1020.0 u_sram/addr_b_q_reg[9]/D       0.00  
+    0:00:37  163166.6      0.30      12.4    1020.0 u_sram/din_b_q_reg[30]/D       0.00  
+    0:00:37  163171.3      0.30      12.4    1017.0 u_sram/addr_b_q_reg[9]/D       0.00  
+    0:00:37  163166.2      0.30      12.4    1020.0 u_sram/addr_b_q_reg[9]/D       0.00  
+    0:00:37  163166.2      0.30      12.3    1020.0 u_sram/addr_b_q_reg[9]/D       0.00  
+    0:00:37  163175.9      0.30      12.3    1017.0 u_sram/addr_b_q_reg[9]/D       0.00  
+    0:00:37  163176.7      0.30      12.3    1015.0 u_sram/addr_b_q_reg[9]/D       0.00  
+    0:00:37  163189.6      0.29      12.3    1015.0 u_sram/addr_b_q_reg[9]/D       0.00  
+    0:00:38  163190.7      0.29      12.3    1018.0 u_sram/addr_b_q_reg[9]/D       0.00  
+    0:00:38  163192.1      0.29      12.2    1018.0 u_sram/addr_b_q_reg[9]/D       0.00  
+    0:00:38  163191.8      0.29      12.1    1016.0 u_sram/addr_b_q_reg[9]/D       0.00  
+    0:00:38  163202.2      0.29      12.1    1018.0 u_sram/addr_b_q_reg[9]/D       0.00  
+    0:00:38  163208.3      0.29      12.3    1012.0 u_sram/addr_b_q_reg[9]/D       0.00  
+    0:00:38  163219.9      0.29      12.2    1012.0 u_sram/addr_b_q_reg[9]/D       0.00  
+    0:00:38  163232.1      0.29      12.2    1010.0 u_sram/addr_b_q_reg[9]/D       0.00  
+    0:00:38  163244.3      0.29      11.9    1010.0 u_sram/addr_b_q_reg[9]/D       0.00  
+    0:00:38  163267.4      0.28      11.7    1010.0 u_sram/addr_b_q_reg[9]/D       0.00  
+    0:00:38  163266.7      0.28      11.7    1010.0 u_sram/addr_b_q_reg[9]/D       0.00  
+    0:00:38  163280.3      0.28      11.7    1010.0 u_sram/addr_b_q_reg[9]/D       0.00  
+    0:00:38  163290.1      0.27      11.5    1011.0 u_sram/din_b_q_reg[31]/D       0.00  
+    0:00:38  163294.0      0.27      11.5    1011.0 u_sram/addr_b_q_reg[9]/D       0.00  
+    0:00:38  163311.3      0.27      11.4    1008.0 u_sram/addr_b_q_reg[9]/D       0.00  
+    0:00:39  163321.4      0.27      11.4    1008.0 u_sram/addr_b_q_reg[9]/D       0.00  
+    0:00:39  163326.4      0.27      11.3    1008.0 u_sram/addr_b_q_reg[9]/D       0.00  
+    0:00:39  163344.4      0.27      11.3    1009.0 u_sram/addr_b_q_reg[9]/D       0.00  
+    0:00:39  163346.2      0.27      11.3    1009.0 u_sram/din_b_q_reg[14]/D       0.00  
+    0:00:39  163353.8      0.27      11.2    1008.0 u_sram/addr_b_q_reg[9]/D       0.00  
+    0:00:39  163357.7      0.27      11.2    1009.0 u_sram/addr_b_q_reg[9]/D       0.00  
+    0:00:39  163357.7      0.27      11.2    1009.0 u_sram/addr_b_q_reg[9]/D       0.00  
+    0:00:39  163360.3      0.27      11.2    1008.0 u_sram/addr_b_q_reg[9]/D       0.00  
+    0:00:39  163362.8      0.27      11.2    1005.0 u_sram/addr_b_q_reg[9]/D       0.00  
+    0:00:39  163368.5      0.26      11.1    1002.0 u_sram/addr_b_q_reg[9]/D       0.00  
+    0:00:39  163371.1      0.26      11.1    1002.0 u_sram/addr_b_q_reg[9]/D       0.00  
+    0:00:39  163373.6      0.26      11.1    1002.0 u_sram/addr_b_q_reg[9]/D       0.00  
+    0:00:39  163387.3      0.26      11.1    1003.0 u_sram/addr_b_q_reg[9]/D       0.00  
+    0:00:39  163384.4      0.26      11.1    1003.0 u_sram/addr_b_q_reg[9]/D       0.00  
+    0:00:39  163390.1      0.26      11.0    1002.0 u_sram/addr_b_q_reg[9]/D       0.00  
+    0:00:39  163385.1      0.26      11.0    1002.0 u_sram/addr_b_q_reg[9]/D       0.00  
+    0:00:40  163406.7      0.26      10.9    1002.0 u_sram/din_b_q_reg[15]/D       0.00  
+    0:00:40  163406.0      0.26      10.9    1000.0 u_sram/addr_b_q_reg[9]/D       0.00  
+    0:00:40  163412.5      0.26      10.8    1000.0 u_sram/addr_b_q_reg[9]/D       0.00  
+    0:00:40  163419.3      0.26      10.8    1000.0 u_sram/addr_b_q_reg[9]/D       0.00  
+    0:00:40  163422.2      0.26      10.8     999.0 u_sram/addr_b_q_reg[9]/D       0.00  
+    0:00:40  163424.0      0.26      10.8    1001.0 u_sram/addr_b_q_reg[9]/D       0.00  
+    0:00:40  163430.5      0.26      10.8     998.0 u_sram/addr_b_q_reg[9]/D       0.00  
+    0:00:40  163431.9      0.26      10.8     995.0 u_sram/addr_b_q_reg[9]/D       0.00  
+    0:00:40  163431.2      0.26      10.8     995.0 u_sram/addr_b_q_reg[9]/D       0.00  
+    0:00:40  163442.3      0.26      10.8     995.0 u_sram/addr_b_q_reg[9]/D       0.00  
+    0:00:40  163445.6      0.26      10.7     995.0 u_sram/addr_b_q_reg[9]/D       0.00  
+    0:00:40  163445.9      0.26      10.7    1000.0 u_sram/addr_b_q_reg[9]/D       0.00  
+    0:00:40  163447.0      0.26      10.7    1000.0 u_sram/addr_b_q_reg[9]/D       0.00  
+    0:00:40  163452.8      0.26      10.6    1000.0 u_sram/addr_b_q_reg[9]/D       0.00  
+    0:00:40  163452.8      0.26      10.6    1000.0 u_sram/addr_b_q_reg[9]/D       0.00  
+    0:00:40  163455.7      0.26      10.6     993.0 u_sram/addr_b_q_reg[9]/D       0.00  
+    0:00:41  163451.7      0.26      10.6     993.0 u_sram/addr_b_q_reg[9]/D       0.00  
+    0:00:41  163463.2      0.25      10.6     994.0 u_sram/addr_b_q_reg[9]/D       0.00  
+    0:00:41  163469.3      0.25      10.6     994.0 u_sram/addr_b_q_reg[9]/D       0.00  
+    0:00:41  163471.1      0.25      10.6     996.0 u_sram/addr_b_q_reg[9]/D       0.00  
+    0:00:41  163473.7      0.25      10.5     996.0 u_sram/addr_b_q_reg[9]/D       0.00  
+    0:00:41  163476.5      0.25      10.5     996.0 u_sram/addr_b_q_reg[9]/D       0.00  
+    0:00:41  163478.7      0.25      10.5     996.0 u_sram/addr_b_q_reg[9]/D       0.00  
+    0:00:41  163478.3      0.25      10.5     996.0 u_sram/addr_b_q_reg[9]/D       0.00  
+    0:00:41  163476.9      0.25      10.5     996.0 u_sram/addr_b_q_reg[9]/D       0.00  
+    0:00:41  163476.2      0.25      10.5     996.0 u_sram/addr_b_q_reg[9]/D       0.00  
+    0:00:41  163476.5      0.25      10.4     996.0 u_sram/din_b_q_reg[30]/D       0.00  
+    0:00:41  163476.9      0.25      10.4     996.0 u_sram/addr_b_q_reg[9]/D       0.00  
+    0:00:41  163480.5      0.25      10.4     996.0 u_sram/addr_b_q_reg[9]/D       0.00  
+    0:00:41  163478.7      0.25      10.4     996.0 u_sram/addr_b_q_reg[9]/D       0.00  
+    0:00:41  163480.1      0.25      10.4     997.0 u_sram/addr_b_q_reg[9]/D       0.00  
+    0:00:41  163481.9      0.25      10.4     997.0 u_sram/addr_b_q_reg[9]/D       0.00  
+    0:00:41  163482.7      0.25      10.4     995.0 u_sram/addr_b_q_reg[9]/D       0.00  
+    0:00:41  163480.1      0.25      10.4     998.0 u_sram/addr_b_q_reg[9]/D       0.00  
+    0:00:42  163476.5      0.25      10.3    1000.0 u_sram/addr_b_q_reg[9]/D       0.00  
+    0:00:42  163483.0      0.25      10.3    1001.0 u_sram/addr_b_q_reg[9]/D       0.00  
+    0:00:42  163490.6      0.25      10.3     999.0 u_sram/addr_b_q_reg[9]/D       0.00  
+    0:00:42  163502.8      0.25      10.1    1000.0 u_sram/addr_b_q_reg[9]/D       0.00  
+    0:00:42  163499.2      0.25      10.0    1009.0 u_sram/addr_b_q_reg[9]/D       0.00  
+    0:00:42  163505.0      0.25      10.0    1009.0 u_sram/addr_b_q_reg[9]/D       0.00  
+    0:00:42  163509.7      0.24      10.0    1009.0 u_sram/addr_b_q_reg[9]/D       0.00  
+    0:00:42  163511.1      0.24      10.0    1009.0 u_sram/addr_b_q_reg[9]/D       0.00  
+    0:00:42  163521.5      0.24      10.0    1011.0 u_sram/addr_b_q_reg[9]/D       0.00  
+    0:00:42  163522.3      0.24      10.0    1010.0 u_sram/din_b_q_reg[15]/D       0.00  
+    0:00:42  163524.4      0.24      10.0    1012.0 u_sram/addr_b_q_reg[9]/D       0.00  
+    0:00:42  163532.3      0.24      10.0    1013.0 u_sram/addr_b_q_reg[9]/D       0.00  
+    0:00:42  163529.8      0.24       9.9    1013.0 u_sram/addr_b_q_reg[9]/D       0.00  
+    0:00:42  163531.3      0.24       9.9    1013.0 u_sram/addr_b_q_reg[9]/D       0.00  
+    0:00:42  163533.4      0.24       9.9    1013.0 u_sram/addr_b_q_reg[9]/D       0.00  
+    0:00:43  163532.3      0.24       9.8    1012.0 u_sram/addr_b_q_reg[9]/D       0.00  
+    0:00:43  163531.6      0.24       9.8    1012.0 u_sram/addr_b_q_reg[9]/D       0.00  
+    0:00:43  163533.8      0.24       9.8    1014.0 u_sram/addr_b_q_reg[9]/D       0.00  
+    0:00:43  163539.9      0.24       9.8    1012.0 u_sram/addr_b_q_reg[9]/D       0.00  
+    0:00:43  163542.1      0.24       9.8    1012.0 u_sram/addr_b_q_reg[9]/D       0.00  
+    0:00:43  163538.5      0.24       9.8    1012.0 u_sram/addr_b_q_reg[9]/D       0.00  
+    0:00:43  163537.4      0.24       9.7    1012.0 u_sram/din_b_q_reg[31]/D       0.00  
+    0:00:43  163537.7      0.24       9.7    1012.0 u_sram/addr_b_q_reg[9]/D       0.00  
+    0:00:43  163542.1      0.24       9.7    1012.0 u_sram/addr_b_q_reg[9]/D       0.00  
+    0:00:43  163542.4      0.24       9.7    1012.0 u_sram/addr_b_q_reg[9]/D       0.00  
+    0:00:43  163543.5      0.24       9.8    1014.0 u_sram/addr_b_q_reg[9]/D       0.00  
+    0:00:43  163541.7      0.24       9.8    1014.0 u_sram/addr_b_q_reg[9]/D       0.00  
+    0:00:43  163541.7      0.24       9.8    1014.0 u_sram/addr_b_q_reg[9]/D       0.00  
+    0:00:44  163541.7      0.24       9.8    1014.0 u_sram/addr_b_q_reg[9]/D       0.00  
+    0:00:44  163545.3      0.24       9.8    1014.0 u_sram/addr_b_q_reg[9]/D       0.00  
+    0:00:44  163548.9      0.24       9.8    1015.0 u_sram/addr_b_q_reg[9]/D       0.00  
+    0:00:44  163548.9      0.24       9.7    1016.0 u_sram/addr_b_q_reg[9]/D       0.00  
+    0:00:44  163548.2      0.24       9.7    1016.0 u_sram/addr_b_q_reg[9]/D       0.00  
+    0:00:44  163547.8      0.24       9.7    1016.0 u_sram/addr_b_q_reg[9]/D       0.00  
+    0:00:44  163548.5      0.24       9.7    1016.0 u_sram/addr_b_q_reg[9]/D       0.00  
+    0:00:44  163548.9      0.24       9.7    1016.0 u_sram/addr_b_q_reg[9]/D       0.00  
+    0:00:44  163548.5      0.24       9.7    1017.0 u_sram/addr_b_q_reg[9]/D       0.00  
+    0:00:44  163550.7      0.24       9.7    1017.0 u_sram/addr_b_q_reg[9]/D       0.00  
+    0:00:44  163551.1      0.24       9.7    1018.0 u_sram/addr_b_q_reg[9]/D       0.00  
+    0:00:44  163551.1      0.24       9.7    1018.0 u_sram/addr_b_q_reg[9]/D       0.00  
+    0:00:44  163544.6      0.23       9.7    1022.0 u_sram/addr_b_q_reg[9]/D       0.00  
+    0:00:45  163544.9      0.23       9.7    1023.0 u_sram/addr_b_q_reg[9]/D       0.00  
+    0:00:45  163546.4      0.23       9.7    1023.0 u_sram/din_b_q_reg[27]/D       0.00  
+    0:00:45  163546.4      0.23       9.7    1023.0 u_sram/addr_b_q_reg[9]/D       0.00  
+    0:00:45  163546.4      0.23       9.7    1023.0 u_sram/addr_b_q_reg[9]/D       0.00  
+    0:00:45  163547.1      0.23       9.7    1023.0 u_sram/addr_b_q_reg[9]/D       0.00  
+    0:00:46  163544.9      0.23       9.6    1023.0 u_sram/addr_b_q_reg[9]/D       0.00  
+    0:00:46  163537.0      0.23       9.6    1023.0 u_sram/addr_b_q_reg[9]/D       0.00  
+    0:00:46  163537.4      0.23       9.5    1024.0 u_sram/addr_b_q_reg[9]/D       0.00  
+    0:00:47  163542.1      0.23       9.5    1025.0 u_sram/addr_b_q_reg[9]/D       0.00  
+    0:00:47  163545.7      0.23       9.4    1027.0 u_sram/addr_b_q_reg[9]/D       0.00  
+    0:00:47  163547.1      0.23       9.3    1028.0 u_sram/addr_b_q_reg[9]/D       0.00  
+    0:00:47  163550.7      0.23       9.2    1033.0 u_sram/addr_b_q_reg[9]/D       0.00  
+    0:00:47  163566.2      0.22       9.1    1034.0 u_sram/addr_b_q_reg[9]/D       0.00  
+    0:00:48  163570.5      0.22       9.0    1036.0 u_sram/addr_b_q_reg[9]/D       0.00  
+    0:00:48  163574.8      0.22       8.9    1039.0                                0.00  
+    0:00:48  163569.4      0.22       8.9    1681.9                                0.00  
+
+
+  Beginning Design Rule Fixing  (min_path)  (max_transition)  (max_fanout)  (max_capacitance)
+  ----------------------------
+
+                                  TOTAL                                                  
+   ELAPSED            WORST NEG   SETUP    DESIGN                              MIN DELAY 
+    TIME      AREA      SLACK     COST    RULE COST         ENDPOINT             COST    
+  --------- --------- --------- --------- --------- ------------------------- -----------
+    0:00:48  163569.4      0.22       8.9    1681.9                               -0.08  
+    0:00:49  163627.7      0.22       8.9     956.0 u_bf/mult_32/net28590         -0.08  
+    0:00:49  163708.4      0.22       8.9     856.0 u_bf/mult_31/n18              -0.08  
+    0:00:49  163726.4      0.22       8.9     826.0 u_ctrl/div_37/net32049        -0.08  
+    0:00:49  163753.0      0.22       8.9     775.0 u_ctrl/div_37/u_div/PartRem[1][3]     -0.08  
+    0:00:49  163762.7      0.22       8.8     766.0 u_sram/din_b_q_reg[27]/D      -0.08  
+    0:00:50  163792.6      0.21       8.5     766.0 u_sram/addr_b_q_reg[9]/D      -0.08  
+    0:00:50  163798.7      0.21       8.5     766.0 u_sram/addr_b_q_reg[9]/D      -0.08  
+    0:00:50  163799.1      0.21       8.5     767.0 u_sram/addr_b_q_reg[9]/D      -0.08  
+    0:00:50  163812.1      0.21       8.4     767.0 u_sram/addr_b_q_reg[9]/D      -0.08  
+    0:00:50  163813.5      0.21       8.4     767.0 u_sram/addr_b_q_reg[9]/D      -0.08  
+    0:00:50  163810.3      0.21       8.3     770.0 u_sram/addr_b_q_reg[9]/D      -0.08  
+    0:00:51  163815.3      0.21       8.2     768.0 u_sram/addr_b_q_reg[9]/D      -0.08  
+    0:00:51  163834.0      0.21       8.2     765.0 u_sram/addr_b_q_reg[9]/D      -0.08  
+    0:00:51  163836.9      0.21       8.2     767.0 u_sram/addr_b_q_reg[9]/D      -0.08  
+    0:00:51  163836.2      0.21       8.2     767.0 u_sram/addr_b_q_reg[9]/D      -0.08  
+    0:00:51  163848.4      0.21       8.1     768.0 u_sram/addr_b_q_reg[9]/D      -0.08  
+    0:00:51  163853.1      0.20       8.0     772.0 u_sram/addr_b_q_reg[9]/D      -0.08  
+    0:00:51  163882.6      0.20       7.8     772.0 u_sram/addr_b_q_reg[9]/D      -0.08  
+    0:00:52  163901.3      0.20       7.7     772.0 u_sram/din_b_q_reg[12]/D      -0.08  
+    0:00:52  163916.1      0.19       7.7     772.0 u_sram/addr_b_q_reg[9]/D      -0.08  
+    0:00:52  163925.8      0.19       7.5     772.0 u_sram/addr_b_q_reg[9]/D      -0.08  
+    0:00:52  163935.2      0.19       7.5     772.0 u_sram/addr_b_q_reg[9]/D      -0.08  
+    0:00:52  163939.9      0.19       7.5     773.0 u_sram/addr_b_q_reg[9]/D      -0.08  
+    0:00:52  163959.7      0.19       7.5     755.0 u_bf/mult_34/n817             -0.08  
+    0:00:53  163985.9      0.19       7.5     732.0 u_bf/mult_34/n815             -0.08  
+    0:00:53  163987.4      0.19       7.5     732.0 u_sram/addr_b_q_reg[9]/D      -0.08  
+    0:00:53  163999.6      0.19       7.4     731.0 u_sram/addr_b_q_reg[9]/D      -0.08  
+    0:00:53  164000.7      0.19       7.3     731.0 u_sram/addr_b_q_reg[9]/D      -0.08  
+    0:00:53  164001.1      0.19       7.3     731.0 u_sram/addr_b_q_reg[9]/D      -0.08  
+    0:00:53  164006.1      0.19       7.3     731.0 u_sram/addr_b_q_reg[9]/D      -0.08  
+    0:00:54  164009.0      0.19       7.3     731.0 u_sram/addr_b_q_reg[9]/D      -0.08  
+    0:00:54  164012.9      0.19       7.2     731.0 u_sram/addr_b_q_reg[9]/D      -0.08  
+    0:00:54  164041.4      0.18       7.2     731.0 u_sram/addr_b_q_reg[9]/D      -0.08  
+    0:00:54  164048.6      0.18       7.2     731.0 u_sram/addr_b_q_reg[9]/D      -0.08  
+    0:00:54  164057.2      0.18       7.1     731.0 u_sram/addr_b_q_reg[9]/D      -0.08  
+    0:00:54  164059.7      0.18       7.1     731.0 u_sram/addr_b_q_reg[9]/D      -0.08  
+    0:00:55  164068.4      0.18       7.0     730.0 u_sram/addr_b_q_reg[9]/D      -0.08  
+    0:00:55  164079.5      0.18       6.9     730.0 u_sram/addr_b_q_reg[9]/D      -0.08  
+    0:00:55  164100.1      0.18       7.0     725.0 u_sram/addr_b_q_reg[9]/D      -0.08  
+    0:00:55  164106.2      0.18       7.0     725.0 u_sram/addr_b_q_reg[9]/D      -0.08  
+    0:00:55  164107.6      0.18       7.0     725.0 u_sram/addr_b_q_reg[9]/D      -0.08  
+    0:00:55  164119.9      0.18       6.9     725.0 u_sram/addr_b_q_reg[9]/D      -0.08  
+    0:00:55  164120.2      0.18       6.9     725.0 u_sram/addr_b_q_reg[9]/D      -0.08  
+    0:00:55  164128.1      0.18       6.8     725.0 u_sram/addr_b_q_reg[9]/D      -0.08  
+    0:00:56  164142.9      0.18       6.7     725.0 u_sram/addr_b_q_reg[9]/D      -0.08  
+    0:00:56  164153.7      0.18       6.7     725.0 u_sram/addr_b_q_reg[9]/D      -0.08  
+    0:00:56  164171.7      0.18       6.6     725.0 u_sram/addr_b_q_reg[9]/D      -0.08  
+    0:00:56  164179.6      0.18       6.6     725.0 u_sram/addr_b_q_reg[9]/D      -0.08  
+    0:00:56  164204.8      0.17       6.4     725.0 u_sram/addr_b_q_reg[9]/D      -0.08  
+    0:00:56  164207.0      0.17       6.4     725.0 u_sram/addr_b_q_reg[9]/D      -0.08  
+    0:00:56  164211.7      0.17       6.4     725.0 u_sram/addr_b_q_reg[9]/D      -0.08  
+    0:00:57  164224.6      0.17       6.3     724.0 u_sram/addr_b_q_reg[9]/D      -0.08  
+    0:00:57  164235.4      0.17       6.3     723.0 u_sram/addr_b_q_reg[9]/D      -0.08  
+    0:00:57  164235.1      0.17       6.3     723.0 u_sram/addr_b_q_reg[9]/D      -0.08  
+    0:00:57  164237.2      0.17       6.3     723.0 u_sram/addr_b_q_reg[9]/D      -0.08  
+    0:00:57  164238.3      0.17       6.3     723.0 u_sram/addr_b_q_reg[9]/D      -0.08  
+    0:00:57  164251.6      0.16       6.2     723.0 u_sram/addr_b_q_reg[9]/D      -0.08  
+    0:00:57  164250.5      0.16       6.2     723.0 u_sram/addr_b_q_reg[9]/D      -0.08  
+    0:00:57  164270.3      0.16       6.2     723.0 u_sram/addr_b_q_reg[9]/D      -0.08  
+    0:00:57  164284.7      0.16       6.2     723.0 u_sram/addr_b_q_reg[9]/D      -0.08  
+    0:00:58  164287.3      0.16       6.1     722.0 u_sram/addr_b_q_reg[9]/D      -0.08  
+    0:00:58  164288.3      0.16       6.1     722.0 u_sram/din_b_q_reg[31]/D      -0.08  
+    0:00:58  164294.5      0.16       6.1     722.0 u_sram/addr_b_q_reg[9]/D      -0.08  
+    0:00:58  164307.1      0.16       6.1     721.0 u_sram/addr_b_q_reg[8]/D      -0.08  
+    0:00:58  164317.5      0.16       6.0     721.0 u_sram/din_b_q_reg[31]/D      -0.08  
+    0:00:58  164327.2      0.16       6.0     720.0 u_sram/addr_b_q_reg[9]/D      -0.08  
+    0:00:58  164332.6      0.16       6.0     719.0 u_sram/addr_b_q_reg[9]/D      -0.08  
+    0:00:58  164356.0      0.16       5.9     719.0 u_sram/din_b_q_reg[31]/D      -0.08  
+    0:00:58  164362.9      0.16       5.9     719.0 u_sram/addr_b_q_reg[9]/D      -0.08  
+    0:00:58  164362.5      0.16       5.9     719.0 u_sram/addr_b_q_reg[9]/D      -0.08  
+    0:00:59  164376.2      0.16       5.8     717.0 u_sram/addr_b_q_reg[9]/D      -0.08  
+    0:00:59  164379.4      0.16       5.8     716.0 u_sram/addr_b_q_reg[9]/D      -0.08  
+    0:00:59  164379.4      0.16       5.8     716.0 u_sram/addr_b_q_reg[9]/D      -0.08  
+    0:00:59  164378.0      0.15       5.7     716.0 u_sram/addr_b_q_reg[9]/D      -0.08  
+    0:00:59  164378.0      0.15       5.7     716.0 u_sram/addr_b_q_reg[9]/D      -0.08  
+    0:00:59  164377.6      0.15       5.7     716.0 u_bf/mult_34/n814             -0.08  
+    0:01:00  164470.1      0.17       5.9     653.0 u_bf/mult_33/n806             -0.08  
+    0:01:00  164576.7      0.17       6.2     567.0 u_ctrl/rem_36/u_div/BInv[1][9]     -0.08  
+    0:01:00  164626.0      0.18       6.4     505.0 u_ctrl/net18561               -0.08  
+    0:01:00  164650.1      0.18       6.4     465.0 u_bf/mult_34/n48              -0.08  
+    0:01:00  164669.6      0.18       6.7     419.0 u_bf/mult_32/n808             -0.08  
+    0:01:00  164704.1      0.18       6.6     389.0 u_sram/addr_b_q_reg[9]/D      -0.08  
+    0:01:00  164724.7      0.17       6.3     389.0 u_sram/addr_b_q_reg[9]/D      -0.08  
+    0:01:00  164726.8      0.17       6.3     389.0 u_sram/din_b_q_reg[29]/D      -0.08  
+    0:01:01  164734.0      0.17       6.3     389.0 u_sram/din_b_q_reg[15]/D      -0.08  
+    0:01:01  164759.6      0.16       6.2     389.0 u_sram/addr_b_q_reg[9]/D      -0.08  
+    0:01:01  164768.9      0.16       6.1     389.0 u_sram/addr_b_q_reg[9]/D      -0.08  
+    0:01:01  164777.6      0.16       5.9     389.0 u_sram/addr_b_q_reg[9]/D      -0.08  
+    0:01:01  164783.3      0.16       5.8     389.0 u_sram/addr_b_q_reg[9]/D      -0.08  
+    0:01:02  164800.6      0.16       5.8     389.0 u_sram/addr_b_q_reg[9]/D      -0.08  
+    0:01:02  164811.1      0.15       5.8     389.0 u_sram/addr_b_q_reg[9]/D      -0.08  
+    0:01:02  164813.2      0.15       5.7     389.0 u_sram/din_b_q_reg[15]/D      -0.08  
+    0:01:02  164816.8      0.15       5.7     389.0 u_sram/addr_b_q_reg[9]/D      -0.08  
+    0:01:02  164812.1      0.15       5.7     389.0 u_sram/din_b_q_reg[29]/D      -0.08  
+    0:01:02  164817.5      0.15       5.7     389.0 u_sram/addr_b_q_reg[9]/D      -0.08  
+    0:01:02  164821.5      0.15       5.7     389.0 u_sram/addr_b_q_reg[9]/D      -0.08  
+    0:01:02  164824.4      0.15       5.6     388.0 u_sram/addr_b_q_reg[9]/D      -0.08  
+    0:01:02  164825.5      0.15       5.6     388.0 u_sram/din_b_q_reg[28]/D      -0.08  
+    0:01:02  164829.1      0.15       5.6     388.0 u_sram/addr_b_q_reg[9]/D      -0.08  
+    0:01:03  164831.6      0.15       5.5     388.0 u_sram/addr_b_q_reg[9]/D      -0.08  
+    0:01:03  164832.7      0.15       5.5     388.0 u_sram/addr_b_q_reg[9]/D      -0.08  
+    0:01:03  164852.5      0.15       5.4     388.0 u_sram/addr_b_q_reg[9]/D      -0.08  
+    0:01:03  164858.9      0.15       5.4     388.0 u_sram/addr_b_q_reg[9]/D      -0.08  
+    0:01:03  164860.4      0.15       5.4     388.0 u_sram/addr_b_q_reg[9]/D      -0.08  
+    0:01:03  164860.4      0.15       5.4     388.0 u_sram/addr_b_q_reg[9]/D      -0.08  
+    0:01:03  164875.5      0.15       5.4     388.0 u_sram/addr_b_q_reg[9]/D      -0.08  
+    0:01:04  164875.5      0.15       5.4     388.0 u_sram/addr_b_q_reg[9]/D      -0.08  
+    0:01:04  164877.3      0.15       5.4     388.0 u_sram/addr_b_q_reg[9]/D      -0.08  
+    0:01:04  164877.7      0.15       5.4     388.0 u_sram/addr_b_q_reg[9]/D      -0.08  
+    0:01:04  164879.1      0.15       5.4     388.0 u_sram/addr_b_q_reg[9]/D      -0.08  
+    0:01:04  164879.1      0.15       5.4     388.0 u_sram/din_b_q_reg[12]/D      -0.08  
+    0:01:04  164878.4      0.15       5.3     388.0 u_sram/addr_b_q_reg[9]/D      -0.08  
+    0:01:04  164876.9      0.15       5.3     388.0 u_sram/addr_b_q_reg[9]/D      -0.08  
+    0:01:04  164882.3      0.15       5.3     388.0 u_sram/addr_b_q_reg[9]/D      -0.08  
+    0:01:04  164882.7      0.15       5.3     388.0 u_sram/din_b_q_reg[28]/D      -0.08  
+    0:01:05  164899.6      0.15       5.3     388.0 u_sram/addr_b_q_reg[9]/D      -0.08  
+    0:01:05  164899.6      0.15       5.3     388.0 u_sram/addr_b_q_reg[9]/D      -0.08  
+    0:01:05  164903.2      0.15       5.3     388.0 u_sram/addr_b_q_reg[9]/D      -0.08  
+    0:01:05  164895.7      0.14       5.3     388.0 u_sram/addr_b_q_reg[7]/D      -0.08  
+    0:01:05  164901.1      0.14       5.2     388.0 u_sram/din_b_q_reg[28]/D      -0.08  
+    0:01:05  164915.1      0.14       5.3     388.0 u_sram/addr_b_q_reg[7]/D      -0.08  
+    0:01:05  164925.9      0.14       5.2     388.0 u_sram/din_b_q_reg[31]/D      -0.08  
+    0:01:05  164930.9      0.14       5.2     388.0 u_sram/din_b_q_reg[28]/D      -0.08  
+    0:01:05  164941.4      0.14       5.2     386.0 u_sram/din_b_q_reg[28]/D      -0.08  
+    0:01:06  164960.5      0.14       5.1     383.0 u_sram/din_b_q_reg[28]/D      -0.08  
+    0:01:06  164958.3      0.14       5.1     383.0 u_sram/din_b_q_reg[27]/D      -0.08  
+    0:01:06  164958.3      0.14       5.1     383.0 u_sram/addr_b_q_reg[9]/D      -0.08  
+    0:01:06  164961.2      0.14       5.1     383.0 u_sram/addr_b_q_reg[9]/D      -0.08  
+    0:01:06  164969.1      0.14       5.1     383.0 u_sram/addr_b_q_reg[9]/D      -0.08  
+    0:01:06  164978.8      0.14       5.1     383.0 u_sram/addr_b_q_reg[9]/D      -0.08  
+    0:01:06  164979.2      0.14       5.0     381.0 u_sram/addr_b_q_reg[7]/D      -0.08  
+    0:01:06  164989.3      0.14       5.0     380.0 u_sram/addr_b_q_reg[7]/D      -0.08  
+    0:01:07  164991.1      0.14       5.0     380.0 u_sram/addr_b_q_reg[7]/D      -0.08  
+    0:01:07  164993.9      0.14       5.0     379.0 u_sram/addr_b_q_reg[7]/D      -0.08  
+    0:01:07  165006.9      0.14       5.0     376.0 u_sram/addr_b_q_reg[7]/D      -0.08  
+    0:01:07  165010.5      0.14       5.0     376.0 u_sram/addr_b_q_reg[9]/D      -0.08  
+    0:01:07  165011.2      0.14       5.0     376.0 u_sram/addr_b_q_reg[9]/D      -0.08  
+    0:01:07  165017.7      0.14       5.0     376.0 u_sram/din_b_q_reg[13]/D      -0.08  
+    0:01:07  165012.7      0.14       4.9     376.0 u_sram/addr_b_q_reg[9]/D      -0.08  
+    0:01:07  165015.9      0.14       4.9     371.0 u_bf/mult_31/n803             -0.08  
+    0:01:07  165107.3      0.15       5.2     316.0 u_ctrl/div_37/net33505        -0.08  
+    0:01:08  165150.2      0.15       5.4     281.0 u_bf/mult_34/n810             -0.08  
+    0:01:08  165231.2      0.15       5.5     238.0 u_ctrl/rem_36/net35633        -0.08  
+    0:01:08  165249.2      0.15       5.7     214.0 u_bf/mult_32/net35007         -0.08  
+    0:01:08  165286.3      0.17       6.0     191.0 u_ctrl/net30415               -0.08  
+    0:01:08  165292.7      0.16       5.6     181.0 u_sram/addr_b_q_reg[9]/D      -0.08  
+    0:01:08  165290.2      0.16       5.6     181.0 u_sram/addr_b_q_reg[9]/D      -0.08  
+    0:01:08  165288.1      0.16       5.6     181.0 u_sram/addr_b_q_reg[9]/D      -0.08  
+    0:01:08  165281.6      0.15       5.6     181.0 u_sram/addr_b_q_reg[9]/D      -0.08  
+    0:01:08  165281.2      0.15       5.6     181.0 u_sram/din_b_q_reg[29]/D      -0.08  
+    0:01:09  165280.1      0.15       5.5     181.0 u_sram/addr_b_q_reg[9]/D      -0.08  
+    0:01:09  165288.1      0.15       5.5     181.0 u_sram/addr_b_q_reg[9]/D      -0.08  
+    0:01:09  165317.9      0.15       5.4     181.0 u_sram/addr_b_q_reg[9]/D      -0.08  
+    0:01:09  165311.8      0.15       5.3     181.0 u_sram/din_b_q_reg[29]/D      -0.08  
+    0:01:09  165312.2      0.14       5.0     181.0 u_sram/addr_b_q_reg[7]/D      -0.08  
+    0:01:10  165331.3      0.14       4.9     181.0 u_sram/din_b_q_reg[15]/D      -0.08  
+    0:01:10  165333.8      0.14       4.9     181.0 u_sram/addr_b_q_reg[7]/D      -0.08  
+    0:01:10  165342.4      0.14       4.9     181.0 u_sram/din_b_q_reg[15]/D      -0.08  
+    0:01:10  165349.6      0.14       4.9     181.0 u_sram/din_b_q_reg[24]/D      -0.08  
+    0:01:10  165356.5      0.14       4.8     181.0 u_sram/din_b_q_reg[15]/D      -0.08  
+    0:01:10  165349.3      0.14       4.8     181.0 u_sram/din_b_q_reg[24]/D      -0.08  
+    0:01:10  165351.4      0.13       4.8     181.0 u_sram/addr_b_q_reg[9]/D      -0.08  
+    0:01:11  165354.3      0.13       4.7     181.0 u_sram/addr_b_q_reg[7]/D      -0.08  
+    0:01:11  165358.3      0.13       4.7     181.0 u_sram/addr_b_q_reg[9]/D      -0.08  
+    0:01:11  165348.5      0.13       4.7     181.0 u_sram/din_b_q_reg[29]/D      -0.08  
+    0:01:11  165354.7      0.13       4.7     181.0 u_sram/addr_b_q_reg[9]/D      -0.08  
+    0:01:11  165346.7      0.13       4.6     181.0 u_sram/din_b_q_reg[28]/D      -0.08  
+    0:01:11  165353.9      0.13       4.6     181.0 u_sram/addr_b_q_reg[8]/D      -0.08  
+    0:01:11  165350.0      0.13       4.6     181.0 u_sram/addr_b_q_reg[9]/D      -0.08  
+    0:01:11  165347.1      0.13       4.6     181.0 u_sram/addr_b_q_reg[9]/D      -0.08  
+    0:01:11  165341.0      0.13       4.5     181.0 u_sram/addr_b_q_reg[9]/D      -0.08  
+    0:01:12  165350.3      0.13       4.5     180.0 u_sram/din_b_q_reg[28]/D      -0.08  
+    0:01:12  165342.8      0.13       4.5     180.0 u_sram/addr_b_q_reg[9]/D      -0.08  
+    0:01:12  165347.5      0.13       4.5     180.0 u_sram/addr_b_q_reg[8]/D      -0.08  
+    0:01:12  165354.3      0.13       4.4     180.0 u_sram/addr_b_q_reg[8]/D      -0.08  
+    0:01:12  165349.6      0.13       4.4     180.0 u_sram/din_b_q_reg[15]/D      -0.08  
+    0:01:12  165346.4      0.13       4.4     180.0 u_sram/din_b_q_reg[30]/D      -0.08  
+    0:01:12  165358.6      0.13       4.4     180.0 u_sram/addr_b_q_reg[9]/D      -0.08  
+    0:01:12  165362.6      0.13       4.4     180.0 u_sram/din_b_q_reg[11]/D      -0.08  
+    0:01:12  165362.6      0.13       4.4     180.0 u_sram/din_b_q_reg[28]/D      -0.08  
+    0:01:13  165362.2      0.13       4.3     180.0 u_sram/addr_b_q_reg[8]/D      -0.08  
+    0:01:13  165362.2      0.13       4.3     180.0 u_sram/din_b_q_reg[28]/D      -0.08  
+    0:01:13  165370.1      0.13       4.3     180.0 u_sram/addr_b_q_reg[9]/D      -0.08  
+    0:01:13  165373.0      0.12       4.3     180.0 u_sram/addr_b_q_reg[9]/D      -0.08  
+    0:01:13  165373.4      0.12       4.3     180.0 u_sram/addr_b_q_reg[9]/D      -0.08  
+    0:01:13  165373.7      0.12       4.3     180.0 u_sram/din_b_q_reg[11]/D      -0.08  
+    0:01:13  165373.0      0.12       4.3     180.0 u_sram/din_b_q_reg[7]/D       -0.08  
+    0:01:13  165373.0      0.12       4.3     180.0 u_sram/addr_b_q_reg[7]/D      -0.08  
+    0:01:13  165371.6      0.12       4.2     180.0 u_sram/din_b_q_reg[11]/D      -0.08  
+    0:01:13  165371.6      0.12       4.2     180.0 u_sram/din_b_q_reg[28]/D      -0.08  
+    0:01:13  165382.0      0.12       4.2     180.0 u_sram/addr_b_q_reg[9]/D      -0.08  
+    0:01:13  165384.9      0.12       4.2     180.0 u_sram/addr_b_q_reg[9]/D      -0.08  
+    0:01:13  165386.7      0.12       4.2     180.0 u_sram/addr_b_q_reg[7]/D      -0.08  
+    0:01:14  165383.8      0.12       4.2     180.0 u_sram/addr_b_q_reg[9]/D      -0.08  
+    0:01:14  165387.8      0.12       4.2     179.0 u_sram/addr_b_q_reg[8]/D      -0.08  
+    0:01:14  165388.9      0.12       4.2     179.0 u_sram/din_b_q_reg[11]/D      -0.08  
+    0:01:14  165392.5      0.12       4.2     179.0 u_sram/din_b_q_reg[30]/D      -0.08  
+    0:01:14  165395.7      0.12       4.2     179.0 u_sram/din_b_q_reg[30]/D      -0.08  
+    0:01:14  165395.7      0.12       4.2     179.0 u_sram/din_b_q_reg[30]/D      -0.08  
+    0:01:14  165397.1      0.12       4.2     179.0 u_sram/addr_b_q_reg[9]/D      -0.08  
+    0:01:14  165400.7      0.12       4.2     179.0 u_sram/addr_b_q_reg[9]/D      -0.08  
+    0:01:14  165398.9      0.12       4.2     179.0 u_sram/din_b_q_reg[30]/D      -0.08  
+    0:01:14  165395.0      0.12       4.2     179.0 u_sram/din_b_q_reg[28]/D      -0.08  
+    0:01:14  165396.4      0.12       4.2     179.0 u_sram/din_b_q_reg[9]/D       -0.08  
+    0:01:14  165400.7      0.12       4.2     179.0 u_sram/addr_b_q_reg[9]/D      -0.08  
+    0:01:14  165411.2      0.12       4.2     179.0 u_sram/addr_b_q_reg[7]/D      -0.08  
+    0:01:14  165415.9      0.12       4.2     179.0 u_sram/addr_b_q_reg[8]/D      -0.08  
+    0:01:15  165414.1      0.12       4.2     179.0 u_sram/addr_b_q_reg[9]/D      -0.08  
+    0:01:15  165414.1      0.12       4.2     179.0 u_sram/addr_b_q_reg[8]/D      -0.08  
+    0:01:15  165412.6      0.12       4.2     179.0 u_sram/addr_b_q_reg[9]/D      -0.08  
+    0:01:15  165415.1      0.12       4.2     179.0 u_sram/addr_b_q_reg[9]/D      -0.08  
+    0:01:15  165421.3      0.12       4.1     179.0 u_sram/din_b_q_reg[30]/D      -0.08  
+    0:01:15  165422.3      0.12       4.1     179.0 u_sram/addr_b_q_reg[9]/D      -0.08  
+    0:01:15  165422.0      0.12       4.1     179.0 u_sram/addr_b_q_reg[9]/D      -0.08  
+    0:01:15  165421.3      0.12       4.1     179.0 u_sram/din_b_q_reg[26]/D      -0.08  
+    0:01:15  165419.5      0.12       4.1     179.0 u_sram/addr_b_q_reg[9]/D      -0.08  
+    0:01:15  165423.1      0.12       4.1     179.0 u_sram/addr_b_q_reg[9]/D      -0.08  
+    0:01:15  165422.3      0.12       4.1     179.0 u_sram/din_b_q_reg[31]/D      -0.08  
+    0:01:15  165422.7      0.12       4.1     179.0 u_sram/addr_b_q_reg[9]/D      -0.08  
+    0:01:15  165426.3      0.12       4.0     179.0 u_sram/din_b_q_reg[21]/D      -0.08  
+    0:01:15  165429.2      0.12       4.0     179.0 u_sram/addr_b_q_reg[9]/D      -0.08  
+    0:01:16  165426.3      0.12       4.0     179.0 u_sram/din_b_q_reg[15]/D      -0.08  
+    0:01:16  165420.5      0.12       4.0     179.0 u_sram/din_b_q_reg[11]/D      -0.08  
+    0:01:16  165418.7      0.12       4.0     179.0 u_sram/addr_b_q_reg[8]/D      -0.08  
+    0:01:16  165427.7      0.12       4.0     179.0 u_sram/din_b_q_reg[12]/D      -0.08  
+    0:01:16  165432.4      0.12       4.0     179.0 u_sram/addr_b_q_reg[9]/D      -0.08  
+    0:01:16  165438.2      0.12       4.0     179.0 u_sram/addr_b_q_reg[7]/D      -0.08  
+    0:01:16  165438.5      0.12       4.0     179.0 u_sram/din_b_q_reg[12]/D      -0.08  
+    0:01:16  165439.3      0.12       3.9     179.0 u_sram/din_b_q_reg[11]/D      -0.08  
+    0:01:16  165441.4      0.12       3.9     179.0 u_sram/din_b_q_reg[12]/D      -0.08  
+    0:01:16  165438.5      0.11       3.9     179.0 u_sram/din_b_q_reg[12]/D      -0.08  
+    0:01:16  165436.7      0.11       3.9     179.0 u_sram/din_b_q_reg[29]/D      -0.08  
+    0:01:16  165437.8      0.11       3.9     179.0 u_sram/addr_b_q_reg[9]/D      -0.08  
+    0:01:16  165438.2      0.11       3.9     179.0 u_sram/din_b_q_reg[12]/D      -0.08  
+    0:01:16  165442.1      0.11       3.9     179.0 u_sram/din_b_q_reg[11]/D      -0.08  
+    0:01:17  165441.4      0.11       3.9     179.0 u_sram/din_b_q_reg[26]/D      -0.08  
+    0:01:17  165444.7      0.11       3.9     179.0 u_sram/addr_b_q_reg[9]/D      -0.08  
+    0:01:17  165445.7      0.11       3.9     179.0 u_sram/addr_b_q_reg[9]/D      -0.08  
+    0:01:17  165445.0      0.11       3.9     177.0 u_sram/din_b_q_reg[26]/D      -0.08  
+    0:01:17  165446.8      0.11       3.9     176.0 u_sram/din_b_q_reg[11]/D      -0.08  
+    0:01:17  165445.7      0.11       3.8     176.0 u_sram/din_b_q_reg[12]/D      -0.08  
+    0:01:17  165447.5      0.11       3.8     176.0 u_sram/din_b_q_reg[12]/D      -0.08  
+    0:01:17  165449.3      0.11       3.8     176.0 u_sram/din_b_q_reg[7]/D       -0.08  
+    0:01:17  165454.7      0.11       3.8     176.0 u_sram/din_b_q_reg[26]/D      -0.08  
+    0:01:17  165454.7      0.11       3.8     176.0 u_sram/din_b_q_reg[11]/D      -0.08  
+    0:01:17  165452.9      0.11       3.8     176.0 u_sram/addr_b_q_reg[9]/D      -0.08  
+    0:01:17  165452.9      0.11       3.8     176.0 u_sram/addr_b_q_reg[9]/D      -0.08  
+    0:01:18  165455.1      0.11       3.8     176.0 u_sram/din_b_q_reg[11]/D      -0.08  
+    0:01:18  165457.6      0.11       3.8     176.0 u_sram/din_b_q_reg[26]/D      -0.08  
+    0:01:18  165459.8      0.11       3.8     176.0 u_sram/din_b_q_reg[26]/D      -0.08  
+    0:01:18  165461.9      0.11       3.8     176.0 u_sram/addr_b_q_reg[9]/D      -0.08  
+    0:01:18  165459.4      0.11       3.8     176.0 u_sram/din_b_q_reg[26]/D      -0.08  
+    0:01:18  165461.2      0.11       3.8     176.0 u_sram/din_b_q_reg[31]/D      -0.08  
+    0:01:18  165466.6      0.11       3.8     176.0 u_sram/addr_b_q_reg[9]/D      -0.08  
+    0:01:18  165467.7      0.11       3.8     176.0 u_sram/din_b_q_reg[9]/D       -0.08  
+    0:01:18  165473.5      0.11       3.8     176.0 u_sram/din_b_q_reg[26]/D      -0.08  
+    0:01:18  165479.2      0.11       3.8     176.0 u_sram/din_b_q_reg[26]/D      -0.08  
+    0:01:18  165481.7      0.11       3.8     176.0 u_sram/addr_b_q_reg[8]/D      -0.08  
+    0:01:18  165479.2      0.11       3.8     176.0 u_sram/din_b_q_reg[12]/D      -0.08  
+    0:01:18  165482.1      0.11       3.8     176.0 u_sram/addr_b_q_reg[8]/D      -0.08  
+    0:01:18  165482.5      0.11       3.7     176.0 u_sram/din_b_q_reg[12]/D      -0.08  
+    0:01:18  165484.3      0.11       3.7     176.0 u_sram/addr_b_q_reg[8]/D      -0.08  
+    0:01:19  165486.1      0.11       3.7     176.0 u_sram/din_b_q_reg[11]/D      -0.08  
+    0:01:19  165487.9      0.11       3.7     176.0 u_sram/din_b_q_reg[26]/D      -0.08  
+    0:01:19  165484.6      0.11       3.7     176.0 u_sram/din_b_q_reg[26]/D      -0.08  
+    0:01:19  165488.9      0.11       3.8     175.0 u_sram/din_b_q_reg[11]/D      -0.08  
+    0:01:19  165495.1      0.11       3.8     175.0 u_sram/addr_b_q_reg[9]/D      -0.08  
+    0:01:19  165495.4      0.11       3.8     175.0 u_sram/din_b_q_reg[11]/D      -0.08  
+    0:01:19  165496.5      0.11       3.8     175.0 u_sram/din_b_q_reg[12]/D      -0.08  
+    0:01:19  165496.1      0.11       3.8     175.0 u_sram/din_b_q_reg[26]/D      -0.08  
+    0:01:19  165496.9      0.11       3.8     175.0 u_sram/din_b_q_reg[31]/D      -0.08  
+    0:01:19  165504.8      0.11       3.7     175.0 u_sram/addr_b_q_reg[9]/D      -0.08  
+    0:01:19  165503.7      0.11       3.7     175.0 u_sram/addr_b_q_reg[9]/D      -0.08  
+    0:01:19  165505.1      0.11       3.7     175.0 u_sram/din_b_q_reg[12]/D      -0.08  
+    0:01:19  165499.7      0.11       3.7     175.0 u_sram/addr_b_q_reg[8]/D      -0.08  
+    0:01:19  165505.5      0.11       3.7     175.0 u_sram/addr_b_q_reg[8]/D      -0.08  
+    0:01:19  165509.5      0.11       3.7     175.0 u_sram/din_b_q_reg[30]/D      -0.08  
+    0:01:20  165509.5      0.11       3.7     175.0 u_sram/din_b_q_reg[28]/D      -0.08  
+    0:01:20  165521.3      0.11       3.7     175.0 u_sram/addr_b_q_reg[8]/D      -0.08  
+    0:01:20  165521.3      0.11       3.7     175.0 u_sram/din_b_q_reg[31]/D      -0.08  
+    0:01:20  165520.6      0.11       3.7     175.0 u_sram/addr_b_q_reg[9]/D      -0.08  
+    0:01:20  165520.3      0.11       3.7     175.0 u_sram/din_b_q_reg[31]/D      -0.08  
+    0:01:20  165523.1      0.11       3.7     174.0 u_sram/addr_b_q_reg[9]/D      -0.08  
+    0:01:20  165521.7      0.11       3.7     174.0 u_sram/din_b_q_reg[30]/D      -0.08  
+    0:01:20  165526.0      0.11       3.7     174.0 u_sram/din_b_q_reg[28]/D      -0.08  
+    0:01:20  165529.6      0.11       3.7     174.0 u_sram/din_b_q_reg[31]/D      -0.08  
+    0:01:20  165531.1      0.11       3.7     174.0 u_sram/din_b_q_reg[9]/D       -0.08  
+    0:01:20  165536.8      0.11       3.7     174.0 u_sram/din_b_q_reg[11]/D      -0.08  
+    0:01:20  165537.5      0.11       3.7     174.0 u_sram/din_b_q_reg[9]/D       -0.08  
+    0:01:20  165537.5      0.11       3.7     174.0 u_sram/din_b_q_reg[12]/D      -0.08  
+    0:01:20  165537.9      0.11       3.7     174.0 u_sram/addr_b_q_reg[9]/D      -0.08  
+    0:01:20  165537.9      0.11       3.7     174.0 u_sram/din_b_q_reg[15]/D      -0.08  
+    0:01:21  165537.9      0.11       3.6     174.0 u_sram/din_b_q_reg[31]/D      -0.08  
+    0:01:21  165540.1      0.11       3.6     174.0 u_sram/addr_b_q_reg[9]/D      -0.08  
+    0:01:21  165538.6      0.11       3.6     174.0 u_sram/din_b_q_reg[7]/D       -0.08  
+    0:01:21  165535.4      0.11       3.6     174.0 u_sram/din_b_q_reg[28]/D      -0.08  
+    0:01:21  165535.0      0.11       3.6     174.0 u_sram/addr_b_q_reg[9]/D      -0.08  
+    0:01:21  165538.6      0.11       3.6     174.0 u_sram/din_b_q_reg[31]/D      -0.08  
+    0:01:21  165540.1      0.11       3.6     174.0 u_sram/addr_b_q_reg[9]/D      -0.08  
+    0:01:22  165541.9      0.11       3.6     174.0                               -0.08  
+    0:01:22  165546.5      0.11       3.6     174.0                               -0.08  
+    0:01:22  165549.4      0.11       3.6     174.0                               -0.08  
+    0:01:22  165548.0      0.11       3.6     174.0                               -0.08  
+    0:01:22  165551.6      0.11       3.6     174.0                               -0.08  
+    0:01:22  165554.8      0.11       3.6     174.0                               -0.08  
+    0:01:22  165558.4      0.11       3.6     174.0                               -0.08  
+    0:01:22  165563.5      0.11       3.6     174.0                               -0.08  
+    0:01:22  165562.7      0.11       3.6     174.0                               -0.08  
+    0:01:23  165565.3      0.11       3.6     174.0                               -0.08  
+    0:01:23  165555.5      0.11       3.5     174.0                               -0.08  
+    0:01:23  165556.3      0.11       3.5     174.0                               -0.08  
+    0:01:23  165558.8      0.11       3.5     174.0                               -0.08  
+    0:01:23  165559.5      0.11       3.5     174.0                               -0.08  
+    0:01:23  165558.8      0.11       3.5     174.0                               -0.08  
+    0:01:23  165555.9      0.11       3.5     174.0                               -0.08  
+    0:01:23  165558.1      0.11       3.5     174.0                               -0.08  
+    0:01:23  165560.2      0.11       3.4     174.0                               -0.08  
+    0:01:23  165566.0      0.11       3.4     174.0                               -0.08  
+    0:01:23  165567.8      0.11       3.4     174.0                               -0.08  
+
+
+  Beginning Area-Recovery Phase  (cleanup)
+  -----------------------------
+
+                                  TOTAL                                                  
+   ELAPSED            WORST NEG   SETUP    DESIGN                              MIN DELAY 
+    TIME      AREA      SLACK     COST    RULE COST         ENDPOINT             COST    
+  --------- --------- --------- --------- --------- ------------------------- -----------
+    0:01:23  165567.8      0.11       3.4     174.0                               -0.08  
+    0:01:23  165567.8      0.11       3.4     174.0                               -0.08  
+    0:01:24  165278.0      0.11       3.5     171.0                               -0.08  
+    0:01:24  165164.6      0.11       3.5     169.0                               -0.08  
+    0:01:24  165098.7      0.11       3.5     169.0                               -0.08  
+    0:01:24  165037.5      0.11       3.5     169.0                               -0.08  
+    0:01:24  164998.3      0.11       3.5     169.0                               -0.08  
+    0:01:24  164961.2      0.11       3.5     169.0                               -0.08  
+    0:01:24  164961.2      0.11       3.5     169.0                               -0.08  
+    0:01:24  164968.4      0.10       3.4     169.0 u_sram/addr_b_q_reg[9]/D      -0.08  
+    0:01:25  164974.5      0.10       3.4     169.0 u_sram/din_b_q_reg[15]/D      -0.08  
+    0:01:25  164989.6      0.10       3.4     169.0                               -0.08  
+    0:01:25  164443.5      0.15       4.4     169.0                               -0.08  
+    0:01:25  164246.9      0.15       4.5     169.0                               -0.08  
+    0:01:25  164232.2      0.15       4.5     169.0                               -0.08  
+    0:01:25  164232.2      0.15       4.5     169.0                               -0.08  
+    0:01:25  164232.2      0.15       4.5     169.0                               -0.08  
+    0:01:25  164232.2      0.15       4.5     169.0                               -0.08  
+    0:01:25  164232.2      0.15       4.5     169.0                               -0.08  
+    0:01:25  164232.2      0.15       4.5     169.0                               -0.08  
+    0:01:25  164286.9      0.11       3.6     169.0 u_sram/addr_b_q_reg[9]/D      -0.08  
+    0:01:26  164298.8      0.10       3.5     169.0 u_sram/addr_b_q_reg[9]/D      -0.08  
+    0:01:26  164305.6      0.10       3.4     169.0 u_sram/addr_b_q_reg[8]/D      -0.08  
+    0:01:26  164308.1      0.10       3.4     169.0 u_sram/din_b_q_reg[31]/D      -0.08  
+    0:01:26  164322.9      0.10       3.3     169.0 u_sram/din_b_q_reg[31]/D      -0.08  
+    0:01:26  164332.3      0.10       3.3     169.0 u_sram/din_b_q_reg[31]/D      -0.08  
+    0:01:26  164335.5      0.10       3.3     169.0 u_sram/din_b_q_reg[12]/D      -0.08  
+    0:01:26  164351.0      0.10       3.3     169.0 u_sram/din_b_q_reg[31]/D      -0.08  
+    0:01:27  164357.1      0.10       3.3     169.0 u_sram/din_b_q_reg[31]/D      -0.08  
+    0:01:27  164356.7      0.10       3.3     169.0 u_sram/din_b_q_reg[12]/D      -0.08  
+    0:01:27  164362.9      0.10       3.3     169.0 u_sram/din_b_q_reg[12]/D      -0.08  
+    0:01:27  164382.7      0.10       3.3     169.0 u_sram/addr_b_q_reg[9]/D      -0.08  
+    0:01:27  164389.1      0.10       3.3     169.0 u_sram/addr_b_q_reg[9]/D      -0.08  
+    0:01:27  164395.3      0.10       3.2     169.0 u_sram/din_b_q_reg[12]/D      -0.08  
+    0:01:27  164393.1      0.10       3.2     169.0 u_sram/din_b_q_reg[30]/D      -0.08  
+    0:01:27  164393.5      0.10       3.2     169.0 u_sram/din_b_q_reg[12]/D      -0.08  
+    0:01:27  164396.3      0.10       3.2     169.0 u_sram/din_b_q_reg[12]/D      -0.08  
+    0:01:27  164397.4      0.10       3.2     169.0 u_sram/addr_b_q_reg[9]/D      -0.08  
+    0:01:27  164398.1      0.10       3.2     169.0 u_sram/din_b_q_reg[12]/D      -0.08  
+    0:01:28  164400.7      0.10       3.2     169.0 u_sram/din_b_q_reg[12]/D      -0.08  
+    0:01:28  164406.1      0.10       3.2     169.0 u_sram/addr_b_q_reg[9]/D      -0.08  
+    0:01:28  164406.1      0.10       3.2     169.0 u_sram/din_b_q_reg[12]/D      -0.08  
+    0:01:28  164415.1      0.10       3.2     169.0 u_sram/addr_b_q_reg[9]/D      -0.08  
+    0:01:28  164416.5      0.10       3.2     169.0 u_sram/addr_b_q_reg[9]/D      -0.08  
+    0:01:28  164434.5      0.10       3.2     169.0 u_sram/din_b_q_reg[12]/D      -0.08  
+    0:01:28  164441.7      0.10       3.2     169.0 u_sram/addr_b_q_reg[9]/D      -0.08  
+    0:01:28  164449.3      0.10       3.2     169.0 u_sram/din_b_q_reg[31]/D      -0.08  
+    0:01:29  164452.5      0.10       3.1     169.0                               -0.08  
+    0:01:29  164449.6      0.10       3.1     169.0                               -0.08  
+    0:01:29  164447.5      0.10       3.1     169.0                               -0.08  
+    0:01:29  164443.5      0.10       3.1     169.0                               -0.08  
+    0:01:29  164442.4      0.10       3.1     169.0                               -0.08  
+    0:01:29  164435.9      0.10       3.1     169.0                               -0.08  
+    0:01:29  164435.6      0.10       3.1     169.0 unload_valid_d_reg/D          -0.05  
+    0:01:29  164436.7      0.10       3.1     169.0                                0.00  
+    0:01:29  164433.8      0.10       3.1     169.0                                0.00  
+    0:01:29  164432.7      0.10       3.1     169.0                                0.00  
+    0:01:29  164433.1      0.10       3.1     169.0                                0.00  
+    0:01:29  164442.1      0.10       3.1     169.0                                0.00  
+    0:01:30  164450.0      0.10       3.1     169.0                                0.00  
+    0:01:30  164453.9      0.10       3.1     169.0                                0.00  
+    0:01:30  164452.1      0.10       3.1     169.0                                0.00  
+    0:01:30  164448.9      0.10       3.1     169.0                                0.00  
+    0:01:30  164448.9      0.10       3.1     169.0                                0.00  
+    0:01:30  164453.9      0.10       3.1     169.0                                0.00  
+    0:01:30  164453.9      0.10       3.1     169.0                                0.00  
+    0:01:30  164453.9      0.10       3.1     169.0                                0.00  
+    0:01:30  164453.6      0.10       3.1     169.0                                0.00  
+    0:01:30  164452.9      0.10       3.1     169.0                                0.00  
+    0:01:30  164452.9      0.10       3.1     169.0                                0.00  
+    0:01:30  164455.0      0.10       3.1     169.0                                0.00  
+    0:01:30  164458.6      0.10       3.1     169.0                                0.00  
+    0:01:30  164459.0      0.10       3.1     169.0                                0.00  
+    0:01:31  164459.7      0.10       3.1     169.0 u_sram/din_b_q_reg[30]/D       0.00  
+    0:01:31  164468.0      0.09       3.0     169.0 u_sram/addr_b_q_reg[9]/D       0.00  
+    0:01:31  164474.5      0.09       3.0     169.0 u_sram/din_b_q_reg[12]/D       0.00  
+    0:01:31  164477.7      0.09       3.0     169.0 u_sram/din_b_q_reg[12]/D       0.00  
+    0:01:31  164477.7      0.09       3.0     169.0 u_sram/addr_b_q_reg[9]/D       0.00  
+    0:01:31  164477.7      0.09       3.0     169.0 u_sram/din_b_q_reg[12]/D       0.00  
+    0:01:31  164477.3      0.09       3.0     169.0 u_sram/addr_b_q_reg[9]/D       0.00  
+    0:01:31  164483.1      0.09       3.0     169.0 u_sram/din_b_q_reg[30]/D       0.00  
+    0:01:32  164480.9      0.09       3.0     169.0 u_sram/din_b_q_reg[29]/D       0.00  
+    0:01:32  164480.2      0.09       3.0     169.0 u_sram/din_b_q_reg[12]/D       0.00  
+    0:01:32  164483.5      0.09       3.0     169.0 u_sram/addr_b_q_reg[9]/D       0.00  
+    0:01:32  164483.8      0.09       3.0     169.0 u_sram/din_b_q_reg[12]/D       0.00  
+    0:01:32  164488.1      0.09       3.0     169.0 u_sram/din_b_q_reg[12]/D       0.00  
+    0:01:32  164484.9      0.09       3.0     169.0 u_sram/addr_b_q_reg[9]/D       0.00  
+    0:01:32  164490.7      0.09       3.0     169.0 u_sram/addr_b_q_reg[9]/D       0.00  
+    0:01:32  164490.7      0.09       3.0     169.0 u_sram/addr_b_q_reg[9]/D       0.00  
+    0:01:32  164492.8      0.09       3.0     169.0 u_sram/din_b_q_reg[31]/D       0.00  
+    0:01:32  164493.5      0.09       3.0     169.0 u_sram/din_b_q_reg[30]/D       0.00  
+    0:01:32  164495.7      0.09       3.0     169.0 u_sram/din_b_q_reg[29]/D       0.00  
+    0:01:32  164498.6      0.09       3.0     169.0 u_sram/din_b_q_reg[12]/D       0.00  
+    0:01:33  164503.3      0.09       3.0     169.0 u_sram/addr_b_q_reg[9]/D       0.00  
+    0:01:33  164504.3      0.09       3.0     169.0 u_sram/din_b_q_reg[12]/D       0.00  
+    0:01:33  164504.3      0.09       3.0     169.0 u_sram/din_b_q_reg[12]/D       0.00  
+    0:01:33  164506.9      0.09       3.0     169.0 u_sram/din_b_q_reg[12]/D       0.00  
+    0:01:33  164502.2      0.09       3.0     169.0 u_sram/addr_b_q_reg[9]/D       0.00  
+    0:01:33  164502.2      0.09       3.0     169.0 u_sram/din_b_q_reg[12]/D       0.00  
+    0:01:33  164502.2      0.09       3.0     169.0 u_sram/din_b_q_reg[31]/D       0.00  
+    0:01:33  164506.9      0.09       3.0     169.0 u_sram/din_b_q_reg[12]/D       0.00  
+    0:01:33  164506.5      0.09       3.0     169.0 u_sram/addr_b_q_reg[9]/D       0.00  
+    0:01:33  164506.5      0.09       3.0     169.0 u_sram/din_b_q_reg[12]/D       0.00  
+    0:01:33  164507.6      0.09       3.0     169.0 u_sram/din_b_q_reg[12]/D       0.00  
+    0:01:33  164507.2      0.09       3.0     169.0 u_sram/din_b_q_reg[31]/D       0.00  
+    0:01:33  164503.3      0.09       3.0     169.0 u_sram/din_b_q_reg[31]/D       0.00  
+    0:01:33  164503.3      0.09       3.0     169.0 u_sram/din_b_q_reg[30]/D       0.00  
+    0:01:34  164504.0      0.09       2.9     169.0 u_sram/din_b_q_reg[12]/D       0.00  
+    0:01:34  164501.8      0.09       2.9     169.0 u_sram/addr_b_q_reg[9]/D       0.00  
+    0:01:34  164502.5      0.09       2.9     169.0 u_sram/din_b_q_reg[12]/D       0.00  
+    0:01:34  164500.7      0.09       2.9     169.0 u_sram/din_b_q_reg[31]/D       0.00  
+    0:01:34  164499.7      0.09       2.9     169.0 u_sram/din_b_q_reg[31]/D       0.00  
+    0:01:34  164497.9      0.09       2.9     169.0 u_sram/din_b_q_reg[12]/D       0.00  
+    0:01:34  164498.9      0.09       2.9     169.0 u_sram/din_b_q_reg[12]/D       0.00  
+    0:01:34  164488.1      0.09       2.9     169.0                                0.00  
+Loading db file '/homes/user/stud/fall25/tl3468/ee6321/memory_compiler/sram00/sram00_libs/sram00_nldm_tt_1p00v_1p00v_25c_syn.db'
+Loading db file '/homes/user/stud/fall25/tl3468/ee6321/memory_compiler/sram01/sram01_libs/sram01_nldm_tt_1p00v_1p00v_25c_syn.db'
+
+
+Note: Symbol # after min delay cost means estimated hold TNS across all active scenarios 
+
+
+  Optimization Complete
+  ---------------------
+CPU Load: 8%, Ram Free: 43 GB, Swap Free: 31 GB, Work Disk Free: 6397 GB, Tmp Disk Free: 31 GB
+Information: Total number of MV cells in the design.
+----------------------------------------------------------------------------------------------------
+ MV Cells                                           Total Number                                   
+----------------------------------------------------------------------------------------------------
+ Level Shifter:                                     0                                             
+ Enable Level Shifter:                              0                                             
+ Isolation Cell:                                    0                                             
+ Retention Cell:                                    0                                             
+ Retention Clamp Cell:                              0                                             
+ Switch Cell:                                       0                                             
+ Always-On Cell:                                    0                                             
+ Repeater Cell:                                     0                                             
+
+----------------------------------------------------------------------------------------------------
+Unmapped MV Cells 
+----------------------------------------------------------------------------------------------------
+0 Isolation Cells are unmapped 
+0 Retention Clamp Cells are unmapped 
+----------------------------------------------------------------------------------------------------
+1
+#########################################
+# Write outputs                         #
+#########################################
+source -verbose "../common_scripts/namingrules.tcl"
+1
+
+Design          Type    Object                  New Name
+--------------------------------------------------------------------------------
+Warning: The specified replacement character (_) is conflicting with the specified allowed or restricted character.   (UCN-4)
+fft_processor_top net   _0_net_                 n_0_net_
+fft_controller  cell    dbg_stage_reg[0]        dbg_stage_reg_0_
+fft_controller  cell    dbg_stage_reg[3]        dbg_stage_reg_3_
+fft_controller  cell    state_reg[0]            state_reg_0_
+fft_controller  cell    state_reg[1]            state_reg_1_
+fft_controller  cell    unload_cnt_reg[1]       unload_cnt_reg_1_
+fft_controller  cell    unload_cnt_reg[0]       unload_cnt_reg_0_
+fft_controller  cell    unload_cnt_reg[2]       unload_cnt_reg_2_
+fft_controller  cell    unload_cnt_reg[3]       unload_cnt_reg_3_
+fft_controller  cell    unload_cnt_reg[4]       unload_cnt_reg_4_
+fft_controller  cell    unload_cnt_reg[5]       unload_cnt_reg_5_
+fft_controller  cell    unload_cnt_reg[6]       unload_cnt_reg_6_
+fft_controller  cell    unload_cnt_reg[7]       unload_cnt_reg_7_
+fft_controller  cell    unload_cnt_reg[8]       unload_cnt_reg_8_
+fft_controller  cell    unload_cnt_reg[9]       unload_cnt_reg_9_
+fft_controller  cell    load_cnt_reg[1]         load_cnt_reg_1_
+fft_controller  cell    load_cnt_reg[0]         load_cnt_reg_0_
+fft_controller  cell    load_cnt_reg[2]         load_cnt_reg_2_
+fft_controller  cell    load_cnt_reg[3]         load_cnt_reg_3_
+fft_controller  cell    load_cnt_reg[4]         load_cnt_reg_4_
+fft_controller  cell    load_cnt_reg[5]         load_cnt_reg_5_
+fft_controller  cell    load_cnt_reg[6]         load_cnt_reg_6_
+fft_controller  cell    load_cnt_reg[7]         load_cnt_reg_7_
+fft_controller  cell    load_cnt_reg[8]         load_cnt_reg_8_
+fft_controller  cell    load_cnt_reg[9]         load_cnt_reg_9_
+fft_controller  cell    bf_cnt_reg[0]           bf_cnt_reg_0_
+fft_controller  cell    bf_cnt_reg[1]           bf_cnt_reg_1_
+fft_controller  cell    bf_cnt_reg[2]           bf_cnt_reg_2_
+fft_controller  cell    bf_cnt_reg[3]           bf_cnt_reg_3_
+fft_controller  cell    bf_cnt_reg[4]           bf_cnt_reg_4_
+fft_controller  cell    bf_cnt_reg[5]           bf_cnt_reg_5_
+fft_controller  cell    bf_cnt_reg[6]           bf_cnt_reg_6_
+fft_controller  cell    bf_cnt_reg[7]           bf_cnt_reg_7_
+fft_controller  cell    bf_cnt_reg[8]           bf_cnt_reg_8_
+fft_controller  cell    dbg_stage_reg[2]        dbg_stage_reg_2_
+fft_controller  cell    dbg_stage_reg[1]        dbg_stage_reg_1_
+fft_controller  cell    stage_cnt_reg[1]        stage_cnt_reg_1_
+fft_controller  cell    stage_cnt_reg[3]        stage_cnt_reg_3_
+fft_controller  cell    stage_cnt_reg[0]        stage_cnt_reg_0_
+fft_controller  cell    stage_cnt_reg[2]        stage_cnt_reg_2_
+fft_controller  net     distance[9]             distance_9_
+fft_controller  net     n54                     n540
+fft_controller  net     n55                     n550
+fft_controller  net     n56                     n560
+fft_controller  net     n57                     n570
+fft_controller  net     n58                     n580
+fft_controller  net     n59                     n590
+fft_controller  net     n60                     n600
+fft_controller  net     n61                     n610
+fft_controller  net     n62                     n620
+fft_controller  net     n63                     n630
+fft_controller  net     n74                     n740
+fft_controller  net     n75                     n750
+fft_controller  net     n76                     n760
+fft_controller  net     n77                     n770
+fft_controller  net     n78                     n780
+fft_controller  net     n79                     n790
+fft_controller  net     n80                     n800
+fft_controller  net     n81                     n810
+fft_controller  net     n82                     n820
+fft_controller  net     N29                     N290
+fft_controller  net     N27                     N270
+fft_controller  net     N26                     N260
+fft_controller  net     n21                     n2100
+fft_controller  net     n22                     n2200
+fft_controller  net     n23                     n2300
+fft_controller  net     n24                     n2400
+fft_controller  net     n25                     n2500
+fft_controller  net     n28                     n2800
+fft_controller  net     n30                     n3000
+fft_controller  net     n47                     n470
+fft_controller  net     n94                     n940
+fft_controller  net     n95                     n950
+fft_controller  net     n96                     n960
+fft_controller  net     n97                     n970
+fft_controller  net     n98                     n980
+fft_controller  net     n99                     n990
+fft_controller  net     n100                    n1000
+fft_controller  net     n101                    n1010
+fft_controller  net     n102                    n1020
+fft_controller  net     n103                    n1030
+fft_controller  net     n210                    n2101
+fft_controller  net     n220                    n2201
+fft_controller  net     n230                    n2301
+fft_controller  net     n240                    n2401
+fft_controller  net     n250                    n2501
+fft_controller  net     n260                    n2600
+fft_controller  net     n270                    n2700
+fft_controller  net     n280                    n2801
+fft_controller  net     n290                    n2900
+fft_controller  net     n300                    n3001
+sram_1024x32    cell    addr_b_q_reg[4]         addr_b_q_reg_4_
+sram_1024x32    cell    addr_a_q_reg[9]         addr_a_q_reg_9_
+sram_1024x32    cell    addr_b_q_reg[5]         addr_b_q_reg_5_
+sram_1024x32    cell    addr_b_q_reg[6]         addr_b_q_reg_6_
+sram_1024x32    cell    addr_b_q_reg[8]         addr_b_q_reg_8_
+sram_1024x32    cell    addr_b_q_reg[7]         addr_b_q_reg_7_
+sram_1024x32    cell    addr_b_q_reg[9]         addr_b_q_reg_9_
+sram_1024x32    cell    addr_a_q_reg[8]         addr_a_q_reg_8_
+sram_1024x32    cell    din_a_q_reg[31]         din_a_q_reg_31_
+sram_1024x32    cell    din_a_q_reg[30]         din_a_q_reg_30_
+sram_1024x32    cell    din_a_q_reg[29]         din_a_q_reg_29_
+sram_1024x32    cell    din_a_q_reg[28]         din_a_q_reg_28_
+sram_1024x32    cell    din_a_q_reg[27]         din_a_q_reg_27_
+sram_1024x32    cell    din_a_q_reg[26]         din_a_q_reg_26_
+sram_1024x32    cell    din_a_q_reg[25]         din_a_q_reg_25_
+sram_1024x32    cell    din_a_q_reg[24]         din_a_q_reg_24_
+sram_1024x32    cell    din_a_q_reg[23]         din_a_q_reg_23_
+sram_1024x32    cell    din_a_q_reg[22]         din_a_q_reg_22_
+sram_1024x32    cell    din_a_q_reg[21]         din_a_q_reg_21_
+sram_1024x32    cell    din_a_q_reg[20]         din_a_q_reg_20_
+sram_1024x32    cell    din_a_q_reg[19]         din_a_q_reg_19_
+sram_1024x32    cell    din_a_q_reg[18]         din_a_q_reg_18_
+sram_1024x32    cell    din_a_q_reg[17]         din_a_q_reg_17_
+sram_1024x32    cell    din_a_q_reg[16]         din_a_q_reg_16_
+sram_1024x32    cell    din_a_q_reg[15]         din_a_q_reg_15_
+sram_1024x32    cell    din_a_q_reg[14]         din_a_q_reg_14_
+sram_1024x32    cell    din_a_q_reg[13]         din_a_q_reg_13_
+sram_1024x32    cell    din_a_q_reg[12]         din_a_q_reg_12_
+sram_1024x32    cell    din_a_q_reg[11]         din_a_q_reg_11_
+sram_1024x32    cell    din_a_q_reg[10]         din_a_q_reg_10_
+sram_1024x32    cell    din_a_q_reg[9]          din_a_q_reg_9_
+sram_1024x32    cell    din_a_q_reg[8]          din_a_q_reg_8_
+sram_1024x32    cell    din_a_q_reg[7]          din_a_q_reg_7_
+sram_1024x32    cell    din_a_q_reg[6]          din_a_q_reg_6_
+sram_1024x32    cell    din_a_q_reg[5]          din_a_q_reg_5_
+sram_1024x32    cell    din_a_q_reg[4]          din_a_q_reg_4_
+sram_1024x32    cell    din_a_q_reg[3]          din_a_q_reg_3_
+sram_1024x32    cell    din_a_q_reg[2]          din_a_q_reg_2_
+sram_1024x32    cell    din_a_q_reg[1]          din_a_q_reg_1_
+sram_1024x32    cell    din_a_q_reg[0]          din_a_q_reg_0_
+sram_1024x32    cell    addr_a_q_reg[7]         addr_a_q_reg_7_
+sram_1024x32    cell    addr_a_q_reg[6]         addr_a_q_reg_6_
+sram_1024x32    cell    addr_a_q_reg[5]         addr_a_q_reg_5_
+sram_1024x32    cell    addr_a_q_reg[4]         addr_a_q_reg_4_
+sram_1024x32    cell    addr_a_q_reg[3]         addr_a_q_reg_3_
+sram_1024x32    cell    addr_a_q_reg[2]         addr_a_q_reg_2_
+sram_1024x32    cell    addr_a_q_reg[1]         addr_a_q_reg_1_
+sram_1024x32    cell    addr_a_q_reg[0]         addr_a_q_reg_0_
+sram_1024x32    cell    addr_b_q_reg[3]         addr_b_q_reg_3_
+sram_1024x32    cell    addr_b_q_reg[2]         addr_b_q_reg_2_
+sram_1024x32    cell    addr_b_q_reg[1]         addr_b_q_reg_1_
+sram_1024x32    cell    addr_b_q_reg[0]         addr_b_q_reg_0_
+sram_1024x32    cell    din_b_q_reg[31]         din_b_q_reg_31_
+sram_1024x32    cell    din_b_q_reg[15]         din_b_q_reg_15_
+sram_1024x32    cell    din_b_q_reg[30]         din_b_q_reg_30_
+sram_1024x32    cell    din_b_q_reg[29]         din_b_q_reg_29_
+sram_1024x32    cell    din_b_q_reg[28]         din_b_q_reg_28_
+sram_1024x32    cell    din_b_q_reg[27]         din_b_q_reg_27_
+sram_1024x32    cell    din_b_q_reg[26]         din_b_q_reg_26_
+sram_1024x32    cell    din_b_q_reg[25]         din_b_q_reg_25_
+sram_1024x32    cell    din_b_q_reg[24]         din_b_q_reg_24_
+sram_1024x32    cell    din_b_q_reg[23]         din_b_q_reg_23_
+sram_1024x32    cell    din_b_q_reg[22]         din_b_q_reg_22_
+sram_1024x32    cell    din_b_q_reg[21]         din_b_q_reg_21_
+sram_1024x32    cell    din_b_q_reg[20]         din_b_q_reg_20_
+sram_1024x32    cell    din_b_q_reg[19]         din_b_q_reg_19_
+sram_1024x32    cell    din_b_q_reg[18]         din_b_q_reg_18_
+sram_1024x32    cell    din_b_q_reg[17]         din_b_q_reg_17_
+sram_1024x32    cell    din_b_q_reg[16]         din_b_q_reg_16_
+sram_1024x32    cell    din_b_q_reg[14]         din_b_q_reg_14_
+sram_1024x32    cell    din_b_q_reg[13]         din_b_q_reg_13_
+sram_1024x32    cell    din_b_q_reg[12]         din_b_q_reg_12_
+sram_1024x32    cell    din_b_q_reg[11]         din_b_q_reg_11_
+sram_1024x32    cell    din_b_q_reg[10]         din_b_q_reg_10_
+sram_1024x32    cell    din_b_q_reg[9]          din_b_q_reg_9_
+sram_1024x32    cell    din_b_q_reg[8]          din_b_q_reg_8_
+sram_1024x32    cell    din_b_q_reg[7]          din_b_q_reg_7_
+sram_1024x32    cell    din_b_q_reg[6]          din_b_q_reg_6_
+sram_1024x32    cell    din_b_q_reg[5]          din_b_q_reg_5_
+sram_1024x32    cell    din_b_q_reg[4]          din_b_q_reg_4_
+sram_1024x32    cell    din_b_q_reg[3]          din_b_q_reg_3_
+sram_1024x32    cell    din_b_q_reg[2]          din_b_q_reg_2_
+sram_1024x32    cell    din_b_q_reg[1]          din_b_q_reg_1_
+sram_1024x32    cell    din_b_q_reg[0]          din_b_q_reg_0_
+sram_1024x32    net     *Logic1*                n_Logic1_
+sram_1024x32    net     *Logic0*                n_Logic0_
+twiddle_rom     cell    ram_addr_q_reg[8]       ram_addr_q_reg_8_
+twiddle_rom     cell    ram_addr_q_reg[7]       ram_addr_q_reg_7_
+twiddle_rom     cell    ram_addr_q_reg[6]       ram_addr_q_reg_6_
+twiddle_rom     cell    ram_addr_q_reg[5]       ram_addr_q_reg_5_
+twiddle_rom     cell    ram_addr_q_reg[4]       ram_addr_q_reg_4_
+twiddle_rom     cell    ram_addr_q_reg[3]       ram_addr_q_reg_3_
+twiddle_rom     cell    ram_addr_q_reg[2]       ram_addr_q_reg_2_
+twiddle_rom     cell    ram_addr_q_reg[1]       ram_addr_q_reg_1_
+twiddle_rom     cell    ram_addr_q_reg[0]       ram_addr_q_reg_0_
+twiddle_rom     cell    ext_din_q_reg[31]       ext_din_q_reg_31_
+twiddle_rom     cell    ext_din_q_reg[30]       ext_din_q_reg_30_
+twiddle_rom     cell    ext_din_q_reg[29]       ext_din_q_reg_29_
+twiddle_rom     cell    ext_din_q_reg[28]       ext_din_q_reg_28_
+twiddle_rom     cell    ext_din_q_reg[27]       ext_din_q_reg_27_
+twiddle_rom     cell    ext_din_q_reg[26]       ext_din_q_reg_26_
+twiddle_rom     cell    ext_din_q_reg[25]       ext_din_q_reg_25_
+twiddle_rom     cell    ext_din_q_reg[24]       ext_din_q_reg_24_
+twiddle_rom     cell    ext_din_q_reg[23]       ext_din_q_reg_23_
+twiddle_rom     cell    ext_din_q_reg[22]       ext_din_q_reg_22_
+twiddle_rom     cell    ext_din_q_reg[21]       ext_din_q_reg_21_
+twiddle_rom     cell    ext_din_q_reg[20]       ext_din_q_reg_20_
+twiddle_rom     cell    ext_din_q_reg[19]       ext_din_q_reg_19_
+twiddle_rom     cell    ext_din_q_reg[18]       ext_din_q_reg_18_
+twiddle_rom     cell    ext_din_q_reg[17]       ext_din_q_reg_17_
+twiddle_rom     cell    ext_din_q_reg[16]       ext_din_q_reg_16_
+twiddle_rom     cell    ext_din_q_reg[15]       ext_din_q_reg_15_
+twiddle_rom     cell    ext_din_q_reg[14]       ext_din_q_reg_14_
+twiddle_rom     cell    ext_din_q_reg[13]       ext_din_q_reg_13_
+twiddle_rom     cell    ext_din_q_reg[12]       ext_din_q_reg_12_
+twiddle_rom     cell    ext_din_q_reg[11]       ext_din_q_reg_11_
+twiddle_rom     cell    ext_din_q_reg[10]       ext_din_q_reg_10_
+twiddle_rom     cell    ext_din_q_reg[9]        ext_din_q_reg_9_
+twiddle_rom     cell    ext_din_q_reg[8]        ext_din_q_reg_8_
+twiddle_rom     cell    ext_din_q_reg[7]        ext_din_q_reg_7_
+twiddle_rom     cell    ext_din_q_reg[6]        ext_din_q_reg_6_
+twiddle_rom     cell    ext_din_q_reg[5]        ext_din_q_reg_5_
+twiddle_rom     cell    ext_din_q_reg[4]        ext_din_q_reg_4_
+twiddle_rom     cell    ext_din_q_reg[3]        ext_din_q_reg_3_
+twiddle_rom     cell    ext_din_q_reg[2]        ext_din_q_reg_2_
+twiddle_rom     cell    ext_din_q_reg[1]        ext_din_q_reg_1_
+twiddle_rom     cell    ext_din_q_reg[0]        ext_din_q_reg_0_
+twiddle_rom     net     *Logic1*                n_Logic1_
+twiddle_rom     net     *Logic0*                n_Logic0_
+butterfly_unit  net     sub_re_full[9]          sub_re_full_9_
+butterfly_unit  net     sub_re_full[8]          sub_re_full_8_
+butterfly_unit  net     sub_re_full[7]          sub_re_full_7_
+butterfly_unit  net     sub_re_full[6]          sub_re_full_6_
+butterfly_unit  net     sub_re_full[5]          sub_re_full_5_
+butterfly_unit  net     sub_re_full[4]          sub_re_full_4_
+butterfly_unit  net     sub_re_full[3]          sub_re_full_3_
+butterfly_unit  net     sub_re_full[2]          sub_re_full_2_
+butterfly_unit  net     sub_re_full[1]          sub_re_full_1_
+butterfly_unit  net     sub_re_full[16]         sub_re_full_16_
+butterfly_unit  net     sub_re_full[15]         sub_re_full_15_
+butterfly_unit  net     sub_re_full[14]         sub_re_full_14_
+butterfly_unit  net     sub_re_full[13]         sub_re_full_13_
+butterfly_unit  net     sub_re_full[12]         sub_re_full_12_
+butterfly_unit  net     sub_re_full[11]         sub_re_full_11_
+butterfly_unit  net     sub_re_full[10]         sub_re_full_10_
+butterfly_unit  net     sub_im_full[9]          sub_im_full_9_
+butterfly_unit  net     sub_im_full[8]          sub_im_full_8_
+butterfly_unit  net     sub_im_full[7]          sub_im_full_7_
+butterfly_unit  net     sub_im_full[6]          sub_im_full_6_
+butterfly_unit  net     sub_im_full[5]          sub_im_full_5_
+butterfly_unit  net     sub_im_full[4]          sub_im_full_4_
+butterfly_unit  net     sub_im_full[3]          sub_im_full_3_
+butterfly_unit  net     sub_im_full[2]          sub_im_full_2_
+butterfly_unit  net     sub_im_full[1]          sub_im_full_1_
+butterfly_unit  net     sub_im_full[16]         sub_im_full_16_
+butterfly_unit  net     sub_im_full[15]         sub_im_full_15_
+butterfly_unit  net     sub_im_full[14]         sub_im_full_14_
+butterfly_unit  net     sub_im_full[13]         sub_im_full_13_
+butterfly_unit  net     sub_im_full[12]         sub_im_full_12_
+butterfly_unit  net     sub_im_full[11]         sub_im_full_11_
+butterfly_unit  net     sub_im_full[10]         sub_im_full_10_
+butterfly_unit  net     mult_rr[9]              mult_rr_9_
+butterfly_unit  net     mult_rr[8]              mult_rr_8_
+butterfly_unit  net     mult_rr[7]              mult_rr_7_
+butterfly_unit  net     mult_rr[6]              mult_rr_6_
+butterfly_unit  net     mult_rr[5]              mult_rr_5_
+butterfly_unit  net     mult_rr[4]              mult_rr_4_
+butterfly_unit  net     mult_rr[3]              mult_rr_3_
+butterfly_unit  net     mult_rr[30]             mult_rr_30_
+butterfly_unit  net     mult_rr[2]              mult_rr_2_
+butterfly_unit  net     mult_rr[29]             mult_rr_29_
+butterfly_unit  net     mult_rr[28]             mult_rr_28_
+butterfly_unit  net     mult_rr[27]             mult_rr_27_
+butterfly_unit  net     mult_rr[26]             mult_rr_26_
+butterfly_unit  net     mult_rr[25]             mult_rr_25_
+butterfly_unit  net     mult_rr[24]             mult_rr_24_
+butterfly_unit  net     mult_rr[23]             mult_rr_23_
+butterfly_unit  net     mult_rr[22]             mult_rr_22_
+butterfly_unit  net     mult_rr[21]             mult_rr_21_
+butterfly_unit  net     mult_rr[20]             mult_rr_20_
+butterfly_unit  net     mult_rr[1]              mult_rr_1_
+butterfly_unit  net     mult_rr[19]             mult_rr_19_
+butterfly_unit  net     mult_rr[18]             mult_rr_18_
+butterfly_unit  net     mult_rr[17]             mult_rr_17_
+butterfly_unit  net     mult_rr[16]             mult_rr_16_
+butterfly_unit  net     mult_rr[15]             mult_rr_15_
+butterfly_unit  net     mult_rr[14]             mult_rr_14_
+butterfly_unit  net     mult_rr[13]             mult_rr_13_
+butterfly_unit  net     mult_rr[12]             mult_rr_12_
+butterfly_unit  net     mult_rr[11]             mult_rr_11_
+butterfly_unit  net     mult_rr[10]             mult_rr_10_
+butterfly_unit  net     mult_rr[0]              mult_rr_0_
+butterfly_unit  net     mult_ri[9]              mult_ri_9_
+butterfly_unit  net     mult_ri[8]              mult_ri_8_
+butterfly_unit  net     mult_ri[7]              mult_ri_7_
+butterfly_unit  net     mult_ri[6]              mult_ri_6_
+butterfly_unit  net     mult_ri[5]              mult_ri_5_
+butterfly_unit  net     mult_ri[4]              mult_ri_4_
+butterfly_unit  net     mult_ri[3]              mult_ri_3_
+butterfly_unit  net     mult_ri[30]             mult_ri_30_
+butterfly_unit  net     mult_ri[2]              mult_ri_2_
+butterfly_unit  net     mult_ri[29]             mult_ri_29_
+butterfly_unit  net     mult_ri[28]             mult_ri_28_
+butterfly_unit  net     mult_ri[27]             mult_ri_27_
+butterfly_unit  net     mult_ri[26]             mult_ri_26_
+butterfly_unit  net     mult_ri[25]             mult_ri_25_
+butterfly_unit  net     mult_ri[24]             mult_ri_24_
+butterfly_unit  net     mult_ri[23]             mult_ri_23_
+butterfly_unit  net     mult_ri[22]             mult_ri_22_
+butterfly_unit  net     mult_ri[21]             mult_ri_21_
+butterfly_unit  net     mult_ri[20]             mult_ri_20_
+butterfly_unit  net     mult_ri[1]              mult_ri_1_
+butterfly_unit  net     mult_ri[19]             mult_ri_19_
+butterfly_unit  net     mult_ri[18]             mult_ri_18_
+butterfly_unit  net     mult_ri[17]             mult_ri_17_
+butterfly_unit  net     mult_ri[16]             mult_ri_16_
+butterfly_unit  net     mult_ri[15]             mult_ri_15_
+butterfly_unit  net     mult_ri[14]             mult_ri_14_
+butterfly_unit  net     mult_ri[13]             mult_ri_13_
+butterfly_unit  net     mult_ri[12]             mult_ri_12_
+butterfly_unit  net     mult_ri[11]             mult_ri_11_
+butterfly_unit  net     mult_ri[10]             mult_ri_10_
+butterfly_unit  net     mult_ri[0]              mult_ri_0_
+butterfly_unit  net     mult_ir[9]              mult_ir_9_
+butterfly_unit  net     mult_ir[8]              mult_ir_8_
+butterfly_unit  net     mult_ir[7]              mult_ir_7_
+butterfly_unit  net     mult_ir[6]              mult_ir_6_
+butterfly_unit  net     mult_ir[5]              mult_ir_5_
+butterfly_unit  net     mult_ir[4]              mult_ir_4_
+butterfly_unit  net     mult_ir[3]              mult_ir_3_
+butterfly_unit  net     mult_ir[30]             mult_ir_30_
+butterfly_unit  net     mult_ir[2]              mult_ir_2_
+butterfly_unit  net     mult_ir[29]             mult_ir_29_
+butterfly_unit  net     mult_ir[28]             mult_ir_28_
+butterfly_unit  net     mult_ir[27]             mult_ir_27_
+butterfly_unit  net     mult_ir[26]             mult_ir_26_
+butterfly_unit  net     mult_ir[25]             mult_ir_25_
+butterfly_unit  net     mult_ir[24]             mult_ir_24_
+butterfly_unit  net     mult_ir[23]             mult_ir_23_
+butterfly_unit  net     mult_ir[22]             mult_ir_22_
+butterfly_unit  net     mult_ir[21]             mult_ir_21_
+butterfly_unit  net     mult_ir[20]             mult_ir_20_
+butterfly_unit  net     mult_ir[1]              mult_ir_1_
+butterfly_unit  net     mult_ir[19]             mult_ir_19_
+butterfly_unit  net     mult_ir[18]             mult_ir_18_
+butterfly_unit  net     mult_ir[17]             mult_ir_17_
+butterfly_unit  net     mult_ir[16]             mult_ir_16_
+butterfly_unit  net     mult_ir[15]             mult_ir_15_
+butterfly_unit  net     mult_ir[14]             mult_ir_14_
+butterfly_unit  net     mult_ir[13]             mult_ir_13_
+butterfly_unit  net     mult_ir[12]             mult_ir_12_
+butterfly_unit  net     mult_ir[11]             mult_ir_11_
+butterfly_unit  net     mult_ir[10]             mult_ir_10_
+butterfly_unit  net     mult_ir[0]              mult_ir_0_
+butterfly_unit  net     mult_ii[9]              mult_ii_9_
+butterfly_unit  net     mult_ii[8]              mult_ii_8_
+butterfly_unit  net     mult_ii[7]              mult_ii_7_
+butterfly_unit  net     mult_ii[6]              mult_ii_6_
+butterfly_unit  net     mult_ii[5]              mult_ii_5_
+butterfly_unit  net     mult_ii[4]              mult_ii_4_
+butterfly_unit  net     mult_ii[3]              mult_ii_3_
+butterfly_unit  net     mult_ii[30]             mult_ii_30_
+butterfly_unit  net     mult_ii[2]              mult_ii_2_
+butterfly_unit  net     mult_ii[29]             mult_ii_29_
+butterfly_unit  net     mult_ii[28]             mult_ii_28_
+butterfly_unit  net     mult_ii[27]             mult_ii_27_
+butterfly_unit  net     mult_ii[26]             mult_ii_26_
+butterfly_unit  net     mult_ii[25]             mult_ii_25_
+butterfly_unit  net     mult_ii[24]             mult_ii_24_
+butterfly_unit  net     mult_ii[23]             mult_ii_23_
+butterfly_unit  net     mult_ii[22]             mult_ii_22_
+butterfly_unit  net     mult_ii[21]             mult_ii_21_
+butterfly_unit  net     mult_ii[20]             mult_ii_20_
+butterfly_unit  net     mult_ii[1]              mult_ii_1_
+butterfly_unit  net     mult_ii[19]             mult_ii_19_
+butterfly_unit  net     mult_ii[18]             mult_ii_18_
+butterfly_unit  net     mult_ii[17]             mult_ii_17_
+butterfly_unit  net     mult_ii[16]             mult_ii_16_
+butterfly_unit  net     mult_ii[15]             mult_ii_15_
+butterfly_unit  net     mult_ii[14]             mult_ii_14_
+butterfly_unit  net     mult_ii[13]             mult_ii_13_
+butterfly_unit  net     mult_ii[12]             mult_ii_12_
+butterfly_unit  net     mult_ii[11]             mult_ii_11_
+butterfly_unit  net     mult_ii[10]             mult_ii_10_
+butterfly_unit  net     mult_ii[0]              mult_ii_0_
+fft_controller_DW_div_uns_2 cell u_div/u_add_B3 u_div_u_add_B3
+fft_controller_DW_div_uns_2 cell u_div/u_add_B5 u_div_u_add_B5
+fft_controller_DW_div_uns_2 cell u_div/u_add_B6 u_div_u_add_B6
+fft_controller_DW_div_uns_2 cell u_div/u_add_B7 u_div_u_add_B7
+fft_controller_DW_div_uns_2 cell u_div/u_add_PartRem_2_1 u_div_u_add_PartRem_2_1
+fft_controller_DW_div_uns_2 cell u_div/u_add_PartRem_2_2 u_div_u_add_PartRem_2_2
+fft_controller_DW_div_uns_2 cell u_div/u_add_PartRem_2_3 u_div_u_add_PartRem_2_3
+fft_controller_DW_div_uns_2 cell u_div/u_add_PartRem_2_4 u_div_u_add_PartRem_2_4
+fft_controller_DW_div_uns_2 cell u_div/u_add_PartRem_2_5 u_div_u_add_PartRem_2_5
+fft_controller_DW_div_uns_2 cell u_div/u_add_PartRem_2_6 u_div_u_add_PartRem_2_6
+fft_controller_DW_div_uns_2 cell u_div/u_add_PartRem_2_7 u_div_u_add_PartRem_2_7
+fft_controller_DW_div_uns_2 cell u_div/u_add_PartRem_1_1 u_div_u_add_PartRem_1_1
+fft_controller_DW_div_uns_2 cell u_div/u_add_PartRem_1_2 u_div_u_add_PartRem_1_2
+fft_controller_DW_div_uns_2 cell u_div/u_add_PartRem_1_3 u_div_u_add_PartRem_1_3
+fft_controller_DW_div_uns_2 cell u_div/u_add_PartRem_1_4 u_div_u_add_PartRem_1_4
+fft_controller_DW_div_uns_2 cell u_div/u_add_PartRem_1_5 u_div_u_add_PartRem_1_5
+fft_controller_DW_div_uns_2 cell u_div/u_add_PartRem_1_6 u_div_u_add_PartRem_1_6
+fft_controller_DW_div_uns_2 cell u_div/u_add_PartRem_1_7 u_div_u_add_PartRem_1_7
+fft_controller_DW_div_uns_2 cell u_div/u_add_PartRem_0_1 u_div_u_add_PartRem_0_1
+fft_controller_DW_div_uns_2 cell u_div/u_add_PartRem_0_2 u_div_u_add_PartRem_0_2
+fft_controller_DW_div_uns_2 cell u_div/u_add_PartRem_0_3 u_div_u_add_PartRem_0_3
+fft_controller_DW_div_uns_2 cell u_div/u_add_PartRem_0_4 u_div_u_add_PartRem_0_4
+fft_controller_DW_div_uns_2 cell u_div/u_add_PartRem_0_5 u_div_u_add_PartRem_0_5
+fft_controller_DW_div_uns_2 cell u_div/u_add_PartRem_0_6 u_div_u_add_PartRem_0_6
+fft_controller_DW_div_uns_2 cell u_div/u_add_PartRem_0_7 u_div_u_add_PartRem_0_7
+fft_controller_DW_div_uns_2 net u_div/SumTmp[7][1][0] u_div_SumTmp_7__1__0_
+fft_controller_DW_div_uns_2 net u_div/SumTmp[7][1][1] u_div_SumTmp_7__1__1_
+fft_controller_DW_div_uns_2 net u_div/SumTmp[7][1][2] u_div_SumTmp_7__1__2_
+fft_controller_DW_div_uns_2 net u_div/SumTmp[7][1][3] u_div_SumTmp_7__1__3_
+fft_controller_DW_div_uns_2 net u_div/SumTmp[7][1][4] u_div_SumTmp_7__1__4_
+fft_controller_DW_div_uns_2 net u_div/SumTmp[7][1][5] u_div_SumTmp_7__1__5_
+fft_controller_DW_div_uns_2 net u_div/SumTmp[7][2][0] u_div_SumTmp_7__2__0_
+fft_controller_DW_div_uns_2 net u_div/SumTmp[7][2][1] u_div_SumTmp_7__2__1_
+fft_controller_DW_div_uns_2 net u_div/SumTmp[7][2][2] u_div_SumTmp_7__2__2_
+fft_controller_DW_div_uns_2 net u_div/SumTmp[6][1][0] u_div_SumTmp_6__1__0_
+fft_controller_DW_div_uns_2 net u_div/SumTmp[6][1][1] u_div_SumTmp_6__1__1_
+fft_controller_DW_div_uns_2 net u_div/SumTmp[6][1][2] u_div_SumTmp_6__1__2_
+fft_controller_DW_div_uns_2 net u_div/SumTmp[6][1][3] u_div_SumTmp_6__1__3_
+fft_controller_DW_div_uns_2 net u_div/SumTmp[6][1][4] u_div_SumTmp_6__1__4_
+fft_controller_DW_div_uns_2 net u_div/SumTmp[6][1][5] u_div_SumTmp_6__1__5_
+fft_controller_DW_div_uns_2 net u_div/SumTmp[6][2][0] u_div_SumTmp_6__2__0_
+fft_controller_DW_div_uns_2 net u_div/SumTmp[6][2][1] u_div_SumTmp_6__2__1_
+fft_controller_DW_div_uns_2 net u_div/SumTmp[6][2][2] u_div_SumTmp_6__2__2_
+fft_controller_DW_div_uns_2 net u_div/SumTmp[5][1][0] u_div_SumTmp_5__1__0_
+fft_controller_DW_div_uns_2 net u_div/SumTmp[5][1][1] u_div_SumTmp_5__1__1_
+fft_controller_DW_div_uns_2 net u_div/SumTmp[5][1][2] u_div_SumTmp_5__1__2_
+fft_controller_DW_div_uns_2 net u_div/SumTmp[5][1][3] u_div_SumTmp_5__1__3_
+fft_controller_DW_div_uns_2 net u_div/SumTmp[5][1][4] u_div_SumTmp_5__1__4_
+fft_controller_DW_div_uns_2 net u_div/SumTmp[5][1][5] u_div_SumTmp_5__1__5_
+fft_controller_DW_div_uns_2 net u_div/SumTmp[5][2][0] u_div_SumTmp_5__2__0_
+fft_controller_DW_div_uns_2 net u_div/SumTmp[5][2][1] u_div_SumTmp_5__2__1_
+fft_controller_DW_div_uns_2 net u_div/SumTmp[5][2][2] u_div_SumTmp_5__2__2_
+fft_controller_DW_div_uns_2 net u_div/SumTmp[4][1][0] u_div_SumTmp_4__1__0_
+fft_controller_DW_div_uns_2 net u_div/SumTmp[4][1][1] u_div_SumTmp_4__1__1_
+fft_controller_DW_div_uns_2 net u_div/SumTmp[4][1][2] u_div_SumTmp_4__1__2_
+fft_controller_DW_div_uns_2 net u_div/SumTmp[4][1][3] u_div_SumTmp_4__1__3_
+fft_controller_DW_div_uns_2 net u_div/SumTmp[4][1][4] u_div_SumTmp_4__1__4_
+fft_controller_DW_div_uns_2 net u_div/SumTmp[4][1][5] u_div_SumTmp_4__1__5_
+fft_controller_DW_div_uns_2 net u_div/SumTmp[4][2][0] u_div_SumTmp_4__2__0_
+fft_controller_DW_div_uns_2 net u_div/SumTmp[4][2][1] u_div_SumTmp_4__2__1_
+fft_controller_DW_div_uns_2 net u_div/SumTmp[4][2][2] u_div_SumTmp_4__2__2_
+fft_controller_DW_div_uns_2 net u_div/SumTmp[3][1][0] u_div_SumTmp_3__1__0_
+fft_controller_DW_div_uns_2 net u_div/SumTmp[3][1][1] u_div_SumTmp_3__1__1_
+fft_controller_DW_div_uns_2 net u_div/SumTmp[3][1][2] u_div_SumTmp_3__1__2_
+fft_controller_DW_div_uns_2 net u_div/SumTmp[3][1][3] u_div_SumTmp_3__1__3_
+fft_controller_DW_div_uns_2 net u_div/SumTmp[3][1][4] u_div_SumTmp_3__1__4_
+fft_controller_DW_div_uns_2 net u_div/SumTmp[3][1][5] u_div_SumTmp_3__1__5_
+fft_controller_DW_div_uns_2 net u_div/SumTmp[3][2][0] u_div_SumTmp_3__2__0_
+fft_controller_DW_div_uns_2 net u_div/SumTmp[3][2][1] u_div_SumTmp_3__2__1_
+fft_controller_DW_div_uns_2 net u_div/SumTmp[3][2][2] u_div_SumTmp_3__2__2_
+fft_controller_DW_div_uns_2 net u_div/SumTmp[2][1][0] u_div_SumTmp_2__1__0_
+fft_controller_DW_div_uns_2 net u_div/SumTmp[2][1][1] u_div_SumTmp_2__1__1_
+fft_controller_DW_div_uns_2 net u_div/SumTmp[2][1][2] u_div_SumTmp_2__1__2_
+fft_controller_DW_div_uns_2 net u_div/SumTmp[2][1][3] u_div_SumTmp_2__1__3_
+fft_controller_DW_div_uns_2 net u_div/SumTmp[2][1][4] u_div_SumTmp_2__1__4_
+fft_controller_DW_div_uns_2 net u_div/SumTmp[2][1][5] u_div_SumTmp_2__1__5_
+fft_controller_DW_div_uns_2 net u_div/SumTmp[2][2][0] u_div_SumTmp_2__2__0_
+fft_controller_DW_div_uns_2 net u_div/SumTmp[2][2][1] u_div_SumTmp_2__2__1_
+fft_controller_DW_div_uns_2 net u_div/SumTmp[2][2][2] u_div_SumTmp_2__2__2_
+fft_controller_DW_div_uns_2 net u_div/SumTmp[1][1][0] u_div_SumTmp_1__1__0_
+fft_controller_DW_div_uns_2 net u_div/SumTmp[1][1][1] u_div_SumTmp_1__1__1_
+fft_controller_DW_div_uns_2 net u_div/SumTmp[1][1][2] u_div_SumTmp_1__1__2_
+fft_controller_DW_div_uns_2 net u_div/SumTmp[1][1][3] u_div_SumTmp_1__1__3_
+fft_controller_DW_div_uns_2 net u_div/SumTmp[1][1][4] u_div_SumTmp_1__1__4_
+fft_controller_DW_div_uns_2 net u_div/SumTmp[1][1][5] u_div_SumTmp_1__1__5_
+fft_controller_DW_div_uns_2 net u_div/SumTmp[1][2][0] u_div_SumTmp_1__2__0_
+fft_controller_DW_div_uns_2 net u_div/SumTmp[1][2][1] u_div_SumTmp_1__2__1_
+fft_controller_DW_div_uns_2 net u_div/SumTmp[1][2][2] u_div_SumTmp_1__2__2_
+fft_controller_DW_div_uns_2 net u_div/CryOut[7][0] u_div_CryOut_7__0_
+fft_controller_DW_div_uns_2 net u_div/CryOut[7][1] u_div_CryOut_7__1_
+fft_controller_DW_div_uns_2 net u_div/CryOut[7][2] u_div_CryOut_7__2_
+fft_controller_DW_div_uns_2 net u_div/CryOut[6][0] u_div_CryOut_6__0_
+fft_controller_DW_div_uns_2 net u_div/CryOut[6][1] u_div_CryOut_6__1_
+fft_controller_DW_div_uns_2 net u_div/CryOut[6][2] u_div_CryOut_6__2_
+fft_controller_DW_div_uns_2 net u_div/CryOut[5][0] u_div_CryOut_5__0_
+fft_controller_DW_div_uns_2 net u_div/CryOut[5][1] u_div_CryOut_5__1_
+fft_controller_DW_div_uns_2 net u_div/CryOut[5][2] u_div_CryOut_5__2_
+fft_controller_DW_div_uns_2 net u_div/CryOut[3][0] u_div_CryOut_3__0_
+fft_controller_DW_div_uns_2 net u_div/CryOut[3][1] u_div_CryOut_3__1_
+fft_controller_DW_div_uns_2 net u_div/CryOut[3][2] u_div_CryOut_3__2_
+fft_controller_DW_div_uns_2 net u_div/CryOut[2][0] u_div_CryOut_2__0_
+fft_controller_DW_div_uns_2 net u_div/CryOut[2][1] u_div_CryOut_2__1_
+fft_controller_DW_div_uns_2 net u_div/CryOut[2][2] u_div_CryOut_2__2_
+fft_controller_DW_div_uns_2 net u_div/CryOut[1][0] u_div_CryOut_1__0_
+fft_controller_DW_div_uns_2 net u_div/CryOut[1][1] u_div_CryOut_1__1_
+fft_controller_DW_div_uns_2 net u_div/CryOut[1][2] u_div_CryOut_1__2_
+fft_controller_DW_div_uns_2 net u_div/PartRem[1][3] u_div_PartRem_1__3_
+fft_controller_DW_div_uns_2 net u_div/PartRem[1][4] u_div_PartRem_1__4_
+fft_controller_DW_div_uns_2 net u_div/PartRem[1][5] u_div_PartRem_1__5_
+fft_controller_DW_div_uns_2 net u_div/PartRem[1][6] u_div_PartRem_1__6_
+fft_controller_DW_div_uns_2 net u_div/PartRem[1][7] u_div_PartRem_1__7_
+fft_controller_DW_div_uns_2 net u_div/PartRem[1][8] u_div_PartRem_1__8_
+fft_controller_DW_div_uns_2 net u_div/BInv[7][0] u_div_BInv_7__0_
+fft_controller_DW_div_uns_2 net u_div/BInv[7][1] u_div_BInv_7__1_
+fft_controller_DW_div_uns_2 net u_div/BInv[7][2] u_div_BInv_7__2_
+fft_controller_DW_div_uns_2 net u_div/BInv[7][3] u_div_BInv_7__3_
+fft_controller_DW_div_uns_2 net u_div/BInv[7][4] u_div_BInv_7__4_
+fft_controller_DW_div_uns_2 net u_div/BInv[7][5] u_div_BInv_7__5_
+fft_controller_DW_div_uns_2 net u_div/BInv[7][6] u_div_BInv_7__6_
+fft_controller_DW_div_uns_2 net u_div/BInv[7][7] u_div_BInv_7__7_
+fft_controller_DW_div_uns_2 net u_div/BInv[7][8] u_div_BInv_7__8_
+fft_controller_DW_div_uns_2 net u_div/BInv[7][9] u_div_BInv_7__9_
+fft_controller_DW_div_uns_2 net u_div/BInv[7][10] u_div_BInv_7__10_
+fft_controller_DW_div_uns_2 net u_div/BInv[7][11] u_div_BInv_7__11_
+fft_controller_DW_div_uns_2 net u_div/BInv[7][12] u_div_BInv_7__12_
+fft_controller_DW_div_uns_2 net u_div/BInv[6][1] u_div_BInv_6__1_
+fft_controller_DW_div_uns_2 net u_div/BInv[6][2] u_div_BInv_6__2_
+fft_controller_DW_div_uns_2 net u_div/BInv[6][3] u_div_BInv_6__3_
+fft_controller_DW_div_uns_2 net u_div/BInv[6][4] u_div_BInv_6__4_
+fft_controller_DW_div_uns_2 net u_div/BInv[6][5] u_div_BInv_6__5_
+fft_controller_DW_div_uns_2 net u_div/BInv[6][6] u_div_BInv_6__6_
+fft_controller_DW_div_uns_2 net u_div/BInv[6][7] u_div_BInv_6__7_
+fft_controller_DW_div_uns_2 net u_div/BInv[6][8] u_div_BInv_6__8_
+fft_controller_DW_div_uns_2 net u_div/BInv[6][9] u_div_BInv_6__9_
+fft_controller_DW_div_uns_2 net u_div/BInv[6][10] u_div_BInv_6__10_
+fft_controller_DW_div_uns_2 net u_div/BInv[6][11] u_div_BInv_6__11_
+fft_controller_DW_div_uns_2 net u_div/BInv[6][12] u_div_BInv_6__12_
+fft_controller_DW_div_uns_2 net u_div/BInv[5][0] u_div_BInv_5__0_
+fft_controller_DW_div_uns_2 net u_div/BInv[5][1] u_div_BInv_5__1_
+fft_controller_DW_div_uns_2 net u_div/BInv[5][2] u_div_BInv_5__2_
+fft_controller_DW_div_uns_2 net u_div/BInv[5][3] u_div_BInv_5__3_
+fft_controller_DW_div_uns_2 net u_div/BInv[5][4] u_div_BInv_5__4_
+fft_controller_DW_div_uns_2 net u_div/BInv[5][5] u_div_BInv_5__5_
+fft_controller_DW_div_uns_2 net u_div/BInv[5][6] u_div_BInv_5__6_
+fft_controller_DW_div_uns_2 net u_div/BInv[5][7] u_div_BInv_5__7_
+fft_controller_DW_div_uns_2 net u_div/BInv[5][8] u_div_BInv_5__8_
+fft_controller_DW_div_uns_2 net u_div/BInv[5][9] u_div_BInv_5__9_
+fft_controller_DW_div_uns_2 net u_div/BInv[5][10] u_div_BInv_5__10_
+fft_controller_DW_div_uns_2 net u_div/BInv[5][11] u_div_BInv_5__11_
+fft_controller_DW_div_uns_2 net u_div/BInv[5][12] u_div_BInv_5__12_
+fft_controller_DW_div_uns_2 net u_div/BInv[3][0] u_div_BInv_3__0_
+fft_controller_DW_div_uns_2 net u_div/BInv[3][1] u_div_BInv_3__1_
+fft_controller_DW_div_uns_2 net u_div/BInv[3][2] u_div_BInv_3__2_
+fft_controller_DW_div_uns_2 net u_div/BInv[3][3] u_div_BInv_3__3_
+fft_controller_DW_div_uns_2 net u_div/BInv[3][4] u_div_BInv_3__4_
+fft_controller_DW_div_uns_2 net u_div/BInv[3][5] u_div_BInv_3__5_
+fft_controller_DW_div_uns_2 net u_div/BInv[3][6] u_div_BInv_3__6_
+fft_controller_DW_div_uns_2 net u_div/BInv[3][7] u_div_BInv_3__7_
+fft_controller_DW_div_uns_2 net u_div/BInv[3][8] u_div_BInv_3__8_
+fft_controller_DW_div_uns_2 net u_div/BInv[3][9] u_div_BInv_3__9_
+fft_controller_DW_div_uns_2 net u_div/BInv[3][10] u_div_BInv_3__10_
+fft_controller_DW_div_uns_2 net u_div/BInv[3][11] u_div_BInv_3__11_
+fft_controller_DW_div_uns_2 net u_div/BInv[1][0] u_div_BInv_1__0_
+fft_controller_DW_div_uns_2 net u_div/BInv[1][2] u_div_BInv_1__2_
+fft_controller_DW_div_uns_2 net u_div/BInv[1][5] u_div_BInv_1__5_
+fft_controller_DW_div_uns_2 net u_div/BInv[1][7] u_div_BInv_1__7_
+fft_controller_DW_div_uns_2 net u_div/BInv[1][8] u_div_BInv_1__8_
+fft_controller_DW_div_uns_2 net u_div/BInv[1][9] u_div_BInv_1__9_
+fft_controller_DW_div_uns_2 net u_div/*Logic0*  u_div__Logic0_
+fft_controller_DW_div_uns_3 cell u_div/u_add_B3 u_div_u_add_B3
+fft_controller_DW_div_uns_3 cell u_div/u_add_B5 u_div_u_add_B5
+fft_controller_DW_div_uns_3 cell u_div/u_add_B6 u_div_u_add_B6
+fft_controller_DW_div_uns_3 cell u_div/u_add_B7 u_div_u_add_B7
+fft_controller_DW_div_uns_3 cell u_div/u_add_PartRem_2_1 u_div_u_add_PartRem_2_1
+fft_controller_DW_div_uns_3 cell u_div/u_add_PartRem_2_2 u_div_u_add_PartRem_2_2
+fft_controller_DW_div_uns_3 cell u_div/u_add_PartRem_2_3 u_div_u_add_PartRem_2_3
+fft_controller_DW_div_uns_3 cell u_div/u_add_PartRem_2_4 u_div_u_add_PartRem_2_4
+fft_controller_DW_div_uns_3 cell u_div/u_add_PartRem_2_5 u_div_u_add_PartRem_2_5
+fft_controller_DW_div_uns_3 cell u_div/u_add_PartRem_2_6 u_div_u_add_PartRem_2_6
+fft_controller_DW_div_uns_3 cell u_div/u_add_PartRem_2_7 u_div_u_add_PartRem_2_7
+fft_controller_DW_div_uns_3 cell u_div/u_add_PartRem_1_1 u_div_u_add_PartRem_1_1
+fft_controller_DW_div_uns_3 cell u_div/u_add_PartRem_1_2 u_div_u_add_PartRem_1_2
+fft_controller_DW_div_uns_3 cell u_div/u_add_PartRem_1_3 u_div_u_add_PartRem_1_3
+fft_controller_DW_div_uns_3 cell u_div/u_add_PartRem_1_4 u_div_u_add_PartRem_1_4
+fft_controller_DW_div_uns_3 cell u_div/u_add_PartRem_1_5 u_div_u_add_PartRem_1_5
+fft_controller_DW_div_uns_3 cell u_div/u_add_PartRem_1_6 u_div_u_add_PartRem_1_6
+fft_controller_DW_div_uns_3 cell u_div/u_add_PartRem_1_7 u_div_u_add_PartRem_1_7
+fft_controller_DW_div_uns_3 cell u_div/u_add_PartRem_0_1 u_div_u_add_PartRem_0_1
+fft_controller_DW_div_uns_3 cell u_div/u_add_PartRem_0_2 u_div_u_add_PartRem_0_2
+fft_controller_DW_div_uns_3 cell u_div/u_add_PartRem_0_3 u_div_u_add_PartRem_0_3
+fft_controller_DW_div_uns_3 cell u_div/u_add_PartRem_0_4 u_div_u_add_PartRem_0_4
+fft_controller_DW_div_uns_3 cell u_div/u_add_PartRem_0_5 u_div_u_add_PartRem_0_5
+fft_controller_DW_div_uns_3 cell u_div/u_add_PartRem_0_6 u_div_u_add_PartRem_0_6
+fft_controller_DW_div_uns_3 cell u_div/u_add_PartRem_0_7 u_div_u_add_PartRem_0_7
+fft_controller_DW_div_uns_3 net u_div/SumTmp[7][0][0] u_div_SumTmp_7__0__0_
+fft_controller_DW_div_uns_3 net u_div/SumTmp[7][0][1] u_div_SumTmp_7__0__1_
+fft_controller_DW_div_uns_3 net u_div/SumTmp[7][0][2] u_div_SumTmp_7__0__2_
+fft_controller_DW_div_uns_3 net u_div/SumTmp[7][0][3] u_div_SumTmp_7__0__3_
+fft_controller_DW_div_uns_3 net u_div/SumTmp[7][0][4] u_div_SumTmp_7__0__4_
+fft_controller_DW_div_uns_3 net u_div/SumTmp[7][0][5] u_div_SumTmp_7__0__5_
+fft_controller_DW_div_uns_3 net u_div/SumTmp[7][0][6] u_div_SumTmp_7__0__6_
+fft_controller_DW_div_uns_3 net u_div/SumTmp[7][0][7] u_div_SumTmp_7__0__7_
+fft_controller_DW_div_uns_3 net u_div/SumTmp[7][0][8] u_div_SumTmp_7__0__8_
+fft_controller_DW_div_uns_3 net u_div/SumTmp[7][1][0] u_div_SumTmp_7__1__0_
+fft_controller_DW_div_uns_3 net u_div/SumTmp[7][1][1] u_div_SumTmp_7__1__1_
+fft_controller_DW_div_uns_3 net u_div/SumTmp[7][1][2] u_div_SumTmp_7__1__2_
+fft_controller_DW_div_uns_3 net u_div/SumTmp[7][1][3] u_div_SumTmp_7__1__3_
+fft_controller_DW_div_uns_3 net u_div/SumTmp[7][1][4] u_div_SumTmp_7__1__4_
+fft_controller_DW_div_uns_3 net u_div/SumTmp[7][1][5] u_div_SumTmp_7__1__5_
+fft_controller_DW_div_uns_3 net u_div/SumTmp[7][2][0] u_div_SumTmp_7__2__0_
+fft_controller_DW_div_uns_3 net u_div/SumTmp[7][2][1] u_div_SumTmp_7__2__1_
+fft_controller_DW_div_uns_3 net u_div/SumTmp[7][2][2] u_div_SumTmp_7__2__2_
+fft_controller_DW_div_uns_3 net u_div/SumTmp[6][0][0] u_div_SumTmp_6__0__0_
+fft_controller_DW_div_uns_3 net u_div/SumTmp[6][0][1] u_div_SumTmp_6__0__1_
+fft_controller_DW_div_uns_3 net u_div/SumTmp[6][0][2] u_div_SumTmp_6__0__2_
+fft_controller_DW_div_uns_3 net u_div/SumTmp[6][0][3] u_div_SumTmp_6__0__3_
+fft_controller_DW_div_uns_3 net u_div/SumTmp[6][0][4] u_div_SumTmp_6__0__4_
+fft_controller_DW_div_uns_3 net u_div/SumTmp[6][0][5] u_div_SumTmp_6__0__5_
+fft_controller_DW_div_uns_3 net u_div/SumTmp[6][0][6] u_div_SumTmp_6__0__6_
+fft_controller_DW_div_uns_3 net u_div/SumTmp[6][0][7] u_div_SumTmp_6__0__7_
+fft_controller_DW_div_uns_3 net u_div/SumTmp[6][0][8] u_div_SumTmp_6__0__8_
+fft_controller_DW_div_uns_3 net u_div/SumTmp[6][1][0] u_div_SumTmp_6__1__0_
+fft_controller_DW_div_uns_3 net u_div/SumTmp[6][1][1] u_div_SumTmp_6__1__1_
+fft_controller_DW_div_uns_3 net u_div/SumTmp[6][1][2] u_div_SumTmp_6__1__2_
+fft_controller_DW_div_uns_3 net u_div/SumTmp[6][1][3] u_div_SumTmp_6__1__3_
+fft_controller_DW_div_uns_3 net u_div/SumTmp[6][1][4] u_div_SumTmp_6__1__4_
+fft_controller_DW_div_uns_3 net u_div/SumTmp[6][1][5] u_div_SumTmp_6__1__5_
+fft_controller_DW_div_uns_3 net u_div/SumTmp[6][2][0] u_div_SumTmp_6__2__0_
+fft_controller_DW_div_uns_3 net u_div/SumTmp[6][2][1] u_div_SumTmp_6__2__1_
+fft_controller_DW_div_uns_3 net u_div/SumTmp[6][2][2] u_div_SumTmp_6__2__2_
+fft_controller_DW_div_uns_3 net u_div/SumTmp[5][0][0] u_div_SumTmp_5__0__0_
+fft_controller_DW_div_uns_3 net u_div/SumTmp[5][0][1] u_div_SumTmp_5__0__1_
+fft_controller_DW_div_uns_3 net u_div/SumTmp[5][0][2] u_div_SumTmp_5__0__2_
+fft_controller_DW_div_uns_3 net u_div/SumTmp[5][0][3] u_div_SumTmp_5__0__3_
+fft_controller_DW_div_uns_3 net u_div/SumTmp[5][0][4] u_div_SumTmp_5__0__4_
+fft_controller_DW_div_uns_3 net u_div/SumTmp[5][0][5] u_div_SumTmp_5__0__5_
+fft_controller_DW_div_uns_3 net u_div/SumTmp[5][0][6] u_div_SumTmp_5__0__6_
+fft_controller_DW_div_uns_3 net u_div/SumTmp[5][0][7] u_div_SumTmp_5__0__7_
+fft_controller_DW_div_uns_3 net u_div/SumTmp[5][0][8] u_div_SumTmp_5__0__8_
+fft_controller_DW_div_uns_3 net u_div/SumTmp[5][1][0] u_div_SumTmp_5__1__0_
+fft_controller_DW_div_uns_3 net u_div/SumTmp[5][1][1] u_div_SumTmp_5__1__1_
+fft_controller_DW_div_uns_3 net u_div/SumTmp[5][1][2] u_div_SumTmp_5__1__2_
+fft_controller_DW_div_uns_3 net u_div/SumTmp[5][1][3] u_div_SumTmp_5__1__3_
+fft_controller_DW_div_uns_3 net u_div/SumTmp[5][1][4] u_div_SumTmp_5__1__4_
+fft_controller_DW_div_uns_3 net u_div/SumTmp[5][1][5] u_div_SumTmp_5__1__5_
+fft_controller_DW_div_uns_3 net u_div/SumTmp[5][2][0] u_div_SumTmp_5__2__0_
+fft_controller_DW_div_uns_3 net u_div/SumTmp[5][2][1] u_div_SumTmp_5__2__1_
+fft_controller_DW_div_uns_3 net u_div/SumTmp[5][2][2] u_div_SumTmp_5__2__2_
+fft_controller_DW_div_uns_3 net u_div/SumTmp[4][0][0] u_div_SumTmp_4__0__0_
+fft_controller_DW_div_uns_3 net u_div/SumTmp[4][0][1] u_div_SumTmp_4__0__1_
+fft_controller_DW_div_uns_3 net u_div/SumTmp[4][0][2] u_div_SumTmp_4__0__2_
+fft_controller_DW_div_uns_3 net u_div/SumTmp[4][0][3] u_div_SumTmp_4__0__3_
+fft_controller_DW_div_uns_3 net u_div/SumTmp[4][0][4] u_div_SumTmp_4__0__4_
+fft_controller_DW_div_uns_3 net u_div/SumTmp[4][0][5] u_div_SumTmp_4__0__5_
+fft_controller_DW_div_uns_3 net u_div/SumTmp[4][0][6] u_div_SumTmp_4__0__6_
+fft_controller_DW_div_uns_3 net u_div/SumTmp[4][0][7] u_div_SumTmp_4__0__7_
+fft_controller_DW_div_uns_3 net u_div/SumTmp[4][0][8] u_div_SumTmp_4__0__8_
+fft_controller_DW_div_uns_3 net u_div/SumTmp[4][1][0] u_div_SumTmp_4__1__0_
+fft_controller_DW_div_uns_3 net u_div/SumTmp[4][1][1] u_div_SumTmp_4__1__1_
+fft_controller_DW_div_uns_3 net u_div/SumTmp[4][1][2] u_div_SumTmp_4__1__2_
+fft_controller_DW_div_uns_3 net u_div/SumTmp[4][1][3] u_div_SumTmp_4__1__3_
+fft_controller_DW_div_uns_3 net u_div/SumTmp[4][1][4] u_div_SumTmp_4__1__4_
+fft_controller_DW_div_uns_3 net u_div/SumTmp[4][1][5] u_div_SumTmp_4__1__5_
+fft_controller_DW_div_uns_3 net u_div/SumTmp[4][2][0] u_div_SumTmp_4__2__0_
+fft_controller_DW_div_uns_3 net u_div/SumTmp[4][2][1] u_div_SumTmp_4__2__1_
+fft_controller_DW_div_uns_3 net u_div/SumTmp[4][2][2] u_div_SumTmp_4__2__2_
+fft_controller_DW_div_uns_3 net u_div/SumTmp[3][0][0] u_div_SumTmp_3__0__0_
+fft_controller_DW_div_uns_3 net u_div/SumTmp[3][0][1] u_div_SumTmp_3__0__1_
+fft_controller_DW_div_uns_3 net u_div/SumTmp[3][0][2] u_div_SumTmp_3__0__2_
+fft_controller_DW_div_uns_3 net u_div/SumTmp[3][0][3] u_div_SumTmp_3__0__3_
+fft_controller_DW_div_uns_3 net u_div/SumTmp[3][0][4] u_div_SumTmp_3__0__4_
+fft_controller_DW_div_uns_3 net u_div/SumTmp[3][0][5] u_div_SumTmp_3__0__5_
+fft_controller_DW_div_uns_3 net u_div/SumTmp[3][0][6] u_div_SumTmp_3__0__6_
+fft_controller_DW_div_uns_3 net u_div/SumTmp[3][0][7] u_div_SumTmp_3__0__7_
+fft_controller_DW_div_uns_3 net u_div/SumTmp[3][0][8] u_div_SumTmp_3__0__8_
+fft_controller_DW_div_uns_3 net u_div/SumTmp[3][1][0] u_div_SumTmp_3__1__0_
+fft_controller_DW_div_uns_3 net u_div/SumTmp[3][1][1] u_div_SumTmp_3__1__1_
+fft_controller_DW_div_uns_3 net u_div/SumTmp[3][1][2] u_div_SumTmp_3__1__2_
+fft_controller_DW_div_uns_3 net u_div/SumTmp[3][1][3] u_div_SumTmp_3__1__3_
+fft_controller_DW_div_uns_3 net u_div/SumTmp[3][1][4] u_div_SumTmp_3__1__4_
+fft_controller_DW_div_uns_3 net u_div/SumTmp[3][1][5] u_div_SumTmp_3__1__5_
+fft_controller_DW_div_uns_3 net u_div/SumTmp[3][2][0] u_div_SumTmp_3__2__0_
+fft_controller_DW_div_uns_3 net u_div/SumTmp[3][2][1] u_div_SumTmp_3__2__1_
+fft_controller_DW_div_uns_3 net u_div/SumTmp[3][2][2] u_div_SumTmp_3__2__2_
+fft_controller_DW_div_uns_3 net u_div/SumTmp[2][0][0] u_div_SumTmp_2__0__0_
+fft_controller_DW_div_uns_3 net u_div/SumTmp[2][0][1] u_div_SumTmp_2__0__1_
+fft_controller_DW_div_uns_3 net u_div/SumTmp[2][0][2] u_div_SumTmp_2__0__2_
+fft_controller_DW_div_uns_3 net u_div/SumTmp[2][0][3] u_div_SumTmp_2__0__3_
+fft_controller_DW_div_uns_3 net u_div/SumTmp[2][0][4] u_div_SumTmp_2__0__4_
+fft_controller_DW_div_uns_3 net u_div/SumTmp[2][0][5] u_div_SumTmp_2__0__5_
+fft_controller_DW_div_uns_3 net u_div/SumTmp[2][0][6] u_div_SumTmp_2__0__6_
+fft_controller_DW_div_uns_3 net u_div/SumTmp[2][0][7] u_div_SumTmp_2__0__7_
+fft_controller_DW_div_uns_3 net u_div/SumTmp[2][0][8] u_div_SumTmp_2__0__8_
+fft_controller_DW_div_uns_3 net u_div/SumTmp[2][1][0] u_div_SumTmp_2__1__0_
+fft_controller_DW_div_uns_3 net u_div/SumTmp[2][1][1] u_div_SumTmp_2__1__1_
+fft_controller_DW_div_uns_3 net u_div/SumTmp[2][1][2] u_div_SumTmp_2__1__2_
+fft_controller_DW_div_uns_3 net u_div/SumTmp[2][1][3] u_div_SumTmp_2__1__3_
+fft_controller_DW_div_uns_3 net u_div/SumTmp[2][1][4] u_div_SumTmp_2__1__4_
+fft_controller_DW_div_uns_3 net u_div/SumTmp[2][1][5] u_div_SumTmp_2__1__5_
+fft_controller_DW_div_uns_3 net u_div/SumTmp[2][2][0] u_div_SumTmp_2__2__0_
+fft_controller_DW_div_uns_3 net u_div/SumTmp[2][2][1] u_div_SumTmp_2__2__1_
+fft_controller_DW_div_uns_3 net u_div/SumTmp[2][2][2] u_div_SumTmp_2__2__2_
+fft_controller_DW_div_uns_3 net u_div/SumTmp[1][0][0] u_div_SumTmp_1__0__0_
+fft_controller_DW_div_uns_3 net u_div/SumTmp[1][0][1] u_div_SumTmp_1__0__1_
+fft_controller_DW_div_uns_3 net u_div/SumTmp[1][0][2] u_div_SumTmp_1__0__2_
+fft_controller_DW_div_uns_3 net u_div/SumTmp[1][0][3] u_div_SumTmp_1__0__3_
+fft_controller_DW_div_uns_3 net u_div/SumTmp[1][0][4] u_div_SumTmp_1__0__4_
+fft_controller_DW_div_uns_3 net u_div/SumTmp[1][0][5] u_div_SumTmp_1__0__5_
+fft_controller_DW_div_uns_3 net u_div/SumTmp[1][0][6] u_div_SumTmp_1__0__6_
+fft_controller_DW_div_uns_3 net u_div/SumTmp[1][0][7] u_div_SumTmp_1__0__7_
+fft_controller_DW_div_uns_3 net u_div/SumTmp[1][0][8] u_div_SumTmp_1__0__8_
+fft_controller_DW_div_uns_3 net u_div/SumTmp[1][1][0] u_div_SumTmp_1__1__0_
+fft_controller_DW_div_uns_3 net u_div/SumTmp[1][1][1] u_div_SumTmp_1__1__1_
+fft_controller_DW_div_uns_3 net u_div/SumTmp[1][1][2] u_div_SumTmp_1__1__2_
+fft_controller_DW_div_uns_3 net u_div/SumTmp[1][1][3] u_div_SumTmp_1__1__3_
+fft_controller_DW_div_uns_3 net u_div/SumTmp[1][1][4] u_div_SumTmp_1__1__4_
+fft_controller_DW_div_uns_3 net u_div/SumTmp[1][1][5] u_div_SumTmp_1__1__5_
+fft_controller_DW_div_uns_3 net u_div/SumTmp[1][2][0] u_div_SumTmp_1__2__0_
+fft_controller_DW_div_uns_3 net u_div/SumTmp[1][2][1] u_div_SumTmp_1__2__1_
+fft_controller_DW_div_uns_3 net u_div/SumTmp[1][2][2] u_div_SumTmp_1__2__2_
+fft_controller_DW_div_uns_3 net u_div/CryOut[7][0] u_div_CryOut_7__0_
+fft_controller_DW_div_uns_3 net u_div/CryOut[7][1] u_div_CryOut_7__1_
+fft_controller_DW_div_uns_3 net u_div/CryOut[7][2] u_div_CryOut_7__2_
+fft_controller_DW_div_uns_3 net u_div/CryOut[6][0] u_div_CryOut_6__0_
+fft_controller_DW_div_uns_3 net u_div/CryOut[6][1] u_div_CryOut_6__1_
+fft_controller_DW_div_uns_3 net u_div/CryOut[6][2] u_div_CryOut_6__2_
+fft_controller_DW_div_uns_3 net u_div/CryOut[5][0] u_div_CryOut_5__0_
+fft_controller_DW_div_uns_3 net u_div/CryOut[5][1] u_div_CryOut_5__1_
+fft_controller_DW_div_uns_3 net u_div/CryOut[5][2] u_div_CryOut_5__2_
+fft_controller_DW_div_uns_3 net u_div/CryOut[3][0] u_div_CryOut_3__0_
+fft_controller_DW_div_uns_3 net u_div/CryOut[3][1] u_div_CryOut_3__1_
+fft_controller_DW_div_uns_3 net u_div/CryOut[3][2] u_div_CryOut_3__2_
+fft_controller_DW_div_uns_3 net u_div/CryOut[2][0] u_div_CryOut_2__0_
+fft_controller_DW_div_uns_3 net u_div/CryOut[2][1] u_div_CryOut_2__1_
+fft_controller_DW_div_uns_3 net u_div/CryOut[2][2] u_div_CryOut_2__2_
+fft_controller_DW_div_uns_3 net u_div/CryOut[1][0] u_div_CryOut_1__0_
+fft_controller_DW_div_uns_3 net u_div/CryOut[1][1] u_div_CryOut_1__1_
+fft_controller_DW_div_uns_3 net u_div/CryOut[1][2] u_div_CryOut_1__2_
+fft_controller_DW_div_uns_3 net u_div/PartRem[1][3] u_div_PartRem_1__3_
+fft_controller_DW_div_uns_3 net u_div/PartRem[1][6] u_div_PartRem_1__6_
+fft_controller_DW_div_uns_3 net u_div/PartRem[1][7] u_div_PartRem_1__7_
+fft_controller_DW_div_uns_3 net u_div/PartRem[1][8] u_div_PartRem_1__8_
+fft_controller_DW_div_uns_3 net u_div/PartRem[2][3] u_div_PartRem_2__3_
+fft_controller_DW_div_uns_3 net u_div/PartRem[2][4] u_div_PartRem_2__4_
+fft_controller_DW_div_uns_3 net u_div/BInv[7][0] u_div_BInv_7__0_
+fft_controller_DW_div_uns_3 net u_div/BInv[7][1] u_div_BInv_7__1_
+fft_controller_DW_div_uns_3 net u_div/BInv[7][2] u_div_BInv_7__2_
+fft_controller_DW_div_uns_3 net u_div/BInv[7][3] u_div_BInv_7__3_
+fft_controller_DW_div_uns_3 net u_div/BInv[7][4] u_div_BInv_7__4_
+fft_controller_DW_div_uns_3 net u_div/BInv[7][5] u_div_BInv_7__5_
+fft_controller_DW_div_uns_3 net u_div/BInv[7][6] u_div_BInv_7__6_
+fft_controller_DW_div_uns_3 net u_div/BInv[7][7] u_div_BInv_7__7_
+fft_controller_DW_div_uns_3 net u_div/BInv[7][8] u_div_BInv_7__8_
+fft_controller_DW_div_uns_3 net u_div/BInv[7][9] u_div_BInv_7__9_
+fft_controller_DW_div_uns_3 net u_div/BInv[7][10] u_div_BInv_7__10_
+fft_controller_DW_div_uns_3 net u_div/BInv[7][11] u_div_BInv_7__11_
+fft_controller_DW_div_uns_3 net u_div/BInv[7][12] u_div_BInv_7__12_
+fft_controller_DW_div_uns_3 net u_div/BInv[6][1] u_div_BInv_6__1_
+fft_controller_DW_div_uns_3 net u_div/BInv[6][2] u_div_BInv_6__2_
+fft_controller_DW_div_uns_3 net u_div/BInv[6][3] u_div_BInv_6__3_
+fft_controller_DW_div_uns_3 net u_div/BInv[6][4] u_div_BInv_6__4_
+fft_controller_DW_div_uns_3 net u_div/BInv[6][5] u_div_BInv_6__5_
+fft_controller_DW_div_uns_3 net u_div/BInv[6][6] u_div_BInv_6__6_
+fft_controller_DW_div_uns_3 net u_div/BInv[6][7] u_div_BInv_6__7_
+fft_controller_DW_div_uns_3 net u_div/BInv[6][8] u_div_BInv_6__8_
+fft_controller_DW_div_uns_3 net u_div/BInv[6][9] u_div_BInv_6__9_
+fft_controller_DW_div_uns_3 net u_div/BInv[6][10] u_div_BInv_6__10_
+fft_controller_DW_div_uns_3 net u_div/BInv[6][11] u_div_BInv_6__11_
+fft_controller_DW_div_uns_3 net u_div/BInv[6][12] u_div_BInv_6__12_
+fft_controller_DW_div_uns_3 net u_div/BInv[5][0] u_div_BInv_5__0_
+fft_controller_DW_div_uns_3 net u_div/BInv[5][1] u_div_BInv_5__1_
+fft_controller_DW_div_uns_3 net u_div/BInv[5][2] u_div_BInv_5__2_
+fft_controller_DW_div_uns_3 net u_div/BInv[5][3] u_div_BInv_5__3_
+fft_controller_DW_div_uns_3 net u_div/BInv[5][4] u_div_BInv_5__4_
+fft_controller_DW_div_uns_3 net u_div/BInv[5][5] u_div_BInv_5__5_
+fft_controller_DW_div_uns_3 net u_div/BInv[5][6] u_div_BInv_5__6_
+fft_controller_DW_div_uns_3 net u_div/BInv[5][7] u_div_BInv_5__7_
+fft_controller_DW_div_uns_3 net u_div/BInv[5][8] u_div_BInv_5__8_
+fft_controller_DW_div_uns_3 net u_div/BInv[5][9] u_div_BInv_5__9_
+fft_controller_DW_div_uns_3 net u_div/BInv[5][10] u_div_BInv_5__10_
+fft_controller_DW_div_uns_3 net u_div/BInv[5][11] u_div_BInv_5__11_
+fft_controller_DW_div_uns_3 net u_div/BInv[5][12] u_div_BInv_5__12_
+fft_controller_DW_div_uns_3 net u_div/BInv[3][0] u_div_BInv_3__0_
+fft_controller_DW_div_uns_3 net u_div/BInv[3][1] u_div_BInv_3__1_
+fft_controller_DW_div_uns_3 net u_div/BInv[3][2] u_div_BInv_3__2_
+fft_controller_DW_div_uns_3 net u_div/BInv[3][3] u_div_BInv_3__3_
+fft_controller_DW_div_uns_3 net u_div/BInv[3][4] u_div_BInv_3__4_
+fft_controller_DW_div_uns_3 net u_div/BInv[3][5] u_div_BInv_3__5_
+fft_controller_DW_div_uns_3 net u_div/BInv[3][6] u_div_BInv_3__6_
+fft_controller_DW_div_uns_3 net u_div/BInv[3][7] u_div_BInv_3__7_
+fft_controller_DW_div_uns_3 net u_div/BInv[3][8] u_div_BInv_3__8_
+fft_controller_DW_div_uns_3 net u_div/BInv[3][9] u_div_BInv_3__9_
+fft_controller_DW_div_uns_3 net u_div/BInv[3][10] u_div_BInv_3__10_
+fft_controller_DW_div_uns_3 net u_div/BInv[3][11] u_div_BInv_3__11_
+fft_controller_DW_div_uns_3 net u_div/BInv[1][0] u_div_BInv_1__0_
+fft_controller_DW_div_uns_3 net u_div/BInv[1][1] u_div_BInv_1__1_
+fft_controller_DW_div_uns_3 net u_div/BInv[1][2] u_div_BInv_1__2_
+fft_controller_DW_div_uns_3 net u_div/BInv[1][3] u_div_BInv_1__3_
+fft_controller_DW_div_uns_3 net u_div/BInv[1][4] u_div_BInv_1__4_
+fft_controller_DW_div_uns_3 net u_div/BInv[1][6] u_div_BInv_1__6_
+fft_controller_DW_div_uns_3 net u_div/BInv[1][7] u_div_BInv_1__7_
+fft_controller_DW_div_uns_3 net u_div/BInv[1][8] u_div_BInv_1__8_
+fft_controller_DW_div_uns_3 net u_div/BInv[1][9] u_div_BInv_1__9_
+fft_controller_DW_div_uns_3 net u_div/*Logic0*  u_div__Logic0_
+butterfly_unit_DW_mult_tc_8 net n43             b[15]
+butterfly_unit_DW_mult_tc_8 net n37             b[13]
+butterfly_unit_DW_mult_tc_8 net n31             b[11]
+butterfly_unit_DW_mult_tc_8 net n25             b[9]
+butterfly_unit_DW_mult_tc_8 net n19             b[7]
+butterfly_unit_DW_mult_tc_8 net n13             b[5]
+butterfly_unit_DW_mult_tc_8 net n7              b[3]
+butterfly_unit_DW_mult_tc_8 net n1              b[1]
+butterfly_unit_DW_mult_tc_8 net n803            a[15]
+butterfly_unit_DW_mult_tc_8 net n804            a[14]
+butterfly_unit_DW_mult_tc_8 net n805            a[13]
+butterfly_unit_DW_mult_tc_8 net n806            a[12]
+butterfly_unit_DW_mult_tc_8 net n807            a[11]
+butterfly_unit_DW_mult_tc_8 net n808            a[10]
+butterfly_unit_DW_mult_tc_8 net n809            a[9]
+butterfly_unit_DW_mult_tc_8 net n810            a[8]
+butterfly_unit_DW_mult_tc_8 net n811            a[7]
+butterfly_unit_DW_mult_tc_8 net n812            a[6]
+butterfly_unit_DW_mult_tc_8 net n813            a[5]
+butterfly_unit_DW_mult_tc_8 net n814            a[4]
+butterfly_unit_DW_mult_tc_8 net n815            a[3]
+butterfly_unit_DW_mult_tc_8 net n816            a[2]
+butterfly_unit_DW_mult_tc_8 net n817            a[1]
+butterfly_unit_DW_mult_tc_8 net n49             a[0]
+butterfly_unit_DW_mult_tc_9 net n43             b[15]
+butterfly_unit_DW_mult_tc_9 net n37             b[13]
+butterfly_unit_DW_mult_tc_9 net n31             b[11]
+butterfly_unit_DW_mult_tc_9 net n25             b[9]
+butterfly_unit_DW_mult_tc_9 net n19             b[7]
+butterfly_unit_DW_mult_tc_9 net n13             b[5]
+butterfly_unit_DW_mult_tc_9 net n7              b[3]
+butterfly_unit_DW_mult_tc_9 net n1              b[1]
+butterfly_unit_DW_mult_tc_9 net n803            a[15]
+butterfly_unit_DW_mult_tc_9 net n804            a[14]
+butterfly_unit_DW_mult_tc_9 net n805            a[13]
+butterfly_unit_DW_mult_tc_9 net n806            a[12]
+butterfly_unit_DW_mult_tc_9 net n807            a[11]
+butterfly_unit_DW_mult_tc_9 net n808            a[10]
+butterfly_unit_DW_mult_tc_9 net n809            a[9]
+butterfly_unit_DW_mult_tc_9 net n810            a[8]
+butterfly_unit_DW_mult_tc_9 net n811            a[7]
+butterfly_unit_DW_mult_tc_9 net n812            a[6]
+butterfly_unit_DW_mult_tc_9 net n813            a[5]
+butterfly_unit_DW_mult_tc_9 net n814            a[4]
+butterfly_unit_DW_mult_tc_9 net n815            a[3]
+butterfly_unit_DW_mult_tc_9 net n816            a[2]
+butterfly_unit_DW_mult_tc_9 net n817            a[1]
+butterfly_unit_DW_mult_tc_9 net n49             a[0]
+butterfly_unit_DW_mult_tc_10 net n43            b[15]
+butterfly_unit_DW_mult_tc_10 net n37            b[13]
+butterfly_unit_DW_mult_tc_10 net n31            b[11]
+butterfly_unit_DW_mult_tc_10 net n25            b[9]
+butterfly_unit_DW_mult_tc_10 net n19            b[7]
+butterfly_unit_DW_mult_tc_10 net n13            b[5]
+butterfly_unit_DW_mult_tc_10 net n7             b[3]
+butterfly_unit_DW_mult_tc_10 net n1             b[1]
+butterfly_unit_DW_mult_tc_10 net n803           a[15]
+butterfly_unit_DW_mult_tc_10 net n804           a[14]
+butterfly_unit_DW_mult_tc_10 net n805           a[13]
+butterfly_unit_DW_mult_tc_10 net n806           a[12]
+butterfly_unit_DW_mult_tc_10 net n807           a[11]
+butterfly_unit_DW_mult_tc_10 net n808           a[10]
+butterfly_unit_DW_mult_tc_10 net n809           a[9]
+butterfly_unit_DW_mult_tc_10 net n810           a[8]
+butterfly_unit_DW_mult_tc_10 net n811           a[7]
+butterfly_unit_DW_mult_tc_10 net n812           a[6]
+butterfly_unit_DW_mult_tc_10 net n813           a[5]
+butterfly_unit_DW_mult_tc_10 net n814           a[4]
+butterfly_unit_DW_mult_tc_10 net n815           a[3]
+butterfly_unit_DW_mult_tc_10 net n816           a[2]
+butterfly_unit_DW_mult_tc_10 net n817           a[1]
+butterfly_unit_DW_mult_tc_10 net n49            a[0]
+butterfly_unit_DW_mult_tc_11 net n43            b[15]
+butterfly_unit_DW_mult_tc_11 net n37            b[13]
+butterfly_unit_DW_mult_tc_11 net n31            b[11]
+butterfly_unit_DW_mult_tc_11 net n25            b[9]
+butterfly_unit_DW_mult_tc_11 net n19            b[7]
+butterfly_unit_DW_mult_tc_11 net n13            b[5]
+butterfly_unit_DW_mult_tc_11 net n7             b[3]
+butterfly_unit_DW_mult_tc_11 net n1             b[1]
+butterfly_unit_DW_mult_tc_11 net n803           a[15]
+butterfly_unit_DW_mult_tc_11 net n804           a[14]
+butterfly_unit_DW_mult_tc_11 net n805           a[13]
+butterfly_unit_DW_mult_tc_11 net n806           a[12]
+butterfly_unit_DW_mult_tc_11 net n807           a[11]
+butterfly_unit_DW_mult_tc_11 net n808           a[10]
+butterfly_unit_DW_mult_tc_11 net n809           a[9]
+butterfly_unit_DW_mult_tc_11 net n810           a[8]
+butterfly_unit_DW_mult_tc_11 net n811           a[7]
+butterfly_unit_DW_mult_tc_11 net n812           a[6]
+butterfly_unit_DW_mult_tc_11 net n813           a[5]
+butterfly_unit_DW_mult_tc_11 net n814           a[4]
+butterfly_unit_DW_mult_tc_11 net n815           a[3]
+butterfly_unit_DW_mult_tc_11 net n816           a[2]
+butterfly_unit_DW_mult_tc_11 net n817           a[1]
+butterfly_unit_DW_mult_tc_11 net n49            a[0]
+1
+1
+write -hierarchy -format verilog -output "${top_level}.nl.v"
+Writing verilog file '/homes/user/stud/fall25/tl3468/ee6321/dc/fft/fft_processor_top.nl.v'.
+Warning: Verilog writer has added 121 nets to module fft_controller_DW_div_uns_2 using SYNOPSYS_UNCONNECTED_ as prefix.  Please use the change_names command to make the correct changes before invoking the verilog writer.  (VO-11)
+Warning: Verilog writer has added 149 nets to module fft_controller_DW_div_uns_3 using SYNOPSYS_UNCONNECTED_ as prefix.  Please use the change_names command to make the correct changes before invoking the verilog writer.  (VO-11)
+Warning: Verilog writer has added 11 nets to module fft_controller using SYNOPSYS_UNCONNECTED_ as prefix.  Please use the change_names command to make the correct changes before invoking the verilog writer.  (VO-11)
+Warning: Verilog writer has added 38 nets to module butterfly_unit using SYNOPSYS_UNCONNECTED_ as prefix.  Please use the change_names command to make the correct changes before invoking the verilog writer.  (VO-11)
+1
+write_sdf -context verilog "${top_level}.temp.sdf"
+Information: Annotated 'cell' delays are assumed to include load delay. (UID-282)
+Information: Writing timing information to file '/homes/user/stud/fall25/tl3468/ee6321/dc/fft/fft_processor_top.temp.sdf'. (WT-3)
+Information: Updating design information... (UID-85)
+1
+write_sdf "${top_level}.syn.sdf"
+Information: Annotated 'cell' delays are assumed to include load delay. (UID-282)
+Information: Writing timing information to file '/homes/user/stud/fall25/tl3468/ee6321/dc/fft/fft_processor_top.syn.sdf'. (WT-3)
+1
+write_sdc "${top_level}.syn.sdc" -version 2.1
+1
+# Generate report file
+set maxpaths 20
+20
+set rpt_file "${top_level}.dc.rpt"
+fft_processor_top.dc.rpt
+check_design > $rpt_file
+report_area  >> ${rpt_file}
+report_power -verbose -hier -analysis_effort medium >> ${rpt_file}
+report_design >> ${rpt_file}
+report_cell >> ${rpt_file}
+report_port -verbose >> ${rpt_file}
+report_compile_options >> ${rpt_file}
+report_constraint -all_violators -verbose >> ${rpt_file}
+report_timing -path full -delay max -max_paths $maxpaths -nworst 100 >> ${rpt_file}
+report_timing -delay max -nworst 1 -max_paths 10000 -path end -nosplit -unique -sort_by slack > ${top_level}.syn.critical_regs
+report_timing -delay max -nworst 1 -max_paths 10000 -path full -nosplit -unique -sort_by slack > ${top_level}.syn.critical_regs.full
+report_timing -delay max -nworst 1 -max_paths 10000 -path end -nosplit -unique -sort_by slack -to [all_outputs] > ${top_level}.syn.critical_regs.output
+report_timing -delay max -nworst 1 -max_paths 10000 -path end -nosplit -unique -sort_by slack -to [all_registers -data_pins] > ${top_level}.syn.critical_regs.regs
+report_timing -delay min -nworst 1 -max_paths 10000 -path short -nosplit -unique -sort_by slack > ${top_level}.syn.fast_path
+quit
+
+Memory usage for this session 1150 Mbytes.
+Memory usage for this session including child processes 1150 Mbytes.
+CPU usage for this session 99 seconds ( 0.03 hours ).
+Elapsed time for this session 111 seconds ( 0.03 hours ).
+
+Thank you...
