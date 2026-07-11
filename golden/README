@@ -1,1 +1,24 @@
+# Golden Module
+
+- Script: `golden_fft1024_fp32.py`
+- Input: `input/input_fp32_v3.hex`, `input/twiddle_fp32.hex`
+- Output:
+  - `results/golden_output_fp32.hex`
+  - `results/golden_output_q15_scaled.hex` (scaled by 1/1024 to match per-stage /2 hardware policy)
+
+Run:
+
+```powershell
+python golden/golden_fft1024_fp32.py
+```
+
+MATLAB run:
+
+```matlab
+cd('<your_proj_path>');
+golden_fft1024_fp32_matlab
+```
+
+Script file:
+- `golden/golden_fft1024_fp32_matlab.m`
 
